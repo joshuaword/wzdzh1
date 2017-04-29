@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <View
+        android:id="@+id/lineMyAcount"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#BEBEBE" />
+    <ListView
+        android:id="@+id/commonlistView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/lineMyAcount"
+        android:cacheColorHint="#00000000"
+        android:divider="#00000000"
+        android:dividerHeight="10dp"
+        android:listSelector="#BEBEBE"
+        android:padding="3dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:visibility="visible" />
+
+    <!--
+              <com.dajia.view.NoScrollListView
+                    android:id="@+id/commonlistView"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="10dp"
+                        android:divider="#00000000"
+                        android:dividerHeight="10dp"
+                   />
+    -->
+    <!-- 没有信息时显示 -->
+
+    <TextView
+        android:id="@+id/no_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="没有信息"
+        android:visibility="gone" />
+
+</RelativeLayout>

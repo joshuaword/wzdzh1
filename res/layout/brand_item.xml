@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/catalog"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1.0"
+        android:background="#E0E0E0"
+        android:paddingBottom="5dip"
+        android:paddingLeft="5dip"
+        android:paddingTop="5dip"
+        android:text="A"
+        android:textColor="#454545" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" 
+        android:layout_marginLeft="10dp">
+
+        <com.dajia.widgets.AsyncImageView
+            android:id="@+id/brand_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:textSize="18.0sp" />
+
+        <TextView
+            android:layout_marginLeft="8dp"
+            android:id="@+id/brand_text"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:textSize="18.0sp" />
+    </LinearLayout>
+
+</LinearLayout>

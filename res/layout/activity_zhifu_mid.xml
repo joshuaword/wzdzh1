@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/account"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/page_back"
+    android:orientation="vertical"
+    >
+    
+     <include layout="@layout/layout_base_ui" /> 
+     
+     <LinearLayout 
+         android:layout_width="fill_parent"
+         android:layout_height="fill_parent"
+         android:padding="15.0dip" 
+         android:orientation="vertical"
+         android:layout_marginTop="10dp"
+         >
+
+    <EditText
+        android:id="@+id/edt_input"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip"
+        android:singleLine="true"
+        android:hint="请输入代驾金额"
+        android:maxLength="30"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/button_white" />
+    
+         <Button
+             android:layout_marginTop="20dp"
+                    android:id="@+id/btn_zhifubao"
+                    style="@style/btn_blue"
+                    android:layout_width="fill_parent"
+                    android:layout_height="45.0dip"
+                    android:layout_gravity="center_horizontal"
+                    android:text="支付宝支付" />
+         
+
+                <Button
+                    android:id="@+id/btn_xianjin"
+                    style="@style/btn_green"
+                    android:layout_width="fill_parent"
+                    android:layout_height="45.0dip"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:text="我已现金支付" />
+         
+         </LinearLayout>
+
+
+</LinearLayout>

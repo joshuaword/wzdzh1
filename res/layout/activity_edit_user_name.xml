@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/account"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/page_back"
+    android:orientation="vertical" >
+
+    <include layout="@layout/layout_base_ui" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:padding="15.0dip" >
+
+        <EditText
+            android:id="@+id/edt_input"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/button_white"
+            android:maxLength="100"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:contentDescription="性别"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <RadioButton
+                android:id="@+id/radioMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="男                " >
+            </RadioButton>
+
+            <RadioButton
+                android:id="@+id/radioFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="女" >
+            </RadioButton>
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_confirm"
+            style="@style/btn_blue"
+            android:layout_width="fill_parent"
+            android:layout_height="45.0dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:text="确定" />
+    </LinearLayout>
+
+</LinearLayout>

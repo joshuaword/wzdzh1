@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/page_back"
+        android:layout_above="@+id/gridview"
+        android:orientation="vertical" >
+
+        <include layout="@layout/layout_base_ui" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.0dip"
+            android:text="@string/vehicle_type" />
+
+        <EditText
+            android:id="@+id/vehicle_type"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/button_white"
+            android:hint="@string/hint_vehicle_type" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10.0dip"
+            android:text="@string/vehicle_number_" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/province"
+                android:layout_width="0dp"
+                android:layout_height="30dip"
+                android:gravity="center"
+                  android:background="@drawable/button_white"
+                android:layout_weight="3"
+                android:visibility="visible" />
+
+            <EditText
+                android:id="@+id/ed_vehicle_number"
+                android:layout_width="0dip"
+                android:layout_height="30dip"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="9"
+                android:background="@drawable/button_white"
+                android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                android:hint="@string/hint_vehicle_number"
+                android:maxLength="6" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_add"
+            style="@style/btn_blue"
+            android:layout_width="fill_parent"
+            android:layout_marginTop="15.0dip"
+            android:gravity="center"
+            android:text="@string/vehicle_add" />
+    </LinearLayout>
+
+    <com.dajia.activity.NoScrollGridView
+        android:id="@+id/gridview"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:numColumns="8"
+        android:verticalSpacing="10dip" />
+
+</RelativeLayout>

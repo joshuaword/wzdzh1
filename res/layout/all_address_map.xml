@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/whit" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="-3dip" >
+
+        <com.baidu.mapapi.map.MapView
+            android:id="@+id/all_mapview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/white"
+            android:clickable="true"
+            android:enabled="true" />
+    </RelativeLayout>
+
+   <FrameLayout
+            android:id="@+id/navi_bar"
+            style="@style/navi_bar" >
+            
+            <LinearLayout 
+                android:id="@+id/back_layout"
+                android:layout_gravity="left|center"
+                 android:layout_width="50dp"
+                android:layout_height="fill_parent"
+                >
+                
+                <ImageView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/back"
+                    />
+                
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/c333"
+                android:text="轨迹"
+                android:textSize="22.0sp" />
+
+            <TextView
+                android:id="@+id/btnRight"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="15.0dip"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:textColor="@color/btn_blue"
+                android:textSize="20.0sp"
+                 />
+        </FrameLayout>
+
+</RelativeLayout>

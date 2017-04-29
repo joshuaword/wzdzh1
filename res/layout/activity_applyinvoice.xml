@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    <include layout="@layout/layout_base_ui" /> 
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/page_back"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:id="@+id/apply_invoice"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/tv_apply_invoice_title"
+                android:layout_width="fill_parent"
+                android:layout_height="60.0dip"
+                android:background="#fff7f7f7"
+                android:gravity="center"
+                android:textColor="#ff333333"
+                android:textSize="17.0sp" />
+
+            <View style="@style/gray_line_horizontal" />
+
+            <LinearLayout
+                android:id="@+id/view_title_container"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/seting_cell_height"
+                android:background="@drawable/layout_seting_background_color" >
+
+                <ImageView
+                    android:layout_width="@dimen/applyinvoice_icon_width"
+                    android:layout_height="@dimen/applyinvoice_icon_width"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10.0dip"
+                    android:src="@drawable/icon_invoice" />
+
+                <TextView
+                    android:id="@+id/tv_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="-10.0dip"
+                    android:layout_weight="1.0"
+                    android:background="@color/transparent"
+                    android:gravity="left|center"
+                    android:hint="请输入您的发票抬头"
+                    android:padding="5.0dip"
+                    android:textColor="@color/c333"
+                    android:textColorHint="@color/c999"
+                    android:textSize="@dimen/normal_edt_text_size" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/btn_listright_setting"
+                    android:clickable="false" />
+            </LinearLayout>
+
+            <View
+                style="@style/gray_line_horizontal"
+                android:layout_marginLeft="10.0dip"
+                android:paddingLeft="10.0dip" />
+
+            <LinearLayout
+                android:id="@+id/view_address_container"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/seting_cell_height"
+                android:background="@drawable/layout_seting_background_color" >
+
+                <ImageView
+                    android:layout_width="@dimen/applyinvoice_icon_width"
+                    android:layout_height="@dimen/applyinvoice_icon_width"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10.0dip"
+                    android:src="@drawable/icon_address" />
+
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="-10.0dip"
+                    android:layout_weight="1.0"
+                    android:background="@color/transparent"
+                    android:focusableInTouchMode="false"
+                    android:gravity="left|center"
+                    android:hint="请输入您的收件地址"
+                    android:padding="5.0dip"
+                    android:textColor="@color/c333"
+                    android:textColorHint="@color/c999"
+                    android:textSize="@dimen/normal_edt_text_size" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/btn_listright_setting"
+                    android:clickable="false" />
+            </LinearLayout>
+
+            <View style="@style/gray_line_horizontal" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/seting_cell_height"
+                android:background="@drawable/layout_seting_background_color" >
+
+                <ImageView
+                    android:layout_width="@dimen/applyinvoice_icon_width"
+                    android:layout_height="@dimen/applyinvoice_icon_width"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10.0dip"
+                    android:src="@drawable/icon_person" />
+
+                <LinearLayout
+                    android:id="@+id/edt_name"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40.0dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="15.0dip"
+                    android:layout_weight="1.0"
+                    android:background="@color/transparent"
+                    android:orientation="horizontal" >
+
+                    <EditText
+                        android:id="@+id/can_clear_edit_text"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1.0"
+                        android:background="@color/transparent"
+                        android:gravity="center_vertical"
+                        android:hint="@string/invoice_default_text_receiver"
+                        android:padding="5.0dip"
+                        android:singleLine="true"
+                        android:textColor="@color/c333"
+                        android:textColorHint="@color/c999"
+                        android:textSize="@dimen/normal_edt_text_size" />
+
+                    <RelativeLayout
+                        android:id="@+id/can_clear_edit_text_btn_clear"
+                        android:layout_width="35.0dip"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:visibility="gone" >
+
+                        <ImageView
+                            android:layout_width="17.0dip"
+                            android:layout_height="17.0dip"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/edit_clear_icon" />
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <View style="@style/gray_line_horizontal" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/seting_cell_height"
+                android:background="@drawable/layout_seting_background_color" >
+
+                <ImageView
+                    android:layout_width="@dimen/applyinvoice_icon_width"
+                    android:layout_height="@dimen/applyinvoice_icon_width"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="10.0dip"
+                    android:src="@drawable/icon_phone" />
+
+              
+                
+                
+                 <LinearLayout
+                    android:id="@+id/edt_phone"
+                    android:layout_width="fill_parent"
+                    android:layout_height="40.0dip"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="5.0dip"
+                    android:layout_marginRight="15.0dip"
+                    android:layout_weight="1.0"
+                    android:background="@color/transparent"
+                    android:orientation="horizontal" >
+
+                    <EditText
+                        android:id="@+id/can_clear_edit_text_phone"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1.0"
+                        android:background="@color/transparent"
+                        android:gravity="center_vertical"
+                        android:hint="@string/invoice_default_text_phone"
+                        android:padding="5.0dip"
+                        android:singleLine="true"
+                        android:textColor="@color/c333"
+                        android:textColorHint="@color/c999"
+                        android:textSize="@dimen/normal_edt_text_size" />
+
+                    <RelativeLayout
+                        android:id="@+id/can_clear_edit_text_btn_clear_phone"
+                        android:layout_width="35.0dip"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center_vertical"
+                        android:visibility="gone" >
+
+                        <ImageView
+                            android:layout_width="17.0dip"
+                            android:layout_height="17.0dip"
+                            android:layout_centerInParent="true"
+                            android:src="@drawable/edit_clear_icon" />
+                    </RelativeLayout>
+                </LinearLayout>
+                
+                
+            </LinearLayout>
+
+            <View style="@style/gray_line_horizontal" />
+
+            <View style="@style/gray_line_horizontal" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginTop="15.0dip"
+                android:gravity="center_vertical"
+                android:text="@string/invoice_paypostage"
+                android:textColor="@color/c666"
+                android:textSize="@dimen/normal_edt_text_size" />
+
+            <View
+                style="@style/gray_line_horizontal"
+                android:layout_marginTop="10.0dip" />
+
+            <RelativeLayout
+                android:id="@+id/payecoins"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/seting_cell_height"
+                android:background="@drawable/layout_seting_background_color"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="10.0dip"
+                    android:gravity="center_vertical"
+                    android:text="@string/invoice_pay500ecoins"
+                    android:textColor="@color/c333"
+                    android:textSize="@dimen/normal_edt_text_size" />
+
+                <TextView
+                    android:id="@+id/not_enough_ecoins"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="32.0dip"
+                    android:gravity="center_vertical"
+                    android:text="@string/invoice_not_enough_ecoins"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/normal_edt_text_size" />
+
+                <ImageView
+                    android:id="@+id/payecoins_image"
+                    android:layout_width="15.0dip"
+                    android:layout_height="15.0dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="8.0dip"
+                    android:background="@drawable/radiobutton_normal" />
+            </RelativeLayout>
+
+            <View style="@style/gray_line_horizontal" />
+
+            <RelativeLayout
+                android:id="@+id/payexpress"
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/seting_cell_height"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/layout_seting_background_color"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="10.0dip"
+                    android:gravity="center_vertical"
+                    android:text="@string/invoice_express_to_pay"
+                    android:textColor="@color/c333"
+                    android:textSize="@dimen/normal_edt_text_size" />
+
+                <ImageView
+                    android:id="@+id/payexpress_image"
+                    android:layout_width="15.0dip"
+                    android:layout_height="15.0dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="8.0dip"
+                    android:background="@drawable/radiobutton_normal" />
+            </RelativeLayout>
+
+            <View style="@style/gray_line_horizontal" />
+
+            <TextView
+                android:id="@+id/whatisecoins"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="10.0dip"
+                android:layout_marginTop="10.0dip"
+                android:textColor="@color/c666"
+                android:textSize="12.0sp" />
+
+            <LinearLayout
+                android:id="@+id/btn_invoiceApply"
+                android:layout_width="fill_parent"
+                android:layout_height="45.0dip"
+                android:layout_margin="20.0dip"
+                android:background="@drawable/button_green"
+                android:gravity="center" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="25.0dip"
+                    android:maxWidth="25.0dip"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/invoice_apply_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5.0dip"
+                    android:text="@string/invoice_sub_btn_text"
+                    android:textColor="@color/btn_blue_text_color"
+                    android:textSize="18.0sp" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="20.0dip" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_back"
+    android:orientation="vertical" >
+
+    <include layout="@layout/layout_base_ui" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginTop="10.0dip"
+        android:text="@string/order_detail"
+        android:textColor="#ff818181"
+        android:textSize="18.0sp" />
+
+    <View
+        style="@style/gray_line_horizontal"
+        android:layout_marginTop="10.0dip" />
+
+    <LinearLayout
+        android:id="@+id/layout_orderdetail"
+        android:layout_width="fill_parent"
+        android:layout_height="35.0dip"
+        android:gravity="center_vertical"
+        android:background="@color/whit"        
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dip"
+            android:layout_marginLeft="20dip"
+            android:text="订单号:"
+            android:textColor="@color/c666"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:id="@+id/odrernum_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_marginTop="5dip"         
+            android:layout_marginLeft="36dip"
+            android:textColor="@color/blue_text"
+            android:text=""
+            android:textSize="16.0sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_servicetype"
+        android:layout_width="fill_parent"
+        android:layout_height="35.0dip"
+        android:gravity="center_vertical"
+        android:background="@color/whit"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"            
+            android:layout_marginLeft="20dip"           
+            android:text="服务内容:"
+            android:textColor="@color/c666"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:id="@+id/servicetype_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"            
+            android:textColor="@color/blue_text"
+            android:layout_marginLeft="20dip"
+            android:text=""
+            android:textSize="16.0sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_paymoney"
+        android:layout_width="fill_parent"
+        android:layout_height="35.0dip"
+        android:gravity="center_vertical"
+        android:background="@color/whit"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"           
+            android:layout_marginLeft="20dip"           
+            android:text="@string/zsht_pay_money"
+            android:textColor="@color/c666"
+            android:textSize="16.0sp"
+            android:layout_marginBottom="5dip" />
+
+        <TextView
+            android:id="@+id/paymoney_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"           
+            android:textColor="@color/blue_text"
+            android:layout_marginLeft="20dip"
+            android:text=""
+            android:textSize="16.0sp" 
+            android:layout_marginBottom="5dip"/>
+    </LinearLayout>
+
+    <View style="@style/gray_line_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginTop="10.0dip"
+        android:text="@string/choose_recharge_mode"
+        android:textColor="#ff818181"
+        android:textSize="18.0sp" />
+
+    <View
+        style="@style/gray_line_horizontal"
+        android:layout_marginTop="10.0dip" />
+
+    <RelativeLayout
+        android:id="@+id/layout_accountpay"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip"
+        android:layout_gravity="center_vertical"
+        android:background="@color/whit"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/accountpay_checkbox"
+            style="@style/checkbox_title"
+            android:layout_width="30dip"
+            android:layout_height="30dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dip"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/text_accountpay"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10.0dip"
+            android:layout_toRightOf="@+id/accountpay_checkbox"
+            android:background="@color/whit"
+            android:gravity="center_vertical"
+            android:text="@string/yue_recharge"
+            android:textColor="@color/blue_text"
+            android:textSize="18.0sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/yue_tv"
+            android:text="账户余额:"
+            android:textColor="@color/c666"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:id="@+id/yue_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dip"           
+            android:textColor="@color/red"
+            android:textSize="16.0sp" />
+    </RelativeLayout>
+
+    <View style="@style/gray_line_horizontal" />
+
+    <RelativeLayout
+        android:id="@+id/layout_carcapay"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip"
+        android:layout_gravity="center_vertical"
+        android:background="@color/whit"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/carcapay_checkbox"
+            style="@style/checkbox_title"
+            android:layout_width="30dip"
+            android:layout_height="30dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dip"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/text_carcapay"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10.0dip"
+            android:layout_toRightOf="@+id/carcapay_checkbox"
+            android:background="@color/whit"
+            android:gravity="center_vertical"
+            android:text="@string/xicheka_recharge"
+            android:textColor="@color/blue_text"
+            android:textSize="18.0sp" />
+    </RelativeLayout>
+
+    <View style="@style/gray_line_horizontal" />
+    <RelativeLayout
+        android:id="@+id/layout_recharge_alipay"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip"
+        android:layout_gravity="center_vertical"
+        android:background="@color/whit"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <CheckBox
+            android:id="@+id/zhifubao_checkbox"
+            style="@style/checkbox_title"
+            android:layout_width="30dip"
+            android:layout_height="30dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dip"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/text_recharge_alipay"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10.0dip"
+            android:layout_toRightOf="@+id/zhifubao_checkbox"
+            android:background="@color/whit"
+            android:gravity="center_vertical"
+            android:text="@string/zhifubao_recharge"
+            android:textColor="@color/blue_text"
+            android:textSize="18.0sp" />
+    </RelativeLayout>
+
+    <View style="@style/gray_line_horizontal" />
+    <RelativeLayout
+        android:id="@+id/layout_recharge_weixin"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip"
+        android:layout_gravity="center_vertical"
+        android:background="@color/whit"
+        android:orientation="horizontal"
+        android:visibility="gone" >
+
+        <CheckBox
+            android:id="@+id/weixin_checkbox"
+            style="@style/checkbox_title"
+            android:layout_width="30dip"
+            android:layout_height="30dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dip"
+            android:text="" />
+
+        <TextView
+            android:id="@+id/text_recharge_weixin"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10.0dip"
+            android:layout_toRightOf="@+id/weixin_checkbox"
+            android:background="@color/whit"
+            android:gravity="center_vertical"
+            android:text="@string/weixin_recharge"
+            android:textColor="@color/blue_text"
+            android:textSize="18.0sp" />
+    </RelativeLayout>
+
+    <View style="@style/gray_line_horizontal" />
+
+    <Button
+        android:id="@+id/confirm_odrder_bt"
+        style="@style/btn_blue"
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip"
+        android:layout_marginBottom="40.0dip"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginRight="10.0dip"
+        android:layout_marginTop="20.0dip"
+        android:gravity="center"
+        android:text="@string/go_recharge"
+        android:textColor="@color/white"
+        android:textSize="18.0sp" >
+    </Button>
+
+</LinearLayout>

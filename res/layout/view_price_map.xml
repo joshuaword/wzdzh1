@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/page_back"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@id/tv_time"
+            android:layout_width="110.0dip"
+            android:layout_height="40.0dip"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="07:00-21:59"
+            android:textColor="@color/c333"
+            android:textSize="15.0sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:layout_weight="1.0"
+            android:gravity="right|center"
+            android:paddingRight="15.0dip"
+            android:text="39元"
+            android:textColor="@color/orange"
+            android:textSize="15.0sp" />
+    </LinearLayout>
+
+    <View style="@style/gray_line_horizontal" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@id/tv_time"
+            android:layout_width="110.0dip"
+            android:layout_height="40.0dip"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="22:00-06:59"
+            android:textColor="@color/c333"
+            android:textSize="15.0sp" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:layout_weight="1.0"
+            android:gravity="right|center"
+            android:paddingRight="15.0dip"
+            android:text="59元"
+            android:textColor="@color/orange"
+            android:textSize="15.0sp" />
+    </LinearLayout>
+
+    <View style="@style/gray_line_horizontal" />
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="5.0dip"
+            android:layout_marginTop="15.0dip"
+            android:gravity="bottom"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/page_back"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="20.0dip"
+                    android:layout_height="26.0dip"
+                    android:gravity="right|center"
+                    android:paddingRight="5.0dip"
+                    android:text="59"
+                    android:textColor="@color/c666"
+                    android:textSize="10.0sp" />
+
+                <View
+                    style="@style/gray_line_horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/page_back"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="20.0dip"
+                    android:layout_height="26.0dip"
+                    android:gravity="right|center"
+                    android:paddingRight="5.0dip"
+                    android:text="49"
+                    android:textColor="@color/c666"
+                    android:textSize="10.0sp" />
+
+                <View
+                    style="@style/gray_line_horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/page_back"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="20.0dip"
+                    android:layout_height="26.0dip"
+                    android:gravity="right|center"
+                    android:paddingRight="5.0dip"
+                    android:text="39"
+                    android:textColor="@color/c666"
+                    android:textSize="10.0sp" />
+
+                <View
+                    style="@style/gray_line_horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.0" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/page_back"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="20.0dip"
+                    android:layout_height="26.0dip"
+                    android:gravity="right|center"
+                    android:paddingRight="5.0dip"
+                    android:text="0"
+                    android:textColor="@color/c666"
+                    android:textSize="10.0sp" />
+
+                <View
+                    style="@style/gray_line_horizontal"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1.0" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_histogram_container"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="13.0dip"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginRight="10.0dip"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal" >
+
+                <View
+                    android:layout_width="20.0dip"
+                    android:layout_height="26.0dip"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/price_histogram_orange" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal" >
+
+                <View
+                    android:layout_width="20.0dip"
+                    android:layout_height="78.0dip"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/price_histogram_gray" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="13.0dip"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginRight="10.0dip"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal" >
+
+                <TextView
+                    android:id="@+id/tv_current_price"
+                    android:layout_width="80.0dip"
+                    android:layout_height="25.0dip"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="15dip"
+                    android:background="@drawable/price_back"
+                    android:gravity="center"
+                    android:paddingBottom="7.0dip"
+                    android:text="当前价格39元"
+                    android:textColor="@color/white"
+                    android:textSize="11.0sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:gravity="center_horizontal" >
+
+                <TextView
+                    android:id="@+id/tv_current_price_two"
+                    android:layout_width="80.0dip"
+                    android:layout_height="25.0dip"
+                    android:layout_gravity="bottom|left|center"
+                    android:layout_marginBottom="39dp"
+                    android:background="@drawable/price_back"
+                    android:gravity="center"
+                    android:paddingBottom="7.0dip"
+                    android:text="当前价格39元"
+                    android:textColor="@color/white"
+                    android:textSize="11.0sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_times_container"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20.0dip"
+        android:layout_marginRight="10.0dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="07:00-21:59"
+            android:textColor="@color/orange"
+            android:textSize="9sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="22:00-06:59"
+            android:textSize="9sp" />
+    </LinearLayout>
+
+</LinearLayout>

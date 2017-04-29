@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/home_gridlayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <com.dajia.widgets.AsyncImageView
+        android:id="@+id/homegrid_iv"
+        android:layout_width="60dip"
+        android:layout_height="60dip" />
+
+    <TextView
+        android:id="@+id/homegrid_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="酒后代驾"
+        android:textColor="@color/black"
+        android:textSize="14sp" />
+
+</LinearLayout>

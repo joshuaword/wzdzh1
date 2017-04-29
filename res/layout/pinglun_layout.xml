@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/layout_base_ui" />
+
+    <LinearLayout
+        android:id="@+id/pinglun_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/commentEdit"
+            android:layout_width="fill_parent"
+            android:layout_height="150dip"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:layout_marginTop="20.0dip"
+            android:gravity="top"
+            android:background="@drawable/ka_edit"
+            android:hint="请对我们的服务提出宝贵意见" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical" >
+
+            <!--
+            <TextView
+                android:id="@+id/txt_choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dip"
+                android:gravity="center"
+                android:text="选择评论"
+                android:textColor="@color/blue_text"
+                android:textSize="16sp"
+                android:visibility="visible" />
+            -->
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/CommentRatingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="40.0dip"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10.0dip"
+                android:layout_marginTop="15.0dip"
+                android:numStars="5"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/text_info_giveRate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="喜欢这个师傅就给他打5星吧"
+                android:textColor="@color/c666"
+                android:textSize="14.0sp" />
+
+            <Button
+                android:id="@+id/comment"
+                style="@style/btn_blue"
+                android:layout_width="fill_parent"
+                android:layout_height="45.0dip"
+                android:layout_gravity="center"
+                android:layout_margin="10.0dip"
+                android:text="确认评价" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

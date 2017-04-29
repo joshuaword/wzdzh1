@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/layout_base_ui" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/driver_detail_background"
+        android:orientation="horizontal" >
+
+        <com.dajia.view.myGridView
+            android:id="@+id/driver_pictures"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dip"
+            android:horizontalSpacing="5dip"
+            android:numColumns="4"
+            android:verticalSpacing="5dip" >
+        </com.dajia.view.myGridView>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:layout_alignParentLeft="true"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/nearby_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dip"
+                    android:text="工号"
+                    android:textColor="@color/TextColorBlack"
+                    android:textSize="20.0sp" />
+
+                <ImageView
+                    android:id="@+id/dirver_confirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:layout_marginTop="2dip" />
+            </LinearLayout>
+
+            <RatingBar
+                android:id="@+id/nearby_star"
+                style="@style/driverRatingBar"
+                android:layout_marginBottom="5.0dip"
+                android:layout_marginLeft="20dip"
+                android:maxHeight="8.0dip"
+                android:maxWidth="15.0dip"
+                android:rating="5.0" />
+
+            <TextView
+                android:id="@+id/ny_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dip"
+                android:layout_marginTop="5dip"
+                android:text="跑腿"
+                android:textColor="@color/TextColorGray"
+                android:textSize="14.0sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/nearby_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="距离"
+            android:textColor="@color/TextColorGray"
+            android:textSize="14.0sp" />
+    </RelativeLayout>
+
+    <View
+        style="@style/gray_line_horizontal1"
+        android:layout_marginTop="5dip" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/driver_comment_title"
+            android:layout_width="fill_parent"
+            android:layout_height="25.0dip"
+            android:layout_marginBottom="5.0dip"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginTop="5.0dip"
+            android:gravity="center_vertical"
+            android:text="评价详情"
+            android:textColor="@color/TextColorGray"
+            android:textSize="16.0sp" />
+
+        <View style="@style/gray_line_horizontal1" />
+
+        <TextView
+            android:id="@+id/linear_review"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/hasnoreview"
+            android:textColor="@color/c333"
+            android:textSize="16.0sp"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/driver_listView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="10dip"
+            android:background="@color/white"
+            android:cacheColorHint="@color/Gray"
+            android:divider="@null"
+            android:scrollbars="none" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
+
+        <View style="@style/gray_line_horizontal" />
+
+        <Button
+            android:id="@+id/image_available"
+            style="@style/btn_blue"
+            android:layout_width="fill_parent"
+            android:layout_height="45.0dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10.0dip"
+            android:text="@string/call_driver" />
+    </LinearLayout>
+
+</LinearLayout>

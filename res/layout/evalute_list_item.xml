@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/whit"
+    android:minHeight="?android:listPreferredItemHeight"
+    android:orientation="vertical"
+    android:paddingLeft="10.0dip"
+    android:paddingRight="10.0dip" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10.0dip"
+        android:layout_weight="1.0"
+        android:orientation="horizontal" >
+
+        <RatingBar
+            android:id="@+id/driver_rating"
+            style="@style/driverRatingBar"
+            android:layout_gravity="center"
+            android:clickable="false"
+            android:enabled="false"
+            android:maxHeight="15.0dip" />
+
+        <TextView
+            android:id="@+id/text_evalate_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10.0dip"
+            android:layout_weight="1.0"
+            android:gravity="right|center"
+            android:textColor="@color/c999"
+            android:textSize="16.0dip" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/text_evalate_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5.0dip"
+        android:layout_marginRight="10.0dip"
+        android:layout_weight="1.0"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textSize="16.0dip"
+        android:textColor="@color/c333" />
+
+    <View style="@style/gray_line_horizontal" />
+
+</LinearLayout>

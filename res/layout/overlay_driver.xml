@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/driver_location"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <FrameLayout
+        android:layout_width="90.0dip"
+        android:layout_height="40.0dip" >
+
+        <ImageView
+            android:id="@+id/img_back"
+            android:layout_width="90.0dip"
+            android:layout_height="40.0dip"
+            android:layout_marginTop="2.0dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/green" />
+
+        <LinearLayout
+            android:id="@+id/item_container"
+            android:layout_width="90.0dip"
+            android:layout_height="40.0dip"
+            android:layout_marginTop="2.0dip"
+            android:orientation="horizontal" >
+
+            <com.dajia.view.RoundImageView
+                android:id="@+id/driver_img"
+                android:layout_width="25.0dip"
+                android:layout_height="25.0dip"
+                android:layout_marginLeft="5.0dip"
+                android:layout_marginTop="5.0dip"
+                android:scaleType="fitXY" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="-5.0dip"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal" >
+
+                    <TextView
+                        android:id="@+id/name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="1dip"
+                        android:layout_marginTop="1dip"
+                        android:gravity="center_horizontal"
+                        android:text="林志玲"
+                        android:textColor="@color/c333"
+                        android:textSize="12.0sp" />
+                </LinearLayout>
+
+                <!--
+                     <TextView
+                    android:id="@+id/number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/c666"
+                    android:text="NJ08998"
+                    android:textSize="10.0sp" />
+                -->
+
+                <RatingBar
+                    android:id="@+id/driver_location_ratingBar"
+                    style="@style/OverlayRatingBar_m"
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dip"
+                    android:minHeight="0.0dip"
+                    android:numStars="5" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/driver_overlay_master"
+            android:layout_width="12.0dip"
+            android:layout_height="24.0dip"
+            android:layout_gravity="top|right|center"
+            android:layout_marginRight="10.0dip"
+            android:layout_marginTop="15.0dip"
+            android:src="@drawable/master_tag"
+            android:visibility="gone" />
+    </FrameLayout>
+
+</FrameLayout>

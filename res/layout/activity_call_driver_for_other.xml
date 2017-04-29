@@ -1,0 +1,881 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#fff7f7f7" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/FrameLayout"
+        android:orientation="vertical" >
+
+        <include layout="@layout/layout_base_ui" />
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="0.0dip"
+                    android:layout_marginTop="20.0dip"
+                    android:layout_weight="1.0"
+                    android:orientation="vertical" >
+
+                    <View style="@style/gray_line_horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_driverother_personcount"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50.0dip"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/input_left_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10.0dip"
+                            android:layout_weight="1.0"
+                            android:text="司机数量" />
+
+                        <RelativeLayout
+                            android:layout_width="150.0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10.0dip" >
+
+                            <Button
+                                android:id="@+id/btn_sub"
+                                android:layout_width="35.0dip"
+                                android:layout_height="35.0dip"
+                                android:layout_alignParentLeft="true"
+                                android:background="@drawable/onekey_btn_sub"
+                                android:enabled="false" />
+
+                            <Button
+                                android:id="@+id/btn_add"
+                                android:layout_width="35.0dip"
+                                android:layout_height="35.0dip"
+                                android:layout_alignParentRight="true"
+                                android:background="@drawable/onekey_btn_add" />
+
+                            <EditText
+                                android:id="@+id/edt_num"
+                                android:layout_width="2.0dip"
+                                android:layout_height="35.0dip"
+                                android:layout_toLeftOf="@+id/btn_add"
+                                android:layout_toRightOf="@+id/btn_sub"
+                                android:background="@drawable/onekey_number_back"
+                                android:enabled="false"
+                                android:fontFamily=""
+                                android:gravity="center"
+                                android:text="1"
+                                android:textColor="@color/edaijia_black"
+                                android:textSize="@dimen/driverother_title_size" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <View style="@style/gray_line_horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/layout_driver_name"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50.0dip"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone" >
+
+                        <TextView
+                            style="@style/input_left_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10.0dip"
+                            android:layout_weight="1.0"
+                            android:text="已选司机" />
+
+                        <TextView
+                            android:id="@+id/show_name"
+                            style="@style/input_right_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:paddingLeft="5.0dip" />
+
+                        <Button
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:background="@drawable/btn_listright_setting"
+                            android:clickable="false" />
+                    </LinearLayout>
+                    <!--
+                    <View style="@style/gray_line_horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/name_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50.0dip"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/input_left_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10.0dip"
+                            android:text="姓名" />
+
+                        <TextView
+                            android:id="@+id/tv_name"
+                            style="@style/input_right_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:paddingLeft="5.0dip" />
+
+                        <Button
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:background="@drawable/btn_listright_setting"
+                            android:clickable="false" />
+                    </LinearLayout>
+
+                    <View style="@style/gray_line_horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/sex_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50.0dip"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/input_left_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10.0dip"
+                            android:text="性别" />
+
+                        <TextView
+                            android:id="@+id/tv_sex"
+                            style="@style/input_right_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:paddingLeft="5.0dip" />
+
+                        <Button
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:background="@drawable/btn_listright_setting"
+                            android:clickable="false" />
+                    </LinearLayout>
+
+                    <View style="@style/gray_line_horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/time_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50.0dip"
+                        android:background="@drawable/list_item_back"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/input_left_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10.0dip"
+                            android:text="预约时间" />
+
+                        <TextView
+                            android:id="@+id/time"
+                            style="@style/input_right_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:paddingLeft="5.0dip" />
+
+                        <Button
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:background="@drawable/btn_listright_setting"
+                            android:clickable="false" />
+                    </LinearLayout>
+
+                    <View style="@style/gray_line_horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/phone_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50.0dip"
+                        android:background="@drawable/list_item_back"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/input_left_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10.0dip"
+                            android:text="联系电话" />
+
+                        <TextView
+                            android:id="@+id/tv_phone"
+                            style="@style/input_right_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:paddingLeft="5.0dip" />
+
+                        <Button
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:background="@drawable/btn_listright_setting"
+                            android:clickable="false" />
+                    </LinearLayout>
+                    -->
+
+                    <View style="@style/gray_line_horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/chufa_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50.0dip"
+                        android:background="@drawable/list_item_back"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/startadress_tv"
+                            style="@style/input_left_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10.0dip"
+                            android:layout_marginRight="8.0dip"
+                            android:text="出发地点" />
+
+                        <TextView
+                            android:id="@+id/chufadi_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:background="@color/transparent"
+                            android:gravity="right|center"
+                            android:paddingLeft="5.0dip"
+                            android:textColor="@color/list_item_text_color_333"
+                            android:textSize="15sp" />
+
+                        <Button
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:background="@drawable/btn_listright_setting"
+                            android:clickable="false" />
+                    </LinearLayout>
+
+                    <View style="@style/gray_line_horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/chepai_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50.0dip"
+                        android:background="@drawable/list_item_back"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/input_left_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10.0dip"
+                            android:layout_marginRight="8.0dip"
+                            android:text="车牌号" />
+
+                        <TextView
+                            android:id="@+id/chupaihao_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:background="@color/transparent"
+                            android:gravity="right|center"
+                            android:paddingLeft="5.0dip"
+                            android:text=""
+                            android:textColor="@color/list_item_text_color_333"
+                            android:textSize="15sp" />
+
+                        <Button
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:background="@drawable/btn_listright_setting"
+                            android:clickable="false" />
+                    </LinearLayout>
+
+                    <View style="@style/gray_line_horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/mudi_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50.0dip"
+                        android:background="@drawable/list_item_back"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/input_left_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10.0dip"
+                            android:layout_marginRight="8.0dip"
+                            android:text="目的地" />
+
+                        <TextView
+                            android:id="@+id/mudidi_tv"
+                            style="@style/input_right_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:ellipsize="end"
+                            android:paddingLeft="5.0dip" />
+
+                        <Button
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:background="@drawable/btn_listright_setting"
+                            android:clickable="false" />
+                    </LinearLayout>
+                    <View style="@style/gray_line_horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/juli_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50.0dip"
+                        android:background="@drawable/list_item_back"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            style="@style/input_left_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10.0dip"
+                            android:layout_marginRight="8.0dip"
+                            android:text="公里数" />
+
+                        <TextView
+                            android:id="@+id/juli_tv"
+                            style="@style/input_right_text"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:ellipsize="end"
+                            android:paddingLeft="5.0dip" />
+
+                        <Button
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:background="@drawable/btn_listright_setting"
+                            android:clickable="false" />
+                    </LinearLayout>
+
+                    <View style="@style/gray_line_horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/type_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50.0dip"
+                        android:background="@drawable/list_item_back"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/input_left_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10.0dip"
+                            android:layout_marginRight="8.0dip"
+                            android:text="服务类型" />
+
+                        <TextView
+                            android:id="@+id/type_tv"
+                            style="@style/input_right_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:ellipsize="end"
+                            android:paddingLeft="5.0dip"
+                            android:text="普通代驾  20元" />
+
+                        <Button
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:background="@drawable/btn_listright_setting"
+                            android:clickable="false" />
+                    </LinearLayout>
+
+                    <View style="@style/gray_line_horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/youhuijuan_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50.0dip"
+                        android:background="@drawable/list_item_back"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone" >
+
+                        <TextView
+                            style="@style/input_left_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10.0dip"
+                            android:layout_marginRight="8.0dip"
+                            android:text="优惠劵" />
+
+                        <TextView
+                            android:id="@+id/youhuijuan_txt"
+                            style="@style/input_right_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:ellipsize="end"
+                            android:paddingLeft="5.0dip"
+                            android:text="新手优惠劵20元" />
+
+                        <Button
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:background="@drawable/btn_listright_setting"
+                            android:clickable="false" />
+                    </LinearLayout>
+
+                    <View style="@style/gray_line_horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/fuwushijian_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50.0dip"
+                        android:background="@drawable/list_item_back"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone" >
+
+                        <TextView
+                            style="@style/input_left_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10.0dip"
+                            android:layout_marginRight="8.0dip"
+                            android:text="服务时间" />
+
+                        <TextView
+                            android:id="@+id/fuwushijian_tv"
+                            style="@style/input_right_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1.0"
+                            android:ellipsize="end"
+                            android:paddingLeft="5.0dip"
+                            android:text="20分钟" />
+
+                        <Button
+                            android:layout_width="40.0dip"
+                            android:layout_height="40.0dip"
+                            android:background="@drawable/btn_listright_setting"
+                            android:clickable="false" />
+                    </LinearLayout>
+
+                    <View style="@style/gray_line_horizontal" />
+
+                    <LinearLayout
+                        android:id="@+id/remark_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical" >
+
+                        <LinearLayout
+                            android:id="@+id/view_coupons_container"
+                            android:layout_width="fill_parent"
+                            android:layout_height="50.0dip"
+                            android:background="@drawable/list_item_back"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                style="@style/input_left_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10.0dip"
+                                android:text="备注" />
+
+                            <TextView
+                                android:id="@+id/remark_tv"
+                                style="@style/input_right_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10.0dip"
+                                android:layout_weight="1.0" />
+
+                            <Button
+                                android:layout_width="40.0dip"
+                                android:layout_height="40.0dip"
+                                android:background="@drawable/btn_listright_setting"
+                                android:clickable="false" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View style="@style/gray_line_horizontal" />
+                  
+                        <LinearLayout
+                           android:id="@+id/time_layout"
+                            android:layout_width="fill_parent"
+                            android:layout_height="50.0dip"
+                            android:background="@drawable/list_item_back"
+                            android:gravity="center_vertical"                           
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                style="@style/input_left_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10.0dip"
+                                android:text="预约时间" />
+
+                            <TextView
+                                android:id="@+id/time"
+                                style="@style/input_right_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.0"
+                                android:paddingLeft="5.0dip" />
+
+                            <TextView
+                                android:id="@+id/time_txt"
+                                style="@style/input_right_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1.0"
+                                android:ellipsize="end"
+                                android:paddingLeft="5.0dip"
+                                android:text="立即服务" />
+
+                            <Button
+                                android:layout_width="40.0dip"
+                                android:layout_height="40.0dip"
+                                android:background="@drawable/btn_listright_setting"
+                                android:clickable="false" />
+                        </LinearLayout>
+                     
+
+                    <View
+                        android:id="@+id/view_coupon_line"
+                        style="@style/gray_line_horizontal" />
+                    <!-- 优惠券布局  listview -->
+
+                    <com.dajia.view.NoScrollListView
+                        android:id="@+id/youhuijuan_list"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_marginTop="10dp"
+                        android:divider="#00000000"
+                        android:dividerHeight="10dp" />
+
+                    <LinearLayout
+                        android:id="@+id/prepay_layout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone" >
+
+                        <LinearLayout
+                            android:id="@+id/paytitle_layout"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#E0E0E0"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical" >
+
+                            <TextView
+                                style="@style/input_left_text"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_marginTop="5dip"
+                                android:text="支付方式" />
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="5dip"
+                                android:layout_marginTop="10dip"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal" >
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5.0dip"
+                                    android:text="订单总金额："
+                                    android:textColor="@color/c58"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/payall_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="29元"
+                                    android:textColor="@color/c58"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10.0dip"
+                                    android:text="优惠劵："
+                                    android:textColor="@color/c58"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/youhui_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="29元"
+                                    android:textColor="@color/orange"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10.0dip"
+                                    android:text="应付金额："
+                                    android:singleLine="true"
+                                    android:textColor="#111111"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:id="@+id/payneed_tv"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="29元"
+                                    android:textColor="@color/red"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <View style="@style/gray_line_horizontal" />
+
+                        <RelativeLayout
+                            android:id="@+id/clayout_accountpay"
+                            android:layout_width="fill_parent"
+                            android:layout_height="45.0dip"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/whit"
+                            android:orientation="horizontal" >
+
+                            <CheckBox
+                                android:id="@+id/accountpay_checkbox"
+                                style="@style/checkbox_title"
+                                android:layout_width="30dip"
+                                android:layout_height="30dip"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginLeft="10dip"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/text_accountpay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_toRightOf="@+id/accountpay_checkbox"
+                                android:background="@color/whit"
+                                android:gravity="center_vertical"
+                                android:text="@string/yue_recharge"
+                                android:textColor="@color/blue_text"
+                                android:textSize="15.0sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toLeftOf="@+id/yue_tv"
+                                android:text="账户余额:"
+                                android:textColor="@color/c58"
+                                android:textSize="14.0sp" />
+
+                            <TextView
+                                android:id="@+id/yue_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="10dip"
+                                android:layout_toLeftOf="@+id/qing"
+                                android:text="29元"
+                                android:textColor="@color/red"
+                                android:textSize="14.0sp" />
+
+                            <TextView
+                                android:id="@+id/qing"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_toLeftOf="@+id/chong_tv"
+                                android:text="请充值:"
+                                android:textColor="@color/c58"
+                                android:textSize="14.0sp" />
+
+                            <TextView
+                                android:id="@+id/chong_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginRight="10dip"
+                                android:text="29元"
+                                android:textColor="@color/red"
+                                android:textSize="14.0sp" />
+                        </RelativeLayout>
+
+                        <View style="@style/gray_line_horizontal" />
+
+                        <RelativeLayout
+                            android:id="@+id/clayout_carcapay"
+                            android:layout_width="fill_parent"
+                            android:layout_height="45.0dip"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/whit"
+                            android:orientation="horizontal" >
+
+                            <CheckBox
+                                android:id="@+id/carcapay_checkbox"
+                                style="@style/checkbox_title"
+                                android:layout_width="30dip"
+                                android:layout_height="30dip"
+                                android:layout_alignParentLeft="true"
+                                android:layout_centerInParent="true"
+                                android:layout_marginLeft="10dip"
+                                android:text="" />
+
+                            <TextView
+                                android:id="@+id/text_carcapay"
+                                android:layout_width="wrap_content"
+                                android:layout_height="fill_parent"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="5.0dip"
+                                android:layout_toRightOf="@+id/carcapay_checkbox"
+                                android:background="@color/whit"
+                                android:gravity="center_vertical"
+                                android:text="@string/xicheka_recharge"
+                                android:textColor="@color/blue_text"
+                                android:textSize="15.0sp" />
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@color/whit"
+                            android:orientation="vertical" >
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dip"
+                                android:layout_marginTop="10dip"
+                                android:gravity="center"
+                                android:orientation="horizontal" >
+
+                                <TextView
+                                    android:layout_width="70dip"
+                                    android:layout_height="wrap_content"
+                                    android:text="卡号："
+                                    android:textSize="14sp" />
+
+                                <EditText
+                                    android:id="@+id/kanum_edit"
+                                    android:layout_width="200dip"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/ka_edit"
+                                    android:hint="请输入代驾卡号"
+                                    android:inputType="text"
+                                    android:singleLine="true"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="10dip"
+                                android:layout_marginLeft="20dip"
+                                android:layout_marginTop="10dip"
+                                android:gravity="center"
+                                android:orientation="horizontal" >
+
+                                <TextView
+                                    android:layout_width="70dip"
+                                    android:layout_height="wrap_content"
+                                    android:text="密码："
+                                    android:textSize="14sp" />
+
+                                <EditText
+                                    android:id="@+id/password_edit"
+                                    android:layout_width="200dip"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/ka_edit"
+                                    android:hint="请输入密码"
+                                    android:inputType="textPassword"
+                                    android:singleLine="true"
+                                    android:textSize="14sp" />
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        style="@style/gray_line_horizontal"
+                        android:layout_marginBottom="10dip" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/FrameLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="65.0dip"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <View
+            style="@style/gray_line_horizontal"
+            android:layout_gravity="top" />
+
+        <Button
+            android:id="@+id/btn_call_order"
+            style="@style/btn_blue"
+            android:layout_width="fill_parent"
+            android:layout_height="45.0dip"
+            android:layout_gravity="center"
+            android:layout_margin="10.0dip"
+            android:text="@string/make_sure_order" />
+    </FrameLayout>
+    <!--
+         <com.dajia.view.ConfirmOrderView
+        android:id="@+id/confirm_orderinfo_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:visibility="gone" />
+    -->
+
+</RelativeLayout>

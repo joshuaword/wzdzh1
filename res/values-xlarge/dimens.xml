@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="inputphonenum">60.0dip</dimen>
+    <dimen name="nextstepbtn">58.0dip</dimen>
+    <dimen name="edittextsize">25.0sp</dimen>
+</resources>

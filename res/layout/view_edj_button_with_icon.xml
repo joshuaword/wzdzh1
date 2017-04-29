@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/transparent"
+    android:gravity="center" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="45.0dip"
+        android:background="@drawable/btn_white"
+        android:layout_margin="10dp"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/imagebutton_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:adjustViewBounds="true"
+            android:maxHeight="25.0dip"
+            android:src="@drawable/icon_logout"
+            android:maxWidth="25.0dip"
+            android:scaleType="centerInside" />
+
+        <TextView
+            android:id="@+id/imagebutton_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5.0dip"
+            android:gravity="center"
+            android:textColor="#FC6769"
+            android:text="@string/logout_account" 
+            android:textSize="18.0sp" />
+    </LinearLayout>
+
+</LinearLayout>

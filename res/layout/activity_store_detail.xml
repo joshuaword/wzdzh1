@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <include layout="@layout/layout_base_ui" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/driver_detail_background"
+        android:orientation="horizontal" >
+
+        <com.dajia.view.myGridView
+            android:id="@+id/store_pictures"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="5dip"
+            android:horizontalSpacing="5dip"
+            android:numColumns="4"
+            android:verticalSpacing="5dip" >
+        </com.dajia.view.myGridView>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dip" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:id="@+id/store_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dip"
+                    android:text="工号"
+                    android:textColor="@color/TextColorBlack"
+                    android:textSize="20.0sp" />
+
+                <ImageView
+                    android:id="@+id/store_confirm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:layout_marginTop="2dip" />
+            </LinearLayout>
+
+            <RatingBar
+                android:id="@+id/store_star"
+                style="@style/driverRatingBar"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dip"
+                android:maxHeight="8.0dip"
+                android:maxWidth="15.0dip"
+                android:rating="5.0" />
+
+            <TextView
+                android:id="@+id/store_sign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dip"
+                android:layout_marginTop="5dip"
+                android:text="跑腿"
+                android:textColor="@color/TextColorGray"
+                android:textSize="14.0sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/store_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="距离"
+            android:textColor="@color/TextColorGray"
+            android:textSize="14.0sp" />
+    </RelativeLayout>
+
+    <View
+        style="@style/gray_line_horizontal1"
+        android:layout_marginTop="5dip" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginTop="10dip" >
+
+        <ImageView
+            android:id="@+id/store_nav"
+            android:layout_width="30dip"
+            android:layout_height="30dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ico_local" />
+
+        <TextView
+            android:id="@+id/store_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="3dip"
+            android:layout_toRightOf="@+id/store_nav"
+            android:ellipsize="none"
+            android:maxLines="100"
+            android:scrollHorizontally="false"
+            android:text="太原市小店区"
+            android:textColor="@color/TextColorBlack"
+            android:textSize="16.0sp" />
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="5dip"
+            android:layout_marginLeft="5.0dip"
+            android:layout_marginRight="5.0dip"
+            android:layout_marginTop="5dip"
+            android:layout_toLeftOf="@+id/store_telephone"
+            android:background="@color/indexseparatorlinecolor" />
+
+        <ImageView
+            android:id="@+id/store_telephone"
+            android:layout_width="25dip"
+            android:layout_height="25dip"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5.0dip"
+            android:layout_marginRight="10.0dip"
+            android:src="@drawable/telephone" />
+    </RelativeLayout>
+
+    <View style="@style/gray_line_horizontal1" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginTop="10dip" >
+
+        <TextView
+            android:id="@+id/store_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:text="服务类型"
+            android:textColor="@color/TextColorBlack"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:id="@+id/store_select_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/store_price"
+            android:text="到店普洗"
+            android:textColor="@color/TextColorBlack"
+            android:textSize="16.0sp" />
+
+        <TextView
+            android:id="@+id/store_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="10.0dip"
+            android:text="25元"
+            android:textColor="@color/blue_text"
+            android:textSize="18.0sp" />
+    </RelativeLayout>
+
+    <View style="@style/gray_line_horizontal1" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0"
+        android:background="@color/white"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/driver_comment_title"
+            android:layout_width="fill_parent"
+            android:layout_height="25.0dip"
+            android:layout_marginBottom="5.0dip"
+            android:layout_marginLeft="20.0dip"
+            android:layout_marginTop="5.0dip"
+            android:gravity="center_vertical"
+            android:text="评价"
+            android:textColor="@color/TextColorGray"
+            android:textSize="16.0sp" />
+
+        <View style="@style/gray_line_horizontal1" />
+
+        <TextView
+            android:id="@+id/linear_review"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/hasnoreview"
+            android:textColor="@color/c333"
+            android:textSize="16.0sp"
+            android:visibility="gone" />
+
+        <com.dajia.view.myListView
+            android:id="@+id/store_listView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:background="@color/white"
+            android:cacheColorHint="@color/Gray"
+            android:divider="@null"
+            android:scrollbars="none" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="vertical" >
+
+        <View style="@style/gray_line_horizontal" />
+
+        <Button
+            android:id="@+id/store_order"
+            style="@style/btn_blue"
+            android:layout_width="fill_parent"
+            android:layout_height="45.0dip"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10.0dip"
+            android:text="@string/call_driver" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/page_back"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:id="@+id/navi_bar"
+        style="@style/navi_bar" >
+        
+          <LinearLayout 
+                android:id="@+id/back_layout"
+                android:layout_gravity="left|center"
+                 android:layout_width="50dp"
+                 android:visibility="gone"
+                android:layout_height="fill_parent"
+                >
+                
+                <ImageView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/back"
+                    />
+                
+            </LinearLayout>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/title_use_license"
+            android:textColor="@color/c333"
+            android:textSize="22.0sp" />
+    </FrameLayout>
+
+    <View
+        android:id="@+id/view_top_line"
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/edaijia_gray" />
+
+    <FrameLayout
+        android:id="@+id/web_view_container"
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0" >
+        
+        <WebView
+        android:id="@+id/tq"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none" />
+        
+        </FrameLayout>
+
+    <View style="@style/gray_line_horizontal" />
+
+    <LinearLayout
+        android:id="@+id/btn_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="10.0dip" >
+
+        <Button
+            android:id="@+id/btn_refuse"
+            style="@style/btn_white"
+            android:layout_width="0.0dip"
+            android:layout_height="45.0dip"
+            android:layout_marginRight="5.0dip"
+            android:layout_weight="1.0"
+            android:text="@string/common_refuse" />
+
+        <Button
+            android:id="@+id/btn_agree"
+            style="@style/btn_blue"
+            android:layout_width="0.0dip"
+            android:layout_height="45.0dip"
+            android:layout_marginLeft="5.0dip"
+            android:layout_weight="1.0"
+            android:text="@string/common_agree" />
+    </LinearLayout>
+
+</LinearLayout>

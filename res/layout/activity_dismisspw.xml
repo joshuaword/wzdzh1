@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_back"
+    android:orientation="vertical" >
+
+    <include layout="@layout/layout_base_ui" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="10.0dip" >
+
+        <EditText
+            android:id="@+id/dlogin_phone"
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="10.0dip"
+            android:background="@drawable/button_white"
+            android:hint="@string/input_phone"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/dedt_password"
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="10.0dip"
+            android:layout_marginTop="10.0dip"
+            android:background="@drawable/button_white"
+            android:hint="@string/input_password"
+            android:inputType="textPassword" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="10.0dip" >
+
+            <EditText
+                android:id="@+id/dvalicode_tv"
+                android:layout_width="160dip"
+                android:layout_height="40.0dip"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/button_white"
+                android:hint="@string/input_valicode"
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/dget_valicode"
+                style="@style/btn_white_blue_text"
+                android:layout_width="wrap_content"
+                android:layout_height="40.0dip"
+                android:layout_marginLeft="10.0dip"
+                android:background="@drawable/czkuang"
+                android:enabled="true"
+                android:text="@string/get_verifycode" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_sureedit"
+            style="@style/btn_blue"
+            android:layout_width="fill_parent"
+            android:layout_marginLeft="10dip"
+            android:layout_marginRight="10dip"
+            android:layout_marginTop="15.0dip"
+            android:gravity="center"
+            android:text="@string/edit_password" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/Gray" >
+
+        <Button
+            android:id="@+id/time_btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="15dp"
+            android:text="取消"
+            android:textColor="@color/blue_text"
+            android:textSize="14sp" />
+
+        <Button
+            android:id="@+id/time_btn_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@null"
+            android:padding="15dp"
+            android:text="确定"
+            android:textColor="@color/blue_text"
+            android:textSize="14sp" />
+    </RelativeLayout>
+    <!--
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/time_today"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="5dip"
+            android:layout_weight="1.0"
+            android:background="@drawable/btn_datetime"
+            android:button="@null"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="今天"
+            android:textSize="14sp" 
+            android:padding="5dip"
+            android:textColor="@drawable/btn_datetext"/>
+
+        <CheckBox
+            android:id="@+id/time_tommorw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_weight="1.0"
+            android:background="@drawable/btn_datetime"
+            android:button="@null"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="今天"
+            android:textSize="14sp" 
+            android:padding="5dip"
+            android:textColor="@drawable/btn_datetext"/>
+
+        <CheckBox
+            android:id="@+id/time_afterday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="20dip"
+            android:layout_weight="1.0"
+            android:background="@drawable/btn_datetime"
+            android:button="@null"
+            android:focusable="true"
+            android:gravity="center"
+            android:text="今天"
+            android:textSize="14sp" 
+            android:padding="5dip"
+            android:textColor="@drawable/btn_datetext"/>
+    </LinearLayout> -->
+
+    <com.dajia.widgets.WheelView
+        android:id="@+id/time_wheel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

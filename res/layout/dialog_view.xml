@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whit"
+    android:orientation="vertical" >
+
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp" >
+
+        <EditText
+            android:id="@+id/edt_input"
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/button_white"
+            android:textSize="15sp"
+            android:textColor="@color/list_item_text_color_333"
+            android:maxLength="30"
+            android:singleLine="true" />
+        
+        <TextView
+            android:id="@+id/yuanyin1"
+            style="@style/quxiao_text"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:text="代驾员态度不好" />
+
+        <View style="@style/gray_line_horizontal" />
+
+        <TextView
+            android:id="@+id/yuanyin2"
+            style="@style/quxiao_text"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:text="收费有点贵" />
+
+        <View style="@style/gray_line_horizontal" />
+
+        <TextView
+            android:id="@+id/yuanyin3"
+            style="@style/quxiao_text"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:text="其他原因" />
+
+        <View style="@style/gray_line_horizontal" />
+    </LinearLayout>
+
+</LinearLayout>

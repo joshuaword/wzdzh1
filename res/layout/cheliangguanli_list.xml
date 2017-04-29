@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+      <LinearLayout
+        android:id="@+id/layout_left_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:id="@+id/navi_bar"
+            style="@style/navi_bar" >
+            
+            <FrameLayout 
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                >
+            
+            <TextView
+                android:id="@+id/btnLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="left|center"
+                android:layout_marginLeft="15.0dip"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:textColor="@color/btn_blue"
+                android:textSize="20.0sp"
+                android:visibility="gone"
+                 />
+            
+               <LinearLayout 
+                android:id="@+id/back_layout"
+                android:layout_gravity="left|center"
+                 android:layout_width="50dp"
+                android:layout_height="fill_parent"
+                >
+                
+                <ImageView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/back"
+                    />
+                
+            </LinearLayout>
+            
+            </FrameLayout>
+            
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/c333"
+                android:text="车辆管理"
+                android:textSize="22.0sp" />
+
+            <TextView
+                android:id="@+id/btnRight"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="15.0dip"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:textColor="@color/btn_blue"
+                android:textSize="20.0sp"
+                android:text="添加"
+                 />
+        </FrameLayout>
+
+        <View
+            android:id="@+id/view_top_line"
+            android:layout_width="fill_parent"
+            android:layout_height="1.0px"
+            android:background="@color/edaijia_gray" />
+
+    </LinearLayout>
+    
+    <include layout="@layout/view_edj_empty_view"
+            android:id="@+id/empty_layout"
+            android:visibility="gone"
+            />
+
+    <ListView
+        android:id="@+id/history_order_listView"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/white"
+        android:cacheColorHint="@color/Gray"
+        android:scrollbars="none" />
+
+    <RelativeLayout
+        android:id="@+id/del_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        android:background="@color/white"
+        android:gravity="center" >
+        
+        <View
+        android:id="@+id/view_top_line"
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/edaijia_gray" />
+        
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/trash_icon" />
+    </RelativeLayout>
+
+</LinearLayout>

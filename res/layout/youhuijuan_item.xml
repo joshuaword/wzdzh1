@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+   android:layout_height="100dip"
+   android:id="@+id/youhui_item_layout"
+    android:minHeight="?android:attr/listPreferredItemHeight"
+    android:background="@drawable/youhuiquan_white"
+    android:orientation="horizontal" >
+    
+
+
+<RelativeLayout
+    android:layout_width="100dp"
+    android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true" >
+
+    <TextView
+        android:id="@+id/tv_youhui_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="50"
+        android:textColor="#FF0000"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_youhui_money"
+        android:layout_alignBottom="@+id/tv_youhui_money"
+        android:layout_toLeftOf="@+id/tv_youhui_money"
+        android:gravity="center"
+        android:text="￥"
+        android:textColor="#FF0000"
+        android:textSize="15dp" />
+
+</RelativeLayout>
+
+    <LinearLayout
+        android:layout_marginLeft="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_youhui_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="title"
+            android:textColor="#000000"
+            android:textSize="20dp" />
+
+	    <TextView
+	        android:id="@+id/tv_youhui_content"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="10dp"
+	        android:layout_weight="3.5"
+	        android:text="content"
+	        android:textColor="#000000"
+	        android:textSize="18dp" />
+
+            <TextView
+                android:id="@+id/tv_youhui_lasttime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="3.5"
+                android:gravity="center"
+                android:text="lasrtime"
+                android:textColor="#C7C7C7"
+                android:textSize="16dp" />
+
+    </LinearLayout>
+
+ 
+   
+
+</LinearLayout>

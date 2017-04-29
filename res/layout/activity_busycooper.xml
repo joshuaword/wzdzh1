@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/page_back"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:id="@+id/navi_bar"
+        style="@style/navi_bar" >
+
+        <LinearLayout
+            android:id="@+id/back_layout"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="left|center" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/back" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/about_edaijia"
+            android:textColor="@color/c333"
+            android:textSize="22.0sp" />
+    </FrameLayout>
+
+    <View
+        android:id="@+id/view_top_line"
+        android:layout_width="fill_parent"
+        android:layout_height="1.0px"
+        android:background="@color/edaijia_gray" />
+
+    <FrameLayout
+        android:id="@+id/web_view_container"
+        android:layout_width="fill_parent"
+        android:layout_height="0.0dip"
+        android:layout_weight="1.0" >
+
+        <WebView
+            android:id="@+id/tq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" />
+    </FrameLayout>
+
+</LinearLayout>

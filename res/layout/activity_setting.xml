@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/page_back"
+    android:orientation="vertical" >
+
+    <include layout="@layout/layout_base_ui" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20.0dip"
+        android:orientation="vertical" >
+
+        <View
+            style="@style/gray_line_horizontal"
+            android:layout_alignParentBottom="true" />
+
+        <RelativeLayout
+            android:id="@+id/layout_feedback"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/seting_cell_height"
+            android:background="@drawable/list_item_back"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/img_icon1"
+                android:layout_width="@dimen/seting_icon_width"
+                android:layout_height="@dimen/seting_icon_width"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:src="@drawable/about_advice" />
+
+            <TextView
+                android:id="@+id/text_title1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:layout_toRightOf="@+id/img_icon1"
+                android:text="@string/feedback"
+                android:textColor="@color/list_item_text_color_333"
+                android:textSize="@dimen/seting_text_size" />
+
+            <Button
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/seting_right_arrow_margin"
+                android:background="@drawable/btn_listright_setting"
+                android:clickable="false" />
+
+            <View
+                style="@style/gray_line_horizontal"
+                android:layout_alignLeft="@+id/text_title1"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_inviteperson"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/seting_cell_height"
+            android:background="@drawable/list_item_back"
+            android:visibility="gone" >
+
+            <ImageView
+                android:id="@+id/img_icon2"
+                android:layout_width="@dimen/seting_icon_width"
+                android:layout_height="@dimen/seting_icon_width"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:src="@drawable/about_inviteperson" />
+
+            <TextView
+                android:id="@+id/text_title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:layout_toRightOf="@+id/img_icon2"
+                android:text="@string/inviteperson"
+                android:textColor="@color/list_item_text_color_333"
+                android:textSize="@dimen/seting_text_size" />
+
+            <Button
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/seting_right_arrow_margin"
+                android:background="@drawable/btn_listright_setting"
+                android:clickable="false" />
+        </RelativeLayout>
+
+        <View style="@style/gray_line_horizontal" />
+
+        <RelativeLayout
+            android:id="@+id/layout_protocol"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/seting_cell_height"
+            android:background="@drawable/list_item_back" >
+
+            <ImageView
+                android:id="@+id/img_icon3"
+                android:layout_width="@dimen/seting_icon_width"
+                android:layout_height="@dimen/seting_icon_width"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:src="@drawable/about_protocol" />
+
+            <TextView
+                android:id="@+id/text_title3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:layout_toRightOf="@+id/img_icon3"
+                android:text="@string/protocol"
+                android:textColor="@color/list_item_text_color_333"
+                android:textSize="@dimen/seting_text_size" />
+
+            <Button
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/seting_right_arrow_margin"
+                android:background="@drawable/btn_listright_setting"
+                android:clickable="false" />
+        </RelativeLayout>
+
+        <View style="@style/gray_line_horizontal" />
+
+        <View
+            style="@style/gray_line_horizontal"
+            android:layout_marginTop="@dimen/seting_cell_gap" />
+
+        <RelativeLayout
+            android:id="@+id/layout_checkversion"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/seting_cell_height"
+            android:background="@drawable/list_item_back" >
+
+            <ImageView
+                android:id="@+id/img_icon4"
+                android:layout_width="@dimen/seting_icon_width"
+                android:layout_height="@dimen/seting_icon_width"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:src="@drawable/about_checkversion" />
+
+            <TextView
+                android:id="@+id/text_title4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:layout_toRightOf="@+id/img_icon4"
+                android:text="@string/checkversion"
+                android:textColor="@color/list_item_text_color_333"
+                android:textSize="@dimen/seting_text_size" />
+
+            <Button
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/seting_right_arrow_margin"
+                android:background="@drawable/btn_listright_setting"
+                android:clickable="false" />
+
+            <TextView
+                android:id="@+id/text_ver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="-10.0dip"
+                android:layout_toLeftOf="@+id/imageView4"
+                android:text=""
+                android:textColor="@color/list_item_text_color_999"
+                android:textSize="14.0sp" />
+        </RelativeLayout>
+
+        <View style="@style/gray_line_horizontal" />
+
+        <View
+            style="@style/gray_line_horizontal"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="@dimen/seting_cell_gap" />
+
+        <RelativeLayout
+            android:id="@+id/layout_phone"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/seting_cell_height"
+            android:background="@drawable/list_item_back" >
+
+            <ImageView
+                android:id="@+id/img_icon5"
+                android:layout_width="@dimen/seting_icon_width"
+                android:layout_height="@dimen/seting_icon_width"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:src="@drawable/account_phone_icon" />
+
+            <TextView
+                android:id="@+id/text_title5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:layout_toRightOf="@+id/img_icon5"
+                android:text="@string/hotline"
+                android:textColor="@color/list_item_text_color_333"
+                android:textSize="@dimen/seting_text_size" />
+
+            <Button
+                android:id="@+id/imageView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/seting_right_arrow_margin"
+                android:background="@drawable/btn_listright_setting"
+                android:clickable="false" />
+
+            <TextView
+                android:id="@+id/text_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="-10.0dip"
+                android:layout_toLeftOf="@+id/imageView5"
+                android:text="@string/phonenumber"
+                android:textColor="@color/list_item_text_color_999"
+                android:textSize="14.0sp" />
+
+            <View
+                style="@style/gray_line_horizontal"
+                android:layout_alignLeft="@+id/text_title5"
+                android:layout_alignParentBottom="true" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_about"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/seting_cell_height"
+            android:background="@drawable/list_item_back" >
+
+            <ImageView
+                android:id="@+id/img_icon6"
+                android:layout_width="@dimen/seting_icon_width"
+                android:layout_height="@dimen/seting_icon_width"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:src="@drawable/about_icon" />
+
+            <TextView
+                android:id="@+id/text_shangwuhezuo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:layout_toRightOf="@+id/img_icon6"
+                android:text="@string/about_edaijia"
+                android:textColor="@color/list_item_text_color_333"
+                android:textSize="@dimen/seting_text_size" />
+
+            <Button
+                android:id="@+id/imageView6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/seting_right_arrow_margin"
+                android:background="@drawable/btn_listright_setting"
+                android:clickable="false" />
+        </RelativeLayout>
+
+        <View style="@style/gray_line_horizontal" />
+
+        <RelativeLayout
+            android:id="@+id/banquan_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/seting_cell_height"
+            android:background="@drawable/list_item_back" >
+
+            <ImageView
+                android:id="@+id/img_icon7"
+                android:layout_width="@dimen/seting_icon_width"
+                android:layout_height="@dimen/seting_icon_width"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:src="@drawable/about_banquan" />
+
+            <TextView
+                android:id="@+id/text_title7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10.0dip"
+                android:layout_toRightOf="@+id/img_icon7"
+                android:text="@string/banquan"
+                android:textColor="@color/list_item_text_color_333"
+                android:textSize="@dimen/seting_text_size" />
+
+         
+
+            <TextView
+                android:id="@+id/text_banquan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="15.0dip"
+                android:text="@string/phonenumber"
+                android:textColor="@color/list_item_text_color_999"
+                android:textSize="14.0sp" />
+        </RelativeLayout>
+
+        <View style="@style/gray_line_horizontal" />
+    </LinearLayout>
+
+</LinearLayout>

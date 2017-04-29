@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_back"
+    android:orientation="vertical" >
+
+    <include layout="@layout/layout_base_ui" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scrollbars="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/headimg_layout"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginTop="10dip" >
+
+                    <com.dajia.view.XCRoundRectImageView
+                        android:id="@+id/headbg_register"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/headbg_regist" />
+
+                    <TextView
+                        android:id="@+id/headtxt"
+                        style="@style/input_right_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="点击添加头像" />
+                </RelativeLayout>
+
+                <View style="@style/gray_line_horizontal" />
+
+                <LinearLayout
+                    android:id="@+id/name_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50.0dip"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        style="@style/input_left_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="13.0dip"
+                        android:text="姓名" />
+
+                    <EditText
+                        android:id="@+id/name_ed"
+                        style="@style/input_right_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="50.0dip"
+                        android:hint="别人可见的名称" />
+
+                    <Button
+                        android:layout_width="40.0dip"
+                        android:layout_height="40.0dip"
+                        android:background="@drawable/btn_listright_setting"
+                        android:clickable="false"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <View style="@style/gray_line_horizontal" />
+
+                <LinearLayout
+                    android:id="@+id/sex_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50.0dip"
+                    android:background="@drawable/list_item_back"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        android:id="@+id/xingbie_txt"
+                        style="@style/input_left_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="13.0dip"
+                        android:text="性别" />
+
+                    <TextView
+                        android:id="@+id/sex_ed"
+                        style="@style/input_right_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="50.0dip"
+                        android:hint="点击选择性别" />
+
+                    <Button
+                        android:id="@+id/btn_vip_go"
+                        android:layout_width="40.0dip"
+                        android:layout_height="40.0dip"
+                        android:background="@drawable/btn_listright_setting"
+                        android:clickable="false"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <View style="@style/gray_line_horizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/phone_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50.0dip"
+                    android:background="@drawable/list_item_back" >
+
+                    <TextView
+                        android:id="@+id/phone"
+                        style="@style/input_left_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="13.0dip"
+                        android:text="手机号码" />
+
+                    <EditText
+                        android:id="@+id/phone_ed"
+                        style="@style/input_right_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20.0dip"
+                        android:layout_toRightOf="@+id/phone"
+                        android:inputType="number"
+                        android:hint="将作为登录账号" />
+
+                    <Button
+                        android:id="@+id/get_valicode"
+                        style="@style/btn_white_blue_text"
+                        android:layout_width="120.0dip"
+                        android:layout_height="40.0dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10.0dip"
+                        android:layout_marginRight="10dip"
+                        android:background="@drawable/czkuang"
+                        android:enabled="false"
+                        android:text="@string/get_verifycode" />
+                </RelativeLayout>
+
+                <View style="@style/gray_line_horizontal" />
+
+                <LinearLayout
+                    android:id="@+id/vali_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50.0dip"
+                    android:background="@drawable/list_item_back"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        style="@style/input_left_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="13.0dip"
+                        android:text="验证码" />
+
+                    <EditText
+                        android:id="@+id/vali_ed"
+                        style="@style/input_right_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="35dip"
+                        android:inputType="number"
+                        android:hint="手机验证码" />
+
+                    <Button
+                        android:id="@+id/btn_vali_go"
+                        android:layout_width="40.0dip"
+                        android:layout_height="40.0dip"
+                        android:background="@drawable/btn_listright_setting"
+                        android:clickable="false"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <View style="@style/gray_line_horizontal" />
+
+                <LinearLayout
+                    android:id="@+id/password_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50.0dip"
+                    android:background="@drawable/list_item_back"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        style="@style/input_left_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="13.0dip"
+                        android:text="密码" />
+
+                    <EditText
+                        android:id="@+id/password_ed"
+                        style="@style/input_right_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="50dip"
+                        android:hint="6位及以上数字或字母" />
+
+                    <Button
+                        android:id="@+id/btn_pass_go"
+                        android:layout_width="40.0dip"
+                        android:layout_height="40.0dip"
+                        android:background="@drawable/btn_listright_setting"
+                        android:clickable="false"
+                        android:visibility="gone" />
+                </LinearLayout>
+
+                <View style="@style/gray_line_horizontal" />
+
+                <Button
+                    android:id="@+id/btn_register"
+                    style="@style/btn_blue"
+                    android:layout_width="fill_parent"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:layout_marginTop="15.0dip"
+                    android:gravity="center"
+                    android:text="@string/check_and_register" />
+
+                <CheckBox
+                    android:id="@+id/licence_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15.0dip"
+                    android:gravity="center_vertical" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

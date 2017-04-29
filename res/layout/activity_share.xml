@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:background="@drawable/light_blue_background" >
+    
+      <LinearLayout
+        android:id="@+id/layout_left_view"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <FrameLayout
+            android:id="@+id/navi_bar"
+            style="@style/navi_bar" >
+            
+            <LinearLayout 
+                android:id="@+id/back_layout"
+                android:layout_gravity="left|center"
+                 android:layout_width="50dp"
+                android:layout_height="fill_parent"
+                >
+                
+                <ImageView 
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/back"
+                    />
+                
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="@color/c333"
+                android:text="订单详情"
+                android:textSize="22.0sp" />
+
+            <TextView
+                android:id="@+id/btnRight"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="right|center"
+                android:layout_marginRight="15.0dip"
+                android:background="@color/transparent"
+                android:gravity="center_vertical"
+                android:textColor="@color/btn_blue"
+                android:textSize="20.0sp"
+                 />
+        </FrameLayout>
+
+        <View
+            android:id="@+id/view_top_line"
+            android:layout_width="fill_parent"
+            android:layout_height="1.0px"
+            android:background="@color/edaijia_gray" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginTop="15.0dip"
+            android:gravity="center" >
+
+            <View
+                android:id="@+id/view_topbutton_back"
+                android:layout_width="fill_parent"
+                android:layout_height="35.0dip"
+                android:layout_marginBottom="10.0dip"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="10.0dip"
+                android:layout_marginTop="10.0dip"
+                android:background="@drawable/share_topbutton_back_app" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10.0dip"
+                android:layout_marginLeft="10.0dip"
+                android:layout_marginRight="10.0dip"
+                android:layout_marginTop="10.0dip"
+                android:gravity="center_vertical" >
+
+                <RelativeLayout
+                    android:id="@+id/layout_download"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true" >
+
+                        <ImageView
+                            android:id="@+id/imageview_download"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20.0dip"
+                            android:layout_gravity="center_vertical"
+                            android:scaleType="centerInside"
+                             />
+
+                        <TextView
+                            android:id="@+id/btn_download"
+                            android:layout_width="wrap_content"
+                            android:layout_height="35.0dip"
+                            android:gravity="center"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5.0dip"
+                            android:background="@color/transparent"
+                            android:text="@string/share_download"
+                            android:textColor="@color/white" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout_public_account"
+                    android:layout_width="0.0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0" >
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true" >
+
+                        <ImageView
+                            android:id="@+id/imageview_public_account"
+                            android:layout_width="wrap_content"
+                            android:layout_height="20.0dip"
+                            android:layout_gravity="center_vertical"
+                            android:scaleType="centerInside"
+                             />
+
+                        <TextView
+                            android:id="@+id/btn_public_account"
+                            android:layout_width="wrap_content"
+                            android:layout_height="35.0dip"
+                            android:gravity="center"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="5.0dip"
+                            android:background="@color/transparent"
+                            android:text="@string/share_public_account"
+                            android:textColor="@color/segment_button_color" />
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/img_qrcode"
+            android:layout_width="250.0dip"
+            android:layout_height="250.0dip"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30.0dip"
+            android:layout_marginTop="65.0dip"
+            />
+        
+    </FrameLayout>
+    
+    <TextView 
+        android:id="@+id/fenxiang"
+             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/segment_button_color"
+            android:layout_gravity="center_horizontal"
+            />
+
+
+</LinearLayout>

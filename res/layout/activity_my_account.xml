@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    
+    <include layout="@layout/layout_base_ui" /> 
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="55.0dip"
+        android:background="@color/white"
+        android:gravity="center" >
+
+        <LinearLayout
+            android:id="@+id/ll_item_container"
+            android:layout_width="fill_parent"
+            android:layout_height="35.0dip"
+            android:layout_margin="10.0dip"
+            android:background="@drawable/account_item_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:id="@+id/ye_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@drawable/account_item_left_focused"
+                android:gravity="center" >
+
+                <ImageView
+                    android:id="@+id/ye_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/myaccout_trade_title_hl" />
+
+                <TextView
+                    android:id="@+id/ye_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 余额"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/yhq_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:background="@drawable/account_item_middle_normal"
+                android:visibility="gone"
+                android:gravity="center" >
+
+                <ImageView
+                    android:id="@+id/yhq_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/coupon_title_icon" />
+
+                <TextView
+                    android:id="@+id/yhq_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 优惠券"
+                    android:textColor="@color/segment_button_color" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/e_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                 android:background="@drawable/account_item_right_normal"
+                android:gravity="center" >
+
+                <ImageView
+                    android:id="@+id/e_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/e_normal" />
+
+                <TextView
+                    android:id="@+id/e_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" 积分"
+                    android:textColor="@color/segment_button_color" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="1.0" >
+        
+        <LinearLayout 
+            android:id="@+id/ye_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:background="@color/segment_button_color"
+            >
+            
+            <TextView 
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="当前余额"
+                android:textColor="@color/white"
+                android:textSize="10dp"
+                />
+            
+            <TextView 
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="￥  0"
+                android:textColor="@color/white"
+                android:textSize="18dp"
+                />
+            
+        </LinearLayout>
+        
+        <include layout="@layout/view_edj_empty_view"
+            android:id="@+id/empty_layout"
+            />
+
+        <include layout="@layout/activity_ecoins"
+            android:visibility="gone"
+            android:id="@+id/ecoin_layout"
+            />
+       
+    </LinearLayout>
+
+</LinearLayout>

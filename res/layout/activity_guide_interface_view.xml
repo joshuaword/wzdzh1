@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/light_blue_background"
+    android:orientation="vertical" >
+
+    <FrameLayout
+        android:id="@+id/viewcontenter"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+    
+       <android.support.v4.view.ViewPager
+        android:id="@+id/id_viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="60.0dip"
+        android:layout_gravity="bottom" >
+
+        <LinearLayout
+            android:id="@+id/guide_interface_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="25.0dip"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="10.0dip"
+                android:layout_height="10.0dip"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10.0dip"
+                android:background="@drawable/dot"
+                android:clickable="true" />
+
+            <ImageView
+                android:layout_width="10.0dip"
+                android:layout_height="10.0dip"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10.0dip"
+                android:background="@drawable/dot"
+                android:clickable="true" />
+
+            <ImageView
+                android:layout_width="10.0dip"
+                android:layout_height="10.0dip"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10.0dip"
+                android:background="@drawable/dot"
+                android:clickable="true" />
+
+            <ImageView
+                android:layout_width="10.0dip"
+                android:layout_height="10.0dip"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10.0dip"
+                android:background="@drawable/dot"
+                android:clickable="true" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_skip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:background="@color/transparent"
+            android:padding="15.0dip"
+            android:text="@string/guid_skip"
+            android:textColor="#ff9ab4c5"
+            android:textSize="15.0sp" />
+    </RelativeLayout>
+
+</FrameLayout>

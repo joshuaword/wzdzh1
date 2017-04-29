@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <include layout="@layout/layout_base_ui" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10.0dip"
+        android:text="@string/current_address" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/current_address"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:singleLine="true"
+            android:layout_weight="1"
+            android:background="@drawable/button_white" />
+
+        <Button
+            android:id="@+id/select"
+            style="@style/btn_blue"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:text="@string/select" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/current_address_tip"
+        android:textSize="12sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10.0dip"
+        android:text="@string/record" />
+
+    <Button
+        android:id="@+id/start_record"
+        style="@style/btn_blue"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/start_record" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/record_tip"
+        android:textSize="12sp" />
+
+    <LinearLayout
+        android:id="@+id/record"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30.0dip"
+        android:background="@drawable/bg_pop_pressed"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/record_time"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/start_record"
+            android:textSize="25sp" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/page_back"
+    android:orientation="vertical" >
+
+    <include layout="@layout/layout_base_ui" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:padding="10.0dip" >
+
+        <EditText
+            android:id="@+id/login_phone"
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="10.0dip"
+            android:background="@drawable/button_white"
+            android:hint="@string/input_phone"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/edt_password"
+            android:layout_width="fill_parent"
+            android:layout_height="40.0dip"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10.0dip"
+            android:layout_marginRight="10.0dip"
+            android:layout_marginTop="10.0dip"
+            android:background="@drawable/button_white"
+            android:hint="@string/input_password"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/dismiss_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10.0dip"
+            android:layout_marginTop="10.0dip"
+            android:textColor="#2E97D6"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="忘记密码" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:padding="10.0dip" >
+
+            <Button
+                android:id="@+id/btn_login"
+                style="@style/btn_blue"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="15.0dip"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:text="@string/check_and_login" />
+
+            <Button
+                android:id="@+id/btn_regist_go"
+                style="@style/btn_blue"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginTop="15.0dip"
+                android:layout_weight="1.0"
+                android:gravity="center"
+                android:text="@string/check_and_register" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
