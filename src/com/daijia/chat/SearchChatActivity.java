@@ -15,14 +15,9 @@ import com.dajia.VehicleApp;
 import com.dajia.Bean.ChatBean;
 import com.dajia.Bean.ChatListBean;
 import com.dajia.Bean.DictationResult;
-import com.dajia.Bean.UpDateInfo;
 import com.dajia.activity.ChatLoginActivity;
-import com.dajia.activity.CheckHtmlActivity;
-import com.dajia.activity.HomepageActivity;
 import com.dajia.activity.SearchResultListActivity;
 import com.dajia.fragment.MenuFragment;
-import com.dajia.util.Assign_UpDateDialog;
-import com.dajia.util.ConfirmDialogListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.iflytek.cloud.ErrorCode;
@@ -37,13 +32,11 @@ import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
-import com.twzs.core.download.Downloadhelper;
 import com.zms.wechatrecorder.MediaManager;
 import com.zms.wechatrecorder.view.AudioRecordButton;
 import com.zms.wechatrecorder.view.AudioRecordButton.AudioRecordFinishListener;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -73,7 +66,7 @@ import net.tsz.afinal.FinalHttp;
 import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
 
-public class ChatActivity extends SlidingFragmentActivity implements OnClickListener {
+public class SearchChatActivity extends SlidingFragmentActivity implements OnClickListener {
 	/** Called when the activity is first created. */
 	private ChatBean chatbean;
 	private Button mBtnSend;
@@ -86,7 +79,6 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 	private ChatMsgViewAdapter mAdapter;
 	private List<ChatListBean> mDataArrays = new ArrayList<ChatListBean>();
 	private boolean isShosrt = false;
-	public static final String TEMPPATH = "temp";
 	private LinearLayout voice_rcd_hint_loading, voice_rcd_hint_rcding, voice_rcd_hint_tooshort;
 	private ImageView img1, sc_img1;
 	private SoundMeter mSensor;
@@ -98,26 +90,14 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 	private Handler mHandler = new Handler();
 	private String voiceName, leixing;
 	private long startVoiceT, endVoiceT;
-	private SharedPreferences settings;
-	String mp3time;
+	String mp3time,chatid;
 	private Fragment menuFragment;
+	TextView title;
 	File file;
     private String dictationResultStr = "[";
 		private HashMap<String, String> mIatResults = new LinkedHashMap<String, String>();
-	Handler handler = new Handler();
-	Runnable runnable = new Runnable() {
+		String keyword;
 
-		@Override
-		public void run() {
-			try {
-				handler.postDelayed(this, 10000);
-				getMessage();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-	};
 		private SpeechRecognizer mIat;
 		private String mEngineType = SpeechConstant.TYPE_CLOUD;
 		
@@ -134,123 +114,20 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 			}
 		};
 		
-		/***
-		 * @return
-		 */
-		public static final String getAppSDPath() {
-			File file = new File(Environment.getExternalStorageDirectory(), "apk");
-			if (!file.exists()) {
-				file.mkdirs();
-			}
-			return file.getAbsolutePath();
-		}
-
-		public static final String getAppTmpSDPath() {
-			File file = new File(getAppSDPath(), TEMPPATH);
-			if (!file.exists()) {
-				file.mkdirs();
-			}
-			return file.getAbsolutePath();
-		}
-
-		public static String getFileNameFromUrl(String s) {
-			int i = s.lastIndexOf("\\");
-			if (i < 0 || i >= s.length() - 1) {
-				i = s.lastIndexOf("/");
-				if (i < 0 || i >= s.length() - 1)
-					return s;
-			}
-			return s.substring(i + 1);
-		}
-		/**
-		 * 显示升级对话框
-		 */
-		public void showUpdate_Dialog(String newVersion, final String downUrl,
-				final String isAPK) {
-			String newverStr = "有新版本更新啦！";
-			final String version_downloading = this.getResources().getString(
-					R.string.version_downloading, newVersion);
-			final String installapkfile = getAppTmpSDPath() + "/"
-					+ getFileNameFromUrl(downUrl);
-			Assign_UpDateDialog.showUpdateDialog(this, newverStr, "增加新功能，优化性能！",
-					"立即尝鲜", "残忍拒绝", new ConfirmDialogListener() {
-						@Override
-						public void onPositive(DialogInterface dialog) {
-							// TODO Auto-generated method stub
-							if (isAPK.equals("yes")) {
-								Downloadhelper dm = new Downloadhelper(
-										ChatActivity.this, true);
-								dm.downLoadFile(version_downloading, downUrl,
-										installapkfile);
-								dialog.cancel();
-							} else {
-								if (downUrl != null && !downUrl.equals("")) {
-
-									Intent intent = new Intent(
-											ChatActivity.this,
-											CheckHtmlActivity.class);
-									intent.putExtra("baseurl", downUrl);
-									startActivity(intent);
-								}
-							}
-
-						}
-
-						@Override
-						public void onNegative(DialogInterface dialog) {
-							dialog.cancel();
-						}
-					});
-
-		}
-		
-		private void checkUPDATE() {
-
-			String baseurl = settings.getString("baseurl", "http://wzd.k76.net");
-			String userid = settings.getString("userid", "");
-			FinalHttp fp = new FinalHttp();
-			AjaxParams params = new AjaxParams();
-			params.put("userid", userid);
-			params.put("act", "postok");
-			params.put("appname", "android");
-			fp.post(baseurl + "/api/shengjiclient.php", params,
-					new AjaxCallBack<Object>() {
-						@Override
-						public void onSuccess(Object t) {
-							Gson gson = new Gson();
-							UpDateInfo upDateBean = gson.fromJson(t.toString(),
-									UpDateInfo.class);
-							if (upDateBean != null) {
-								if (!upDateBean.getVer().equals("7.4.20170419")) {
-									showUpdate_Dialog(upDateBean.getVer(),
-											upDateBean.getUrl(),
-											upDateBean.getApk());
-								}
-							}
-						}
-
-						@Override
-						public void onFailure(Throwable t, int errorNo,
-								String strMsg) {
-							super.onFailure(t, errorNo, strMsg);
-							Log.e("aaaa", t.toString() + "-------" + errorNo
-									+ "-------" + strMsg);
-						}
-					});
-
-		}
-		
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// 去除title
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.chat);
+		setContentView(R.layout.chat_search);
+		chatid = getIntent().getStringExtra("chatid");
+		keyword = getIntent().getStringExtra("keyword");
+		title = (TextView)findViewById(R.id.title);
+		title.setText("搜索"+keyword);
 		// 去掉Activity上面的状态栏
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		initView();
 		initData();
-		handler.postDelayed(runnable, 10000); // 每隔1s执行// 初始化SlideMenus
 		initMenu();
 		Button leftBtn = (Button) findViewById(R.id.homebtnLeft);
 		leftBtn.setOnClickListener(new OnClickListener() {
@@ -258,14 +135,11 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				getSlidingMenu().showMenu();
+				finish();
 			}
 		});
-		SpeechUtility.createUtility(ChatActivity.this, SpeechConstant.APPID +"55d3f58b");   
-	    mIat = SpeechRecognizer.createRecognizer(ChatActivity.this, mInitListener);
-	    
-	    settings = getSharedPreferences("setting", 0);
-	    checkUPDATE();
+		SpeechUtility.createUtility(SearchChatActivity.this, SpeechConstant.APPID +"55d3f58b");   
+	    mIat = SpeechRecognizer.createRecognizer(SearchChatActivity.this, mInitListener);
 	}
 	// 左侧slidingMenu
 		private void initMenu() {
@@ -371,12 +245,12 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 							public void onClick(View arg0) {
 								// TODO Auto-generated method stub
 								if( null == mIat ){
-									Toast.makeText(ChatActivity.this, "创建对象失败，请确认 libmsc.so 放置正确，且有调用 createUtility 进行初始化", Toast.LENGTH_SHORT).show();
+									Toast.makeText(SearchChatActivity.this, "创建对象失败，请确认 libmsc.so 放置正确，且有调用 createUtility 进行初始化", Toast.LENGTH_SHORT).show();
 									return;
 								}
 							    dictationResultStr = "[";
 					            RecognizerDialog iatDialog = new RecognizerDialog(
-					                    ChatActivity.this, null);
+					                    SearchChatActivity.this, null);
 					            mIat.setParameter(SpeechConstant.DOMAIN, "iat"); // domain:域名
 					            mIat.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
 					            mIat.setParameter(SpeechConstant.ACCENT, "mandarin"); // mandarin:普通话
@@ -444,7 +318,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		final SharedPreferences settings = getSharedPreferences("setting", 0);
 		String userid = settings.getString("userid", "");
 		if (userid.equals("") || userid == null) {
-			Intent intent = new Intent(ChatActivity.this, ChatLoginActivity.class);
+			Intent intent = new Intent(SearchChatActivity.this, ChatLoginActivity.class);
 			startActivity(intent);
 			finish();
 			return;
@@ -460,8 +334,9 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		FinalHttp fp = new FinalHttp();
 		AjaxParams params = new AjaxParams();
 		params.put("userid", userid);
+		params.put("chatid", chatid);
 		params.put("act", "postok");
-		fp.post(baseurl + "/api/chatclient.php", params, new AjaxCallBack<Object>() {
+		fp.post(baseurl + "/api/chatsearch.php", params, new AjaxCallBack<Object>() {
 			@Override
 			public void onSuccess(Object t) {
 				Gson gson = new Gson();
@@ -470,9 +345,10 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 				Log.d("chatbean", chatbean + "");
 				if (chatbean != null) {
 					if (chatbean.getChatlist() != null && chatbean.getChatlist().size() > 0) {
-						mAdapter = new ChatMsgViewAdapter(ChatActivity.this, chatbean.getChatlist());
+						mAdapter = new ChatMsgViewAdapter(SearchChatActivity.this, chatbean.getChatlist());
 						mListView.setAdapter(mAdapter);
 						mAdapter.notifyDataSetChanged();
+						
 					}
 				}
 			}
@@ -534,7 +410,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 			send();
 			break;
 		case R.id.currentcity_txt:
-			Intent intent = new Intent(ChatActivity.this, SearchActivity.class);
+			Intent intent = new Intent(SearchChatActivity.this, SearchActivity.class);
 			startActivity(intent);
 			break;
 		}

@@ -1,0 +1,22 @@
+<LinearLayout
+    android:id="@+id/clear_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:layout_marginBottom="12dip"
+        android:layout_marginTop="10dip"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:gravity="center"
+            android:text="清除历史记录"
+            android:textColor="@color/black" />
+    </LinearLayout>
+</LinearLayout>
