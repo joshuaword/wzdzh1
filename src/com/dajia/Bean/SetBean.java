@@ -32,8 +32,49 @@ public class SetBean {
 	private String yuyuebegintime;
 	private String yuyueendtime;
 	private String  voice;
+	private String clientusername,androidstore,wentifankui,gerenzhongxin,gongnengjieshao;
 	
 	
+	public String getAndroidstore() {
+		return androidstore;
+	}
+
+	public void setAndroidstore(String androidstore) {
+		this.androidstore = androidstore;
+	}
+
+	public String getWentifankui() {
+		return wentifankui;
+	}
+
+	public void setWentifankui(String wentifankui) {
+		this.wentifankui = wentifankui;
+	}
+
+	public String getGerenzhongxin() {
+		return gerenzhongxin;
+	}
+
+	public void setGerenzhongxin(String gerenzhongxin) {
+		this.gerenzhongxin = gerenzhongxin;
+	}
+
+	public String getGongnengjieshao() {
+		return gongnengjieshao;
+	}
+
+	public void setGongnengjieshao(String gongnengjieshao) {
+		this.gongnengjieshao = gongnengjieshao;
+	}
+
+	public String getClientusername() {
+		return clientusername;
+	}
+
+	public void setClientusername(String clientusername) {
+		this.clientusername = clientusername;
+	}
+
 	public String getVoice() {
 		return voice;
 	}

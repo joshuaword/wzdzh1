@@ -318,7 +318,6 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 //			mIat.setParameter(SpeechConstant.ASR_AUDIO_PATH, Environment.getExternalStorageDirectory()+"/msc/iat.wav");
 //		}
 	public void initView() {
-	 Log.d("***Voice****", VehicleApp.getInstance().getSetBean().getVoice())   ;
 		mListView = (ListView) findViewById(R.id.listview);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 

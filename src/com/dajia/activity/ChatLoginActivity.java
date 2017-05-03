@@ -1,6 +1,7 @@
 package com.dajia.activity;
 
 import com.daijia.chat.ChatActivity;
+import com.dajia.VehicleApp;
 import com.dajia.Bean.UserBean;
 import com.google.gson.Gson;
 
@@ -31,7 +32,7 @@ public class ChatLoginActivity extends BaseActivity {
 	private EditText password_ed;
 	private SharedPreferences sp;
 	private TextView dismisspw;
-
+	private String isEmail;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -40,6 +41,7 @@ public class ChatLoginActivity extends BaseActivity {
 
 		title = (TextView) findViewById(R.id.title);
 		title.setText(getString(R.string.check_and_login));
+		isEmail = VehicleApp.getInstance().getSetBean().getClientusername();
 		// 返回
 		backLayout = (LinearLayout) findViewById(R.id.back_layout);
 		backLayout.setOnClickListener(new OnClickListener() {
@@ -54,8 +56,10 @@ public class ChatLoginActivity extends BaseActivity {
 		String phone = sp.getString(SP_KEY_PHONE, "");
 
 		phone_ed = (EditText) findViewById(R.id.login_phone);
+		if(isEmail.equals("email")){
+			phone_ed.setHint("请输入邮箱");
+		}
 		phone_ed.setText(phone);
-
 		password_ed = (EditText) findViewById(R.id.edt_password);
 		dismisspw = (TextView) findViewById(R.id.dismiss_password);
 		dismisspw.setOnClickListener(new OnClickListener() {

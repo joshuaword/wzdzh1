@@ -128,7 +128,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="13.0dip"
-                        android:text="手机号码" />
+                        android:text="邮箱号码" />
 
                     <EditText
                         android:id="@+id/phone_ed"
@@ -136,13 +136,47 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:gravity="center"
                         android:layout_marginLeft="20.0dip"
                         android:layout_toRightOf="@+id/phone"
-                        android:inputType="number"
-                        android:hint="将作为登录账号" />
+                        android:hint="将作为登录账号"
+                        android:inputType="number" />
+
+                  
+                </RelativeLayout>
+
+                <View style="@style/gray_line_horizontal" />
+
+                <RelativeLayout
+                    android:id="@+id/phone_layout2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50.0dip"
+                    android:visibility="gone"
+                    android:background="@drawable/list_item_back" >
+
+                    <TextView
+                        android:id="@+id/phone2"
+                        style="@style/input_left_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="13.0dip"
+                        android:text="手机号码" />
+
+                    <EditText
+                        android:id="@+id/phone_ed2"
+                        style="@style/input_right_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15.0dip"
+                        android:layout_toRightOf="@+id/phone2"
+                        android:hint="将作为登录账号"
+                        android:inputType="number" />
 
                     <Button
-                        android:id="@+id/get_valicode"
+                        android:id="@+id/get_valicode2"
                         style="@style/btn_white_blue_text"
                         android:layout_width="120.0dip"
                         android:layout_height="40.0dip"
@@ -152,6 +186,7 @@
                         android:layout_marginRight="10dip"
                         android:background="@drawable/czkuang"
                         android:enabled="false"
+                        android:visibility="gone"
                         android:text="@string/get_verifycode" />
                 </RelativeLayout>
 
@@ -177,9 +212,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="fill_parent"
                         android:layout_marginLeft="35dip"
-                        android:inputType="number"
-                        android:hint="手机验证码" />
+                        android:hint="手机验证码"
+                        android:inputType="number" />
 
+                    <Button
+                        android:id="@+id/get_valicode"
+                        style="@style/btn_white_blue_text"
+                        android:layout_width="120.0dip"
+                        android:layout_height="40.0dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10.0dip"
+                        android:layout_marginRight="10dip"
+                        android:background="@drawable/czkuang"
+                        android:enabled="false"
+                        android:visibility="visible"
+                        android:text="@string/get_verifycode" />
                     <Button
                         android:id="@+id/btn_vali_go"
                         android:layout_width="40.0dip"

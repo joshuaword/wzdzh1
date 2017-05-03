@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 
+import com.dajia.VehicleApp;
 import com.dajia.Bean.MessageBean;
 import com.dajia.util.FileUtils;
 import com.dajia.view.Bimp;
@@ -23,6 +24,7 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -66,7 +68,7 @@ public class RegiterActivity extends BaseActivity {
 	public static final String SP_KEY_PASSWORD = "sp_password";
 	public static final String SP_KEY_ISCHECKED = "sp_is_checked";
 	EditText phoneEdit, yanzhenmaEdit, nameEdit, passwordEdit;
-	TextView sexEdit;
+	TextView sexEdit,phone_ed2;
 	private Button regist_go;
 	private SharedPreferences settings;
 	private String baseurl;
@@ -88,8 +90,10 @@ public class RegiterActivity extends BaseActivity {
 	private static final int CUT_PHOTO_REQUEST_CODE = 2;
 	private Uri photoUri;
 	private float roatdp;
-	private TextView headtxt;
+	private TextView headtxt,phone;
 	Bitmap bitmap;
+	private String isEmail;
+	private View phone_layout2;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -97,9 +101,13 @@ public class RegiterActivity extends BaseActivity {
 //		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
 		setContentView(R.layout.activity_register);
 		mTime = new TimeCount(MILLIS_IN_FUTURE, COUNT_DOWN_INTERVAL);
-
+		isEmail = VehicleApp.getInstance().getSetBean().getClientusername();
 		title = (TextView) findViewById(R.id.title);
 		xingbie_txt= (TextView) findViewById(R.id.xingbie_txt);
+		phone_layout2 = findViewById(R.id.phone_layout2);
+		phone = (TextView)findViewById(R.id.phone);
+		phone_ed2 =(EditText)findViewById(R.id.phone_ed2);
+		
 		xingbie_txt.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -173,32 +181,64 @@ public class RegiterActivity extends BaseActivity {
 		mLicenceCheckBox.setChecked(true);
 
 		phoneEdit = (EditText) findViewById(R.id.phone_ed);
-		phoneEdit.addTextChangedListener(new TextWatcher() {
+		
+		if(isEmail.equals("email")){
+			phone_layout2.setVisibility(View.VISIBLE);
+			phone.setText("邮箱号码");
+			phoneEdit.setInputType(InputType.TYPE_CLASS_TEXT);
+			phoneEdit.addTextChangedListener(new TextWatcher() {
+				@Override
+				public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+						int arg3) {
+					// ^1[3|4|5|8][0-9]\\d{8}$
 
-			@Override
-			public void onTextChanged(CharSequence arg0, int arg1, int arg2,
-					int arg3) {
-				// ^1[3|4|5|8][0-9]\\d{8}$
-
-				if (checkString(String.valueOf(arg0),
-						"^1[3|4|5|7|8][0-9]\\d{8}$")) {
-					codeBtn.setEnabled(true);
+						codeBtn.setEnabled(true);
 				}
-			}
 
-			@Override
-			public void beforeTextChanged(CharSequence arg0, int arg1,
-					int arg2, int arg3) {
-				// TODO Auto-generated method stub
+				@Override
+				public void beforeTextChanged(CharSequence arg0, int arg1,
+						int arg2, int arg3) {
+					// TODO Auto-generated method stub
 
-			}
+				}
 
-			@Override
-			public void afterTextChanged(Editable arg0) {
-				// TODO Auto-generated method stub
+				@Override
+				public void afterTextChanged(Editable arg0) {
+					// TODO Auto-generated method stub
 
-			}
-		});
+				}
+			});
+		}else{
+			phone_layout2.setVisibility(View.GONE);
+			phoneEdit.setInputType(InputType.TYPE_CLASS_NUMBER);
+			phone.setText("手机号码");
+			phoneEdit.addTextChangedListener(new TextWatcher() {
+
+				@Override
+				public void onTextChanged(CharSequence arg0, int arg1, int arg2,
+						int arg3) {
+					// ^1[3|4|5|8][0-9]\\d{8}$
+
+					if (checkString(String.valueOf(arg0),
+							"^1[3|4|5|7|8][0-9]\\d{8}$")) {
+						codeBtn.setEnabled(true);
+					}
+				}
+
+				@Override
+				public void beforeTextChanged(CharSequence arg0, int arg1,
+						int arg2, int arg3) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void afterTextChanged(Editable arg0) {
+					// TODO Auto-generated method stub
+
+				}
+			});
+		}
 		codeBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -594,7 +634,13 @@ public class RegiterActivity extends BaseActivity {
 			e.printStackTrace();
 		}
 		params.put("nickname", nameEdit.getText().toString());
-		params.put("telphone", phoneEdit.getText().toString());
+		if(isEmail.equals("email")){
+			params.put("telphone", phone_ed2.getText().toString());
+			params.put("email", phoneEdit.getText().toString());
+		}else{
+			params.put("telphone", phoneEdit.getText().toString());
+		}
+	
 		params.put("sex", sexEdit.getText().toString());
 		params.put("password", passwordEdit.getText().toString());
 		params.put("act", "postok");

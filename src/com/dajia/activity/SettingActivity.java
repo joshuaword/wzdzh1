@@ -22,6 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.dajia.VehicleApp;
 import com.dajia.Bean.UpDateInfo;
 import com.dajia.util.Assign_UpDateDialog;
 import com.dajia.util.ConfirmDialogListener;
@@ -40,8 +41,8 @@ public class SettingActivity extends BaseActivity {
 	private UpDateInfo upDateBean;
 	RelativeLayout aboutLayout;
 	public static final String TEMPPATH = "temp";
-	private RelativeLayout protocol;
-
+	private RelativeLayout protocol,protocol1,protocol2,protocol3,protocol4;
+	String userid;
 	String phoneString;
 
 	RelativeLayout phoneLayout;
@@ -78,7 +79,7 @@ public class SettingActivity extends BaseActivity {
 		appbanquan = sp.getString("appbanquan", "");
 		text_appbanqan.setText(appbanquan);
 		
-		String userid = sp.getString("userid", "");
+		userid = sp.getString("userid", "");
 		phone.setText(phoneString);
 		text_shangwuhezuo.setText("商务合作(" + userid + ")");
 
@@ -142,6 +143,10 @@ public class SettingActivity extends BaseActivity {
 		 */
 
 		protocol = (RelativeLayout) findViewById(R.id.layout_protocol);
+		protocol1 = (RelativeLayout) findViewById(R.id.layout_protocol1);
+		protocol2 = (RelativeLayout) findViewById(R.id.layout_protocol2);
+		protocol3 = (RelativeLayout) findViewById(R.id.layout_protocol3);
+		protocol4 = (RelativeLayout) findViewById(R.id.layout_protocol4);
 		protocol.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -152,7 +157,49 @@ public class SettingActivity extends BaseActivity {
 				startActivity(intent);
 			}
 		});
+		protocol1.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(SettingActivity.this,
+						WebViewActivity.class);
+				intent.putExtra("url", VehicleApp.getInstance().getSetBean().getAndroidstore()+"?n="+userid);
+				intent.putExtra("title", "评分");
+				startActivity(intent);
+			}
+		});
+		protocol2.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(SettingActivity.this,
+						WebViewActivity.class);
+				intent.putExtra("url", VehicleApp.getInstance().getSetBean().getWentifankui()+"?n="+userid);
+				intent.putExtra("title", "问题反馈");
+				startActivity(intent);
+			}
+		});
+		protocol3.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(SettingActivity.this,
+						WebViewActivity.class);
+				intent.putExtra("url", VehicleApp.getInstance().getSetBean().getGerenzhongxin()+"?n="+userid);
+				intent.putExtra("title", "个人中心");
+				startActivity(intent);
+			}
+		});
+		protocol4.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				Intent intent = new Intent(SettingActivity.this,
+						WebViewActivity.class);
+				intent.putExtra("url", VehicleApp.getInstance().getSetBean().getGongnengjieshao()+"?n="+userid);
+				intent.putExtra("title", "新版本说明");
+				startActivity(intent);
+			}
+		});
 	}
 
 	/*
