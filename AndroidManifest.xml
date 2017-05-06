@@ -102,7 +102,7 @@
         </activity>
        
          <activity
-            android:name="com.dajia.activity.LoginActivity"
+            android:name="com.dajia.activity.OldLoginActivity"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -137,6 +137,13 @@
                 <data android:scheme="wx0f044d8ae00fb4df" />
             </intent-filter>
         </activity>
+         <!-- 微信回调activity -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:screenOrientation="portrait"
@@ -422,7 +429,11 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
-
+   <!-- 友盟AppKey， 需要替换成你自己的 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="590aeceabbea8344330010bd" >
+        </meta-data>
         <!-- push富媒体结束 -->
 
 

@@ -4,6 +4,7 @@ package com.dajia.constant;
  * @author chensf5
  */
 public class Constant {
+	public static final String DESCRIPTOR = "com.umeng.share";
 	public static final String WEIXINID = "wx10a08b885fc21e10";
 	public static final String QQID = "1102856983";
 	public static final String QQKEY = "lMBdldPR4sw1hseg";

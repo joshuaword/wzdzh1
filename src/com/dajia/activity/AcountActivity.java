@@ -101,7 +101,7 @@ public class AcountActivity extends BaseActivity {
 		
 				if (userBean != null) {
 					Intent intent = new Intent(AcountActivity.this,
-							LoginActivity.class);
+							ChatLoginActivity.class);
 					startActivity(intent);
 				}
 			}
@@ -204,7 +204,7 @@ public class AcountActivity extends BaseActivity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(AcountActivity.this,
-						LoginActivity.class);
+						ChatLoginActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -229,7 +229,6 @@ public class AcountActivity extends BaseActivity {
 		Log.e("MUSIC", "LOGIN AcountActivity 1111--");
 		final SharedPreferences settings = getSharedPreferences("setting", 0);
 		String baseurl = settings.getString("baseurl", "http://wzd.k76.net");
-
 		FinalHttp fp = new FinalHttp();
 		AjaxParams params = new AjaxParams();
 		params.put("lmdengluhao", dengluhao);

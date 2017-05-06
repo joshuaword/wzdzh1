@@ -3,11 +3,25 @@ package com.dajia.fragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.k76.wzd.R;
-import net.k76.wzd.wxapi.WXPayEntryActivity;
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
+import com.dajia.Bean.MessageBean;
+import com.dajia.Bean.MessageLisyBean;
+import com.dajia.Bean.UserBean;
+import com.dajia.activity.AcountActivity;
+import com.dajia.activity.ChatLoginActivity;
+import com.dajia.activity.ChaxunWGActivity;
+import com.dajia.activity.GuangWangHtmlActivity;
+import com.dajia.activity.HistoryOrderActivity;
+import com.dajia.activity.JifenHtmlActivity;
+import com.dajia.activity.MessageListActivity;
+import com.dajia.activity.MipcaActivityCapture;
+import com.dajia.activity.PriceActivity;
+import com.dajia.activity.SettingActivity;
+import com.dajia.activity.ShareActivity;
+import com.dajia.activity.YouhuiAcitivity;
+import com.dajia.view.RoundImageView;
+import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,25 +40,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.dajia.Bean.MessageBean;
-import com.dajia.Bean.MessageLisyBean;
-import com.dajia.Bean.UserBean;
-import com.dajia.activity.AcountActivity;
-import com.dajia.activity.ChaxunWGActivity;
-import com.dajia.activity.GuangWangHtmlActivity;
-import com.dajia.activity.HistoryOrderActivity;
-import com.dajia.activity.JifenHtmlActivity;
-import com.dajia.activity.LoginActivity;
-import com.dajia.activity.MessageListActivity;
-import com.dajia.activity.MipcaActivityCapture;
-import com.dajia.activity.PriceActivity;
-import com.dajia.activity.SettingActivity;
-import com.dajia.activity.ShareActivity;
-import com.dajia.activity.YouhuiAcitivity;
-import com.dajia.view.RoundImageView;
-import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
+import net.k76.wzd.R;
+import net.k76.wzd.wxapi.WXPayEntryActivity;
+import net.tsz.afinal.FinalHttp;
+import net.tsz.afinal.http.AjaxCallBack;
+import net.tsz.afinal.http.AjaxParams;
 
 /**
  * slidingmenu 左侧
@@ -145,12 +145,15 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		params.put("lmdengluhao", dengluhao);
 		params.put("telphone", phoneString);
 		params.put("password", passwordString);
+		params.put("qquid", sp.getString("qquid", ""));
+		params.put("weixinuid", sp.getString("weixinuid", ""));
 		params.put("act", "postok");
 		Log.e("MUSIC", "LOGIN--baseurl=" + baseurl + " dengluhao=" + dengluhao);
 		fp.post(baseurl + "/api/applogin.php", params,
 				new AjaxCallBack<Object>() {
 					@Override
 					public void onSuccess(Object t) {
+						Log.e("***menufragment***", t.toString());
 						Gson gson = new Gson();
 						userBean = gson.fromJson(t.toString(), UserBean.class);
 						if (userBean != null) {
@@ -295,7 +298,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.menu_head:
 			if (TextUtils.isEmpty(userBean.getTelphone())) {
-				Intent intent = new Intent(getActivity(), LoginActivity.class);
+				Intent intent = new Intent(getActivity(), ChatLoginActivity.class);
 				startActivity(intent);
 				return;
 			}
@@ -316,7 +319,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		case R.id.menu_account_balance:
 			// forwardMyAcount("0");
 			if (TextUtils.isEmpty(userBean.getTelphone())) {
-				Intent intent = new Intent(getActivity(), LoginActivity.class);
+				Intent intent = new Intent(getActivity(), ChatLoginActivity.class);
 				startActivity(intent);
 				return;
 			}
@@ -336,7 +339,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		case R.id.menu_coupon:
 			// forwardMyAcount("1");
 			if (TextUtils.isEmpty(userBean.getTelphone())) {
-				Intent intent = new Intent(getActivity(), LoginActivity.class);
+				Intent intent = new Intent(getActivity(), ChatLoginActivity.class);
 				startActivity(intent);
 				return;
 			}
@@ -356,7 +359,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		case R.id.menu_account_ecoins:
 			// forwardMyAcount("2");
 			if (TextUtils.isEmpty(userBean.getTelphone())) {
-				Intent intent = new Intent(getActivity(), LoginActivity.class);
+				Intent intent = new Intent(getActivity(), ChatLoginActivity.class);
 				startActivity(intent);
 				return;
 			}
@@ -375,7 +378,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 
 		case R.id.menu_historyorder:
 			if (TextUtils.isEmpty(userBean.getTelphone())) {
-				Intent intent = new Intent(getActivity(), LoginActivity.class);
+				Intent intent = new Intent(getActivity(), ChatLoginActivity.class);
 				startActivity(intent);
 				return;
 			}
@@ -394,7 +397,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 
 		case R.id.menu_recharge:// 充值
 			if (TextUtils.isEmpty(userBean.getTelphone())) {
-				Intent intent = new Intent(getActivity(), LoginActivity.class);
+				Intent intent = new Intent(getActivity(), ChatLoginActivity.class);
 				startActivity(intent);
 				return;
 			}
@@ -471,7 +474,7 @@ public class MenuFragment extends Fragment implements OnClickListener {
 		String yanzhenma = sp.getString("ifyanzhenma", "no");
 		if ("yes".equals(yanzhenma)) {
 			if (TextUtils.isEmpty(phoneString)) {
-				Intent intent = new Intent(getActivity(), LoginActivity.class);
+				Intent intent = new Intent(getActivity(), ChatLoginActivity.class);
 				startActivity(intent);
 				return false;
 			}

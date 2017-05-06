@@ -440,7 +440,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			// if (yanzhen()) {
 			if (userBean != null && TextUtils.isEmpty(userBean.getTelphone())) {
 				Intent intent = new Intent(MainActivity.this,
-						LoginActivity.class);
+						ChatLoginActivity.class);
 				startActivity(intent);
 				return;
 			}
@@ -477,7 +477,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 			// 一键下单点击事件
 			if (userBean != null && TextUtils.isEmpty(userBean.getTelphone())) {
 				Intent intent1 = new Intent(MainActivity.this,
-						LoginActivity.class);// 跳转到登录
+						ChatLoginActivity.class);// 跳转到登录
 				startActivity(intent1);
 				return;
 			}
@@ -1426,7 +1426,7 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		if ("yes".equals(yanzhenma)) {
 			if (TextUtils.isEmpty(phoneString)) {
 				Intent intent = new Intent(MainActivity.this,
-						LoginActivity.class);
+						ChatLoginActivity.class);
 				startActivity(intent);
 				return false;
 			}

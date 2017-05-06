@@ -198,7 +198,7 @@ public class DriverDetails extends BaseActivity implements OnClickListener {
 		if ("yes".equals(yanzhenma)) {
 			if (TextUtils.isEmpty(phone)) {
 				Intent intent = new Intent(DriverDetails.this,
-						LoginActivity.class);
+						ChatLoginActivity.class);
 				startActivity(intent);
 				return false;
 			}
@@ -252,7 +252,7 @@ public class DriverDetails extends BaseActivity implements OnClickListener {
 
 			if (userBean != null && TextUtils.isEmpty(userBean.getTelphone())) {
 				Intent intent = new Intent(DriverDetails.this,
-						LoginActivity.class);
+						ChatLoginActivity.class);
 				startActivity(intent);
 				return;
 			}

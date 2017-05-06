@@ -187,7 +187,7 @@ public class DismissPasswordActivity extends BaseActivity {
 							if (bean.getRet().equals("success")) {							
 								Intent intent = new Intent(
 										DismissPasswordActivity.this,
-										LoginActivity.class);
+										ChatLoginActivity.class);
 								startActivity(intent);
 							} else {
 								Toast.makeText(DismissPasswordActivity.this,

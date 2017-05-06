@@ -43,14 +43,14 @@
             android:layout_gravity="right"
             android:layout_marginRight="10.0dip"
             android:layout_marginTop="10.0dip"
+            android:text="忘记密码"
             android:textColor="#2E97D6"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:text="忘记密码" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:padding="10.0dip" >
 
@@ -73,6 +73,43 @@
                 android:gravity="center"
                 android:text="@string/check_and_register" />
         </LinearLayout>
+        
+        <TextView
+             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:paddingLeft="5dip"
+            android:layout_marginTop="10dip"
+            android:singleLine="true"
+           android:textColor="@color/black"
+            android:text="———————第三方账号登录———————"
+             />
+        
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingRight="10dip"
+            android:layout_gravity="center"
+           >
+
+            <Button
+                android:id="@+id/btn_qq"
+                android:layout_width="110dip"
+                android:layout_height="110dip"
+                android:background="@drawable/mobileqq"
+                android:gravity="center"
+                android:text="" />
+
+            <Button
+                android:id="@+id/btn_weixin"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:background="@drawable/weixin_icon"
+                android:text="" />
+        </LinearLayout>
+        
     </LinearLayout>
 
 </LinearLayout>

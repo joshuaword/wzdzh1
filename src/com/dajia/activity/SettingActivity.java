@@ -2,10 +2,22 @@ package com.dajia.activity;
 
 import java.io.File;
 
-import net.k76.wzd.R;
-import net.tsz.afinal.FinalHttp;
-import net.tsz.afinal.http.AjaxCallBack;
-import net.tsz.afinal.http.AjaxParams;
+import com.dajia.VehicleApp;
+import com.dajia.Bean.UpDateInfo;
+import com.dajia.Bean.UserBean;
+import com.dajia.constant.Constant;
+import com.dajia.util.Assign_UpDateDialog;
+import com.dajia.util.ConfirmDialogListener;
+import com.google.gson.Gson;
+import com.twzs.core.download.Downloadhelper;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.controller.listener.SocializeListeners.UMAuthListener;
+import com.umeng.socialize.exception.SocializeException;
+import com.umeng.socialize.sso.UMQQSsoHandler;
+import com.umeng.socialize.weixin.controller.UMWXHandler;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,22 +27,21 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.dajia.VehicleApp;
-import com.dajia.Bean.UpDateInfo;
-import com.dajia.util.Assign_UpDateDialog;
-import com.dajia.util.ConfirmDialogListener;
-import com.google.gson.Gson;
-import com.twzs.core.download.Downloadhelper;
+import android.widget.Toast;
+import net.k76.wzd.R;
+import net.tsz.afinal.FinalHttp;
+import net.tsz.afinal.http.AjaxCallBack;
+import net.tsz.afinal.http.AjaxParams;
 
 public class SettingActivity extends BaseActivity {
-
 	private TextView title;
 	private LinearLayout backLayout;
 	private RelativeLayout share;
@@ -41,13 +52,13 @@ public class SettingActivity extends BaseActivity {
 	private UpDateInfo upDateBean;
 	RelativeLayout aboutLayout;
 	public static final String TEMPPATH = "temp";
-	private RelativeLayout protocol,protocol1,protocol2,protocol3,protocol4;
+	private RelativeLayout protocol,protocol1,protocol2,protocol3,protocol4,layout_qq_bangding,layout_weixin_bangding;
 	String userid;
 	String phoneString;
-
+	ImageView img_icon_qq, img_icon_weixin;
 	RelativeLayout phoneLayout;
 	private String appbanquan;
-
+	private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR);
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -63,17 +74,18 @@ public class SettingActivity extends BaseActivity {
 				finish();
 			}
 		});
-
 		String ver = getAppVersionName(this.getApplication());
 		TextView vertext = (TextView) findViewById(R.id.text_ver);
 		vertext.setText(ver);
-
+		img_icon_qq = (ImageView)findViewById(R.id.img_icon_qq);
+		img_icon_weixin = (ImageView)findViewById(R.id.img_icon_weixin);
 		TextView phone = (TextView) findViewById(R.id.text_phone);
 		TextView text_shangwuhezuo = (TextView) findViewById(R.id.text_shangwuhezuo);
 		TextView text_appbanqan = (TextView) findViewById(R.id.text_banquan);
 
 		phoneLayout = (RelativeLayout) findViewById(R.id.layout_phone);
-
+		layout_qq_bangding = (RelativeLayout) findViewById(R.id.layout_qq_bangding);
+		layout_weixin_bangding = (RelativeLayout) findViewById(R.id.layout_weixin_bangding);
 		SharedPreferences sp = getSharedPreferences("setting", 0);
 		phoneString = sp.getString("kefuphone", "");
 		appbanquan = sp.getString("appbanquan", "");
@@ -82,7 +94,21 @@ public class SettingActivity extends BaseActivity {
 		userid = sp.getString("userid", "");
 		phone.setText(phoneString);
 		text_shangwuhezuo.setText("商务合作(" + userid + ")");
+		layout_qq_bangding.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View v) {
+				QQLogin(v);
+			}
+		});
+		
+		layout_weixin_bangding.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				WeiXinlogin(SHARE_MEDIA.WEIXIN);
+			}
+		});
 		phoneLayout.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -200,8 +226,38 @@ public class SettingActivity extends BaseActivity {
 				startActivity(intent);
 			}
 		});
-	}
 
+		mController.getConfig().setPlatforms(SHARE_MEDIA.WEIXIN, SHARE_MEDIA.WEIXIN_CIRCLE, SHARE_MEDIA.QQ,
+				SHARE_MEDIA.QZONE, SHARE_MEDIA.SINA, SHARE_MEDIA.TENCENT, SHARE_MEDIA.DOUBAN, SHARE_MEDIA.RENREN,
+				SHARE_MEDIA.EMAIL, SHARE_MEDIA.EVERNOTE, SHARE_MEDIA.FACEBOOK, SHARE_MEDIA.GOOGLEPLUS,
+				SHARE_MEDIA.INSTAGRAM, SHARE_MEDIA.LAIWANG, SHARE_MEDIA.LAIWANG_DYNAMIC, SHARE_MEDIA.LINKEDIN,
+				SHARE_MEDIA.PINTEREST, SHARE_MEDIA.POCKET, SHARE_MEDIA.SMS, SHARE_MEDIA.TWITTER, SHARE_MEDIA.YIXIN,
+				SHARE_MEDIA.YIXIN_CIRCLE, SHARE_MEDIA.YNOTE);
+		mController.openShare(SettingActivity.this, false);
+		addQQQZonePlatform();
+		addWXPlatform();
+	}
+	private void addQQQZonePlatform() {
+		String appId = "101399822";
+		String appKey = "0541a6ed98298b35f873153352806ef9";
+		UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(SettingActivity.this, appId, appKey);
+		qqSsoHandler.addToSocialSDK();
+
+	}
+	private void addWXPlatform() {
+		// 注意：在微信授权的时候，必须传递appSecret
+		// wx967daebe835fbeac是你在微信开发平台注册应用的AppID, 这里需要替换成你注册的AppID
+		String appId = "wx34e695311ba607b9";
+		String appSecret = "6504e0056d1a817dd1215ba4bbf43859";
+		// 添加微信平台
+		UMWXHandler wxHandler = new UMWXHandler(SettingActivity.this, appId, appSecret);
+		wxHandler.addToSocialSDK();
+
+		// 支持微信朋友圈
+		UMWXHandler wxCircleHandler = new UMWXHandler(SettingActivity.this, appId, appSecret);
+		wxCircleHandler.setToCircle(true);
+		wxCircleHandler.addToSocialSDK();
+	}
 	/*
 	 * public void share() {
 	 * 
@@ -333,6 +389,71 @@ public class SettingActivity extends BaseActivity {
 		}
 		return s.substring(i + 1);
 	}
+	private void WeiXinlogin(final SHARE_MEDIA platform) {
+		mController.doOauthVerify(SettingActivity.this, platform, new UMAuthListener() {
+
+			@Override
+			public void onStart(SHARE_MEDIA platform) {
+				Toast.makeText(SettingActivity.this, "授权开始", Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onError(SocializeException e, SHARE_MEDIA platform) {
+				Toast.makeText(SettingActivity.this, "授权失败", Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onComplete(Bundle value, SHARE_MEDIA platform) {
+				// 获取uid
+				String uid = value.getString("uid");
+				Log.e("***uid***", uid);
+				if (!TextUtils.isEmpty(uid)) {
+					// uid不为空，获取用户信息
+					SendUid( "", uid);
+//					getUserInfo(platform);
+				} else {
+					Toast.makeText(SettingActivity.this, "授权失败...", Toast.LENGTH_LONG).show();
+				}
+			}
+
+			@Override
+			public void onCancel(SHARE_MEDIA platform) {
+				Toast.makeText(SettingActivity.this, "授权取消", Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
+
+	public void QQLogin(View v) {
+		mController.doOauthVerify(SettingActivity.this, SHARE_MEDIA.QQ, new UMAuthListener() {
+			@Override
+			public void onStart(SHARE_MEDIA platform) {
+				Toast.makeText(SettingActivity.this, "授权开始", Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onError(SocializeException e, SHARE_MEDIA platform) {
+				Toast.makeText(SettingActivity.this, "授权错误", Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onComplete(Bundle value, SHARE_MEDIA platform) {
+				Toast.makeText(SettingActivity.this, "授权完成", Toast.LENGTH_SHORT).show();
+				String uid = value.getString("uid");
+				// 如果授权完成，则获取授权平台的用户信息
+				if (!TextUtils.isEmpty(uid)) {
+					SendUid( uid, "");
+//					getUserInfo(SHARE_MEDIA.QQ);
+				} else {
+					Toast.makeText(SettingActivity.this, "授权失败", 0).show();
+				}
+			}
+
+			@Override
+			public void onCancel(SHARE_MEDIA platform) {
+				Toast.makeText(SettingActivity.this, "授权取消", Toast.LENGTH_SHORT).show();
+			}
+		});
+	}
 
 	/**
 	 * 显示升级对话框
@@ -379,6 +500,90 @@ public class SettingActivity extends BaseActivity {
 					}
 				});
 
+	}
+	
+	
+	private void SendUid(final String qquid,final String weixinuid) {
+		Log.e("***qquid***", qquid);
+		Log.e("***weixinuid***", weixinuid);
+		final SharedPreferences settings = getSharedPreferences("setting", 0);
+		String baseurl = settings.getString("baseurl", "http://wzd.k76.net");
+		String userid = settings.getString("userid", "");
+		FinalHttp fp = new FinalHttp();
+		AjaxParams params = new AjaxParams();
+		params.put("qquid", qquid);
+		params.put("userid", userid);
+		params.put("weixinuid", weixinuid);	
+		params.put("act", "postok"); 
+		fp.post(baseurl + "/api/registerclient.php", params,
+				new AjaxCallBack<Object>() {
+					@Override
+					public void onSuccess(Object t) {
+						Gson gson = new Gson();
+						Log.e("aaaaaaaaaaaa", t.toString());
+						UserBean userBean = gson.fromJson(t.toString(), UserBean.class);
+						if (userBean != null) {
+							if(userBean.getRet().equalsIgnoreCase("success")){
+								getinfo();
+								if(!qquid.equals("")){
+									Toast.makeText(SettingActivity.this, "您的QQ已绑定，可以使用QQ登录!", Toast.LENGTH_SHORT).show();
+								}else 	if(!weixinuid.equals("")){
+									Toast.makeText(SettingActivity.this, "您的微信已绑定，可以使用微信登录!", Toast.LENGTH_SHORT).show();
+								}
+							}
+						}
+					}
+
+					@Override
+					public void onFailure(Throwable t, int errorNo,
+							String strMsg) {
+						super.onFailure(t, errorNo, strMsg);
+						Log.e("aaaa", t.toString() + "-------" + errorNo
+								+ "-------" + strMsg);
+					}
+				});
+
+	}
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
+		getinfo();
+	}
+	private void getinfo(){
+		final SharedPreferences settings = getSharedPreferences("setting", 0);
+		String baseurl = settings.getString("baseurl", "http://wzd.k76.net");
+		FinalHttp fp = new FinalHttp();
+        AjaxParams params = new AjaxParams();
+        params.put("userid", userid);
+        params.put("act", "postok");
+        fp.post(baseurl +"/api/userinfoclient.php", params, new AjaxCallBack<Object>() {
+        	@Override
+        	public void onSuccess(Object t) {
+        		Gson gson = new Gson();
+				UserBean userBean = gson.fromJson(t.toString(), UserBean.class);
+				if (userBean != null) {
+					if (userBean.getIfqq().equals("0")) {
+						img_icon_qq.setBackgroundResource(R.drawable.qq2);
+					}else if(userBean.getIfqq().equals("1")){
+						img_icon_qq.setBackgroundResource(R.drawable.qq1);
+					}
+					
+					if (userBean.getIfweixin().equals("0")) {
+						img_icon_weixin.setBackgroundResource(R.drawable.weixin2);
+					}else if(userBean.getIfweixin().equals("1")){
+						img_icon_weixin.setBackgroundResource(R.drawable.weixin1);
+					}
+				}
+        	}
+        	
+        	@Override
+        	public void onFailure(Throwable t, int errorNo, String strMsg) {
+        		super.onFailure(t, errorNo, strMsg);
+        		Log.e("aaaa", t.toString() + "-------" + errorNo + "-------" + strMsg);
+        	}
+		});
+		
 	}
 
 }

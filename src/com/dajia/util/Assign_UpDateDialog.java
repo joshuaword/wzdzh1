@@ -69,7 +69,6 @@ public class Assign_UpDateDialog {
 		}
 		alertDialog.show();
 		WindowManager.LayoutParams lp = alertDialog.getWindow().getAttributes();
-		;
 		lp.width = screenWidth - screenWidth / 4;
 		alertDialog.getWindow().setBackgroundDrawableResource(
 				android.R.color.transparent);

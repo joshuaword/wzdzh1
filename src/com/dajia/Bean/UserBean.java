@@ -25,7 +25,21 @@ public class UserBean {
 	private String weizhangchaxun;
 	private String thefile;
 	private String kehuleixing;
+	private String ifqq;
+	private String ifweixin;
 	
+	public String getIfqq() {
+		return ifqq;
+	}
+	public void setIfqq(String ifqq) {
+		this.ifqq = ifqq;
+	}
+	public String getIfweixin() {
+		return ifweixin;
+	}
+	public void setIfweixin(String ifweixin) {
+		this.ifweixin = ifweixin;
+	}
 	public String getKehuleixing() {
 		return kehuleixing;
 	}

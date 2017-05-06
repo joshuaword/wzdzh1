@@ -270,7 +270,7 @@ public class StoreDetailsActivity extends BaseActivity implements
 		case R.id.store_order:
 			if (TextUtils.isEmpty(userBean.getTelphone())) {
 				Intent intent = new Intent(StoreDetailsActivity.this,
-						LoginActivity.class);
+						ChatLoginActivity.class);
 				startActivity(intent);
 				return;
 			}
