@@ -234,6 +234,8 @@ public class AcountActivity extends BaseActivity {
 		params.put("lmdengluhao", dengluhao);
 		params.put("telphone", phoneString);
 		params.put("password", passwordString);	
+		params.put("qquid", settings.getString("qquid", ""));
+		params.put("weixinuid", settings.getString("weixinuid", ""));
 		params.put("act", "postok");
 		Log.e("MUSIC", "LOGINAcount--baseurl=" + baseurl + " dengluhao="
 				+ dengluhao);

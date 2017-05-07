@@ -1522,6 +1522,8 @@ public class MainActivity extends BaseActivity implements OnClickListener {
 		params.put("lmdengluhao", dengluhao);
 		params.put("telphone", phoneString);
 		params.put("password", passwordString);
+		params.put("qquid", settings.getString("qquid", ""));
+		params.put("weixinuid", settings.getString("weixinuid", ""));
 		params.put("act", "postok");
 		fp.post(baseurl + "/api/applogin.php", params,
 				new AjaxCallBack<Object>() {

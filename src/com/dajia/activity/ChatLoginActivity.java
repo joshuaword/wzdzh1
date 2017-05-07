@@ -107,6 +107,8 @@ public class ChatLoginActivity extends BaseActivity {
 				AjaxParams params = new AjaxParams();
 				params.put("telphone", phone_ed.getText().toString().trim());
 				params.put("password", password_ed.getText().toString().trim());
+				params.put("qquid", sp.getString("qquid", ""));
+				params.put("weixinuid", sp.getString("weixinuid", ""));
 				params.put("act", "postok");
 				fp.post(baseurl + "/api/applogin.php", params, new AjaxCallBack<Object>() {
 					@Override

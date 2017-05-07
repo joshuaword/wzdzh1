@@ -210,6 +210,8 @@ public class YanzhenActivity extends BaseActivity {
 		AjaxParams params = new AjaxParams();
 		params.put("lmdengluhao", dengluhao);
 		params.put("act", "postok");
+		params.put("qquid", settings.getString("qquid", ""));
+		params.put("weixinuid", settings.getString("weixinuid", ""));
 		Log.e("MUSIC", "LOGINAcount--baseurl=" + baseurl + " dengluhao="
 				+ dengluhao);
 		fp.post(baseurl + "/api/applogin.php", params,
