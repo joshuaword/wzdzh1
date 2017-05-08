@@ -269,6 +269,40 @@
                         android:clickable="false"
                         android:visibility="gone" />
                 </LinearLayout>
+                
+                <View style="@style/gray_line_horizontal" />
+
+                <LinearLayout
+                    android:id="@+id/yaoqingma_layout"
+                    android:layout_width="fill_parent"
+                    android:layout_height="50.0dip"
+                    android:background="@drawable/list_item_back"
+                    android:gravity="center_vertical" >
+
+                    <TextView
+                        style="@style/input_left_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="13.0dip"
+                        android:text="邀请码" />
+
+                    <EditText
+                        android:id="@+id/yaoqingma_ed"
+                        style="@style/input_right_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="fill_parent"
+                        android:layout_marginLeft="25dip"
+                        android:inputType="number" 
+                        android:hint="向您的推荐人索取邀请码(可选项)" />
+
+                    <Button
+                        android:id="@+id/btn_yaoqingma_go"
+                        android:layout_width="40.0dip"
+                        android:layout_height="40.0dip"
+                        android:background="@drawable/btn_listright_setting"
+                        android:clickable="false"
+                        android:visibility="gone" />
+                </LinearLayout>
 
                 <View style="@style/gray_line_horizontal" />
 

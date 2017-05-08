@@ -67,7 +67,7 @@ public class RegiterActivity extends BaseActivity {
 	public static final String SP_KEY_PHONE = "sp_phone";
 	public static final String SP_KEY_PASSWORD = "sp_password";
 	public static final String SP_KEY_ISCHECKED = "sp_is_checked";
-	EditText phoneEdit, yanzhenmaEdit, nameEdit, passwordEdit;
+	EditText phoneEdit, yanzhenmaEdit, nameEdit, passwordEdit, yaoqingmaEdit;
 	TextView sexEdit,phone_ed2;
 	private Button regist_go;
 	private SharedPreferences settings;
@@ -138,6 +138,7 @@ public class RegiterActivity extends BaseActivity {
 		sexEdit.setFocusableInTouchMode(false);
 		yanzhenmaEdit = (EditText) findViewById(R.id.vali_ed);
 		passwordEdit = (EditText) findViewById(R.id.password_ed);
+		yaoqingmaEdit = (EditText) findViewById(R.id.yaoqingma_ed);
 
 		headimg = (XCRoundRectImageView) findViewById(R.id.headbg_register);
 		headtxt = (TextView) findViewById(R.id.headtxt);
@@ -642,6 +643,7 @@ public class RegiterActivity extends BaseActivity {
 		}
 	
 		params.put("sex", sexEdit.getText().toString());
+		params.put("yaoqingma", yaoqingmaEdit.getText().toString());
 		params.put("password", passwordEdit.getText().toString());
 		params.put("act", "postok");
 		fp.post(baseurl + "/api/appregisterclient.php", params,

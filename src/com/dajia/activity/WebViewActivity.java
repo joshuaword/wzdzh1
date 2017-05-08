@@ -3,6 +3,7 @@ package com.dajia.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -31,8 +32,13 @@ public class WebViewActivity extends BaseActivity {
 		title = getIntent().getStringExtra("title");
 		title_view.setText(title);
 		
+				
 		tqWebView = (WebView) findViewById(R.id.tq);
 		tqWebView.loadUrl(url);
+		WebSettings settings = tqWebView.getSettings();
+		//settings.setPluginsEnabled(true);
+		settings.setJavaScriptEnabled(true);
+		
 		tqWebView.setWebViewClient(new WebViewClient() {
 			@Override
 			public boolean shouldOverrideUrlLoading(WebView view, String url) {
