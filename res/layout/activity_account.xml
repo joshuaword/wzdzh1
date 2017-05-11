@@ -192,6 +192,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="50.0dip"
                 android:background="@drawable/list_item_back"
+                android:visibility="gone"
                 android:gravity="center_vertical" >
 
                 <TextView
@@ -215,13 +216,14 @@
                     android:clickable="false" />
             </LinearLayout>
 
-            <View style="@style/gray_line_horizontal" />
+            
 
             <LinearLayout
                 android:id="@+id/login_id"
                 android:layout_width="fill_parent"
                 android:layout_height="50.0dip"
                 android:background="@drawable/list_item_back"
+                android:visibility="gone"
                 android:gravity="center_vertical" >
 
                 <TextView

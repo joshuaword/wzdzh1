@@ -18,5 +18,8 @@
 	<classpathentry exported="true" kind="lib" path="libs/pushservice-4.5.1.8.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
+	<classpathentry kind="lib" path="libs/Msc.jar"/>
+	<classpathentry kind="lib" path="libs/photoview-library-1.2.2.jar"/>
+	<classpathentry kind="lib" path="libs/glide-3.6.1.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

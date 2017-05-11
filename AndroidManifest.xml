@@ -370,6 +370,13 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
+         <activity
+            android:name="com.dajia.ImageGesActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        
         <activity
             android:name="net.k76.wzd.wxapi.WXPayEntryActivity"
             android:configChanges="orientation|keyboardHidden|navigation"

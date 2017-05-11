@@ -17,7 +17,29 @@ public class ChatListBean  {
 	private  String mp3time;
 	private  String chatid;
 	private String msgtype;
+	private String  title;
+	private String  jianjie;
+	private String  icon;
 	
+	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getJianjie() {
+		return jianjie;
+	}
+	public void setJianjie(String jianjie) {
+		this.jianjie = jianjie;
+	}
+	public String getIcon() {
+		return icon;
+	}
+	public void setIcon(String icon) {
+		this.icon = icon;
+	}
 	public String getMsgtype() {
 		return msgtype;
 	}

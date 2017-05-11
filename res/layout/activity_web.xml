@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text=""
+            android:maxLength="12"
             android:textColor="@color/c333"
             android:textSize="22.0sp" />
     </FrameLayout>

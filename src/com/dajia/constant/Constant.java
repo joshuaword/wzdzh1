@@ -11,4 +11,11 @@ public class Constant {
 	public static final String API_BASE = "http://t.k76.net";
 	public static final String API_ADDRESS_MANAGE = API_BASE + "/api/addaddressclient.php";
 	public static final String API_UPLOAD_RECORD = API_BASE + "/api/uploadvoiceclient.php";
+	/** 显示进度框. */
+	public static final int SHOW_PROGRESS = 1;
+
+	/** 删除进度框. */
+	public static final int REMOVE_PROGRESS = 2;
+	/** 图片处理：缩放. */
+	public static final int SCALEIMG = 1;
 }

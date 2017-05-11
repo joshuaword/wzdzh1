@@ -1,9 +1,14 @@
 package com.daijia.chat;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.dajia.ImageGesActivity;
 import com.dajia.VehicleApp;
 import com.dajia.Bean.ChatListBean;
+import com.dajia.activity.DriverDetails;
+import com.dajia.activity.ScaleimgActivity;
+import com.dajia.activity.WebViewActivity;
 import com.iflytek.cloud.ErrorCode;
 import com.iflytek.cloud.InitListener;
 import com.iflytek.cloud.RecognizerListener;
@@ -21,6 +26,7 @@ import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.umeng.socialize.utils.Log;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Bundle;
@@ -37,7 +43,7 @@ import net.k76.wzd.R;
 public class ChatMsgViewAdapter extends BaseAdapter {
 	private static ImageLoader imageLoader = ImageLoader.getInstance();
 	private static DisplayImageOptions options;
-	
+	private ArrayList<String> imglist =new ArrayList<String>();
 	public static void setCacheImageLoad(Context context, int drawId,
 			int Rounded, ImageView imageView, String imageUrl) {
 		imageLoader.init(ImageLoaderConfiguration.createDefault(context));
@@ -214,7 +220,17 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 					.findViewById(R.id.tv_time);
 			viewHolder.iv_userhead = (ImageView) convertView
 					.findViewById(R.id.iv_userhead);
-
+			viewHolder.img_chatcontent= (ImageView) convertView
+					.findViewById(R.id.img_chatcontent);
+			viewHolder.url_layout=convertView
+					.findViewById(R.id.url_layout);
+			viewHolder.biaoti = (TextView) convertView
+					.findViewById(R.id.biaoti);
+			viewHolder.jianjie = (TextView) convertView
+					.findViewById(R.id.jianjie);
+			viewHolder.img_title = (ImageView) convertView
+					.findViewById(R.id.img_title);
+			
 			convertView.setTag(viewHolder);
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
@@ -222,29 +238,71 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 
 		viewHolder.tvSendTime.setText(entity.getCreatetime());
 		
-		if (!entity.getThefile().equals("")||entity.getLeixing().equals("xunfei") ) {
+		if (!entity.getThefile().equals("")&&entity.getLeixing().equals("xunfei") ) {
+			viewHolder.img_chatcontent.setVisibility(View.GONE);
+			viewHolder.tvContent.setVisibility(View.VISIBLE);
+			viewHolder.url_layout.setVisibility(View.GONE);
 			viewHolder.tvContent.setText("");
 			viewHolder.tvContent.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.chatto_voice_playing, 0);
 			viewHolder.tvTime.setText(entity.getMp3time());
-		} else {
+		}else if(entity.getLeixing().equals("url")){
+			viewHolder.url_layout.setVisibility(View.VISIBLE);
+			viewHolder.tvContent.setVisibility(View.GONE);
+			viewHolder.biaoti.setText(entity.getTitle());
+			viewHolder.jianjie.setText(entity.getJianjie());
+			setCacheImageLoad(ctx, 0, 0, viewHolder.img_title, entity.getIcon());
+		} else if(!entity.getThefile().equals("")&&entity.getLeixing().equals("img")){
+			viewHolder.img_chatcontent.setVisibility(View.VISIBLE);
+			viewHolder.tvContent.setVisibility(View.GONE);
+			viewHolder.url_layout.setVisibility(View.GONE);
+			Log.d("entity.getThefile()", entity.getThefile());
+			setCacheImageLoad(ctx, 0, 0, viewHolder.img_chatcontent, entity.getThefile());
+		}else {
+			viewHolder.img_chatcontent.setVisibility(View.GONE);
+			viewHolder.url_layout.setVisibility(View.GONE);
+			viewHolder.tvContent.setVisibility(View.VISIBLE);
 			viewHolder.tvContent.setText(entity.getLeirong());			
 			viewHolder.tvContent.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 			viewHolder.tvTime.setText("");
 		}
+		viewHolder.img_chatcontent.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				imglist.clear();
+				imglist.add(entity.getThefile());
+				Intent intent = new Intent(ctx,
+						ImageGesActivity.class);
+				intent.putExtra("selectposition", 0);
+				intent.putStringArrayListExtra("imglist", imglist);
+				ctx.startActivity(intent);
+			}
+		});
+		viewHolder.url_layout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				   Intent intent = new Intent(ctx, WebViewActivity.class);
+				   intent.putExtra("url", entity.getLeirong());
+				   intent.putExtra("title",entity.getTitle());
+				   ctx.startActivity(intent);
+			}
+		});
+		 
 		viewHolder.tvContent.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if (entity.getLeixing().equals("mp3")) {
 					playMusic(entity.getThefile()) ;
-				}else if(VehicleApp.getInstance().getSetBean().getVoice().equals("xunfei")){
-					  // 设置参数
-				    setParam();
-				    mTts.startSpeaking(entity.getLeirong(), mTtsListener);
-				
-				}else if(entity.getLeixing().equals("xunfei")){
-					  // 设置参数
-				    setParam();
-				    mTts.startSpeaking(entity.getLeirong(), mTtsListener);
 				}
+				else if(VehicleApp.getInstance().getSetBean().getVoice().equals("xunfei")&&!entity.getLeixing().equals("url")){
+					  // 设置参数
+				    setParam();
+				    mTts.startSpeaking(entity.getLeirong(), mTtsListener);
+				}else if(entity.getLeixing().equals("xunfei")){
+					 setParam();
+					    mTts.startSpeaking(entity.getLeirong(), mTtsListener);
+				}
+				
 			}
 		});
 		viewHolder.tvUserName.setText(entity.getNickname());
@@ -303,7 +361,10 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 		public TextView tvUserName;
 		public TextView tvContent;
 		public TextView tvTime;
-		public ImageView iv_userhead;
+		public View url_layout;
+		public TextView biaoti;
+		public TextView jianjie;
+		public ImageView iv_userhead,img_chatcontent,img_title;
 	}
 
 	/**

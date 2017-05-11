@@ -3,7 +3,9 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@drawable/chat_bg_default" >
-<!-- 标题栏 -->
+
+    <!-- 标题栏 -->
+
     <RelativeLayout
         android:id="@+id/home_top"
         style="@style/navi_bar" >
@@ -66,30 +68,48 @@
                 android:id="@+id/currentcity_txt"
                 android:layout_width="35dip"
                 android:layout_height="35dip"
-                android:text="返回"
                 android:src="@drawable/search_r"
+                android:text="返回"
                 android:textColor="#228dce"
                 android:textSize="16sp" />
-
         </LinearLayout>
     </RelativeLayout>
 
-    <!-- 底部按钮以及 编辑框-->
+    <!-- 底部按钮以及 编辑框 -->
+
     <RelativeLayout
         android:id="@+id/rl_bottom"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/gray" >
-
-        <ImageView
-            android:id="@+id/ivPopUp"
+        <LinearLayout
+            android:id="@+id/add_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dip"
-            android:src="@drawable/chatting_setmode_msg_btn" />
+            android:layout_marginLeft="5dip"
+            android:weightSum="2"
+            android:orientation="horizontal" >
+            <ImageView
+                android:id="@+id/ivPopUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:src="@drawable/chatting_setmode_msg_btn" />
+
+            <ImageView
+                android:id="@+id/img_add"
+                android:layout_width="39dip"
+                android:layout_height="39dip"
+                android:layout_gravity="center"
+                 android:layout_weight="1"
+                 android:visibility="visible"
+                android:layout_marginLeft="5dip"
+                android:src="@drawable/jia" />
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/btn_bottom"
@@ -97,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/ivPopUp" >
+            android:layout_toRightOf="@+id/add_layout" >
 
             <Button
                 android:id="@+id/btn_send"
@@ -130,12 +150,12 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_toRightOf="@+id/ivPopUp"
+            android:layout_toRightOf="@+id/add_layout"
             android:gravity="center"
             android:text="按住说话"
             android:visibility="gone" />
-        
-         <Button
+
+        <Button
             android:id="@+id/btn_normal_rcd"
             android:layout_width="fill_parent"
             android:layout_height="40dp"
@@ -143,12 +163,13 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_toRightOf="@+id/ivPopUp"
+            android:layout_toRightOf="@+id/add_layout"
             android:gravity="center"
             android:text="按住说话"
             android:visibility="gone" />
     </RelativeLayout>
-    <!-- 聊天内容 listview-->
+    <!-- 聊天内容 listview -->
+
     <ListView
         android:id="@+id/listview"
         android:layout_width="fill_parent"
@@ -160,7 +181,8 @@
         android:dividerHeight="5dp"
         android:scrollbarStyle="outsideOverlay"
         android:stackFromBottom="true" />
-    <!-- 录音显示UI层-->
+    <!-- 录音显示UI层 -->
+
     <LinearLayout
         android:id="@+id/rcChat_popup"
         android:layout_width="fill_parent"

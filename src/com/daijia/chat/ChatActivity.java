@@ -2,6 +2,8 @@ package com.daijia.chat;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -19,9 +21,12 @@ import com.dajia.Bean.DictationResult;
 import com.dajia.Bean.UpDateInfo;
 import com.dajia.activity.ChatLoginActivity;
 import com.dajia.activity.CheckHtmlActivity;
+import com.dajia.activity.RegiterActivity;
 import com.dajia.fragment.MenuFragment;
 import com.dajia.util.Assign_UpDateDialog;
 import com.dajia.util.ConfirmDialogListener;
+import com.dajia.util.FileUtils;
+import com.dajia.view.Bimp;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.iflytek.cloud.ErrorCode;
@@ -37,23 +42,33 @@ import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
+import com.tencent.mm.sdk.modelmsg.WXMediaMessage.IMediaObject;
 import com.twzs.core.download.Downloadhelper;
 import com.zms.wechatrecorder.MediaManager;
 import com.zms.wechatrecorder.view.AudioRecordButton;
 import com.zms.wechatrecorder.view.AudioRecordButton.AudioRecordFinishListener;
 
+import android.annotation.SuppressLint;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
@@ -65,6 +80,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 import net.k76.wzd.R;
@@ -101,6 +117,22 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 	String mp3time;
 	private Fragment menuFragment;
 	private String leirong;
+	private PopupWindow headimgpop;
+	private ImageView add;
+	/**
+	 * 拍照的照片存储位置
+	 */
+
+	private String mFileName;
+	Bitmap bitmap;
+	private float roatdp;
+	/**
+	 * 照相机拍照得到的图片
+	 */
+	private static final int TAKE_PICTURE = 0;
+	private static final int RESULT_LOAD_IMAGE = 1;
+	private static final int CUT_PHOTO_REQUEST_CODE = 2;
+	private Uri photoUri;
 	File file;
     private String dictationResultStr = "[";
 		private HashMap<String, String> mIatResults = new LinkedHashMap<String, String>();
@@ -260,6 +292,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		// 去掉Activity上面的状态栏
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		roatdp = getResources().getDimension(R.dimen.introduce3_text_top);
 		initView();
 		initData();
 		handler.postDelayed(runnable, 10000); // 每隔1s执行// 初始化SlideMenus
@@ -330,6 +363,14 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 //			mIat.setParameter(SpeechConstant.ASR_AUDIO_PATH, Environment.getExternalStorageDirectory()+"/msc/iat.wav");
 //		}
 	public void initView() {
+		add= (ImageView)findViewById(R.id.img_add);
+		add.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				showHeadimgpop(v);
+			}
+		});
 		mListView = (ListView) findViewById(R.id.listview);
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 
@@ -525,6 +566,17 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 				e.printStackTrace();
 			}
 		}
+		
+		try {
+			if (mFileName!=null) {
+				File imgfile = new File(mFileName);
+				params.put("thefile", imgfile);
+			}	
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Log.e("paramsparamsparams", baseurl + "/api/chataddclient.php"+params.toString());
 		fp.post(baseurl + "/api/chataddclient.php", params, new AjaxCallBack<Object>() {
 			@Override
 			public void onSuccess(Object t) {
@@ -786,5 +838,195 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		}
 		mEditTextContent.setText(resultBuffer.toString());
 		SendMessage();
+	}
+	
+	public void showHeadimgpop(View v) {
+		// TODO Auto-generated method stub
+		View view = getLayoutInflater().inflate(R.layout.headimg_popview, null);
+		headimgpop = new PopupWindow(view, ViewGroup.LayoutParams.FILL_PARENT,
+				ViewGroup.LayoutParams.WRAP_CONTENT);
+		headimgpop.setBackgroundDrawable(null);
+		headimgpop.setOutsideTouchable(true);
+		headimgpop.setFocusable(true);
+		headimgpop.setTouchable(true);
+		headimgpop.showAtLocation(v, Gravity.BOTTOM, 0, 0);
+
+		Button btn_make_photo = (Button) view.findViewById(R.id.btn_camera);
+		Button btn_take_photo = (Button) view
+				.findViewById(R.id.btn_selectalbum);
+		Button btn_cancel = (Button) view.findViewById(R.id.btn_cancelload);
+
+		view.setOnKeyListener(new OnKeyListener() {
+
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				// TODO Auto-generated method stub
+				if (keyCode == KeyEvent.KEYCODE_BACK) {
+					if (headimgpop.isShowing()) {
+						headimgpop.dismiss();
+					}
+					return true;
+				}
+				return false;
+			}
+		});
+
+		btn_make_photo.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				openCamera();
+				headimgpop.dismiss();
+			}
+		});
+
+		btn_take_photo.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				openAlbum();
+				headimgpop.dismiss();
+			}
+		});
+		btn_cancel.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				headimgpop.dismiss();
+			}
+		});
+	}
+	/**
+	 * 打开相机
+	 */
+	@SuppressLint("ShowToast")
+	private void openCamera() {
+		String status = Environment.getExternalStorageState();
+		// 判断是否有SD卡,如果有sd卡存入sd卡在说，没有sd卡直接转换为图片
+		if (status.equals(Environment.MEDIA_MOUNTED)) {
+			doTakephoto();
+		} else {
+			Toast.makeText(ChatActivity.this, "没有可用的存储卡", Toast.LENGTH_LONG)
+					.show();
+		}
+	}
+
+	/**
+	 * 打开相册
+	 */
+	private void openAlbum() {
+		try {
+			Intent i = new Intent(
+					Intent.ACTION_PICK,
+					android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+			startActivityForResult(i, RESULT_LOAD_IMAGE);
+		} catch (ActivityNotFoundException e) {
+			Toast.makeText(ChatActivity.this, "没有找到照片", Toast.LENGTH_LONG)
+					.show();
+		}
+	}
+
+	/**
+	 * 拍照获取图片
+	 */
+	public void doTakephoto() {
+		try {
+			Intent openCameraIntent = new Intent(
+					MediaStore.ACTION_IMAGE_CAPTURE);
+
+			String sdcardState = Environment.getExternalStorageState();
+			String sdcardPathDir = android.os.Environment
+					.getExternalStorageDirectory().getPath() + "/tempImage/";
+			File file = null;
+			if (Environment.MEDIA_MOUNTED.equals(sdcardState)) {
+				// 有sd卡，是否有myImage文件夹
+				File fileDir = new File(sdcardPathDir);
+				if (!fileDir.exists()) {
+					fileDir.mkdirs();
+				}
+				// 是否有headImg文件
+				file = new File(sdcardPathDir + System.currentTimeMillis()
+						+ ".JPEG");
+			}
+			if (file != null) {
+				photoUri = Uri.fromFile(file);
+				openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+				startActivityForResult(openCameraIntent, TAKE_PICTURE);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@SuppressLint({ "SdCardPath", "SimpleDateFormat" })
+	private void startPhotoZoom(Uri uri) {
+		try {
+			// 获取系统时间 然后将裁剪后的图片保存至指定的文件夹
+			SimpleDateFormat sDateFormat = new SimpleDateFormat(
+					"yyyyMMddhhmmss");
+			String address = sDateFormat.format(new java.util.Date());
+			if (!FileUtils.isFileExist("")) {
+				FileUtils.createSDDir("");
+
+			}
+			Uri imageUri = Uri.parse("file:///sdcard/formats/" + address
+					+ ".JPEG");
+			mFileName = FileUtils.SDPATH + address + ".JPEG";
+			final Intent intent = new Intent("com.android.camera.action.CROP");
+
+			// 照片URL地址
+			intent.setDataAndType(uri, "image/*");
+
+			intent.putExtra("crop", "true");
+//			intent.putExtra("aspectX", 1);
+//			intent.putExtra("aspectY", 1);
+			intent.putExtra("outputX", 1920);
+			intent.putExtra("outputY", 1920);
+			// 输出路径
+			intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+			// 输出格式
+			intent.putExtra("outputFormat",
+					Bitmap.CompressFormat.JPEG.toString());
+			// 不启用人脸识别
+			intent.putExtra("noFaceDetection", false);
+			intent.putExtra("return-data", false);
+			startActivityForResult(intent, CUT_PHOTO_REQUEST_CODE);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		switch (requestCode) {
+		case TAKE_PICTURE:// 当选择拍照时调用
+
+			startPhotoZoom(photoUri);
+
+			break;
+		case RESULT_LOAD_IMAGE:
+			if (data != null) {// 当选择从本地获取图片时
+				Uri uri = data.getData();
+				if (uri != null) {
+					startPhotoZoom(uri);
+				}
+			}
+			break;
+		case CUT_PHOTO_REQUEST_CODE:
+			if (resultCode == RESULT_OK && null != data) {// 裁剪返回
+				leixing = "img";
+			   SendMessage();
+			}
+			break;
+		}
+
+		super.onActivityResult(requestCode, resultCode, data);
+
 	}
 }

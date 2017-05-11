@@ -165,7 +165,6 @@ public class RegiterActivity extends BaseActivity {
 		});
 		LinearLayout sexlayout = (LinearLayout) findViewById(R.id.sex_layout);
 		sexlayout.setOnClickListener(new OnClickListener() {
-
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
