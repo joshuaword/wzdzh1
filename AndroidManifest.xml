@@ -432,6 +432,7 @@
         <activity
             android:name="com.daijia.chat.VideoTasteActivity"
             android:configChanges="orientation|keyboardHidden"
+             android:screenOrientation="portrait"
             android:launchMode="singleTask" >
         </activity>
       
@@ -444,6 +445,28 @@
             android:name="com.dajia.activity.WebViewActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+        
+           <!-- 自定义相册 -->
+        <activity
+            android:name="com.twzs.zouyizou.photo.activity.AlbumActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.twzs.zouyizou.photo.activity.ImageFile"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.twzs.zouyizou.photo.activity.ShowAllPhoto"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.twzs.zouyizou.photo.activity.GalleryActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" >
         </activity>
    <!-- 友盟AppKey， 需要替换成你自己的 -->
         <meta-data

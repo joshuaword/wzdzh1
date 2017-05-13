@@ -11,10 +11,6 @@
         <item name="android:textColor">#ff5d5d5d</item>
         <item name="android:button">@drawable/checkbox_button</item>
     </style>
-    <style name="font18_black">
-        <item name="android:textSize">18.0dp</item>
-        <item name="android:textColor">#ff333333</item>
-    </style>
     <style name="font14_black">
         <item name="android:textSize">16.0dp</item>
         <item name="android:textColor">#ff333333</item>
@@ -23,10 +19,6 @@
     <style name="font14_white">
         <item name="android:textSize">16.0dp</item>
         <item name="android:textColor">#ffffffff</item>
-    </style>
-    <style name="font16_black">
-        <item name="android:textSize">16.0dp</item>
-        <item name="android:textColor">#ff333333</item>
     </style>
   <style name="font18_white">
         <item name="android:textSize">18.0dp</item>
@@ -409,4 +401,400 @@
 		<item name="android:textSize">12sp</item>      
 		<item name="android:gravity">center</item> 
 	</style>
+	
+    <style name="font16_black">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#ff333333</item>
+    </style>
+
+    <style name="font16_black_leve1">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#3c3c3c</item>
+    </style>
+
+    <style name="font16_black_leve2">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#7B7B7B</item>
+    </style>
+
+    <style name="font16_black_leve3">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#999999</item>
+    </style>
+
+    <style name="font18_black">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">#ff333333</item>
+    </style>
+
+    <style name="font20_black">
+        <item name="android:textSize">20.0sp</item>
+        <item name="android:textColor">#ff333333</item>
+    </style>
+
+    <style name="font22_black">
+        <item name="android:textSize">22.0sp</item>
+        <item name="android:textColor">#ff333333</item>
+    </style>
+
+    <style name="font12_white">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">#ffffffff</item>
+    </style>
+
+    <style name="font12_black">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">#ff333333</item>
+    </style>
+
+    <style name="font12_top_color">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">@color/top_title_bg</item>
+    </style>
+
+    <style name="font14_top_color">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textColor">@color/top_title_bg</item>
+    </style>
+
+    <style name="font16_top_color">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">@color/top_title_bg</item>
+    </style>
+
+    <style name="font18_top_color">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">@color/top_title_bg</item>
+    </style>
+
+    <!-- 蓝色字体 -->
+    <style name="font12_LEYOU_blue">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">#57B095</item>
+    </style>
+
+    <!-- 蓝色字体 -->
+    <style name="font14_LEYOU_blue">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textColor">#57B095</item>
+    </style>
+
+    <!-- 蓝色字体 -->
+    <style name="font16_LEYOU_blue">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#57B095</item>
+    </style>
+
+    <style name="font12_gray_black">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">#ff333333</item>
+    </style>
+
+
+    <style name="font10_gray_light">
+        <item name="android:textSize">10.0sp</item>
+        <item name="android:textColor">#ee4f4f4f</item>
+    </style>
+
+    <style name="font12_gray_level1">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">#3c3c3c</item>
+    </style>
+
+    <style name="font12_gray_level3">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">#999999</item>
+    </style>
+
+    <style name="font10_gray_level3">
+        <item name="android:textSize">10.0sp</item>
+        <item name="android:textColor">#999999</item>
+    </style>
+
+    <style name="font12_gray_light">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">#ee4f4f4f</item>
+    </style>
+
+    <style name="font16_pop_red">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#ffffaea0</item>
+    </style>
+
+    <style name="post_thread_title">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">#ff3a3a3a</item>
+    </style>
+
+    <style name="font16_pop_orange">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#fff6c67f</item>
+    </style>
+
+    <style name="font16_pop_green">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#ff4abba0</item>
+    </style>
+
+    <style name="font16_pop_blue">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#ff34aac9</item>
+    </style>
+
+    <style name="font12_pop_red">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">#ffffaea0</item>
+    </style>
+
+    <style name="font12_pop_orange">
+        <item name="android:textSize">12.0dp</item>
+        <item name="android:textColor">#fff6c67f</item>
+    </style>
+
+    <style name="font12_pop_green">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">#ff4abba0</item>
+    </style>
+
+    <style name="font16_comment_blue">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#ff34aac9</item>
+    </style>
+
+    <style name="font18_blue">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#ff34aac9</item>
+    </style>
+
+    <style name="font12_pop_blue">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">#ff34aac9</item>
+    </style>
+
+    <style name="font14_blue">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textColor">#cc0090ff</item>
+    </style>
+
+    <style name="font14_gray">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textColor">#ff666666</item>
+    </style>
+
+    <style name="font14_gray_level1">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textColor">#3c3c3c</item>
+    </style>
+
+    <style name="font14_gray_level2">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textColor">#7B7B7B</item>
+    </style>
+
+    <style name="font14_gray_level3">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textColor">#999999</item>
+    </style>
+
+    <style name="font16_blue">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#cc0090ff</item>
+    </style>
+
+    <style name="font18_gray">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">#ff666666</item>
+    </style>
+
+    <style name="font18_gray_level1">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">#3c3c3c</item>
+    </style>
+
+    <style name="font18_gray_level2">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">#7B7B7B</item>
+    </style>
+
+    <style name="font18_gray_level3">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">#999999</item>
+    </style>
+
+    <style name="font16_gray">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#ff666666</item>
+    </style>
+
+    <style name="font20_white">
+        <item name="android:textSize">20.0sp</item>
+        <item name="android:textColor">#ffffffff</item>
+    </style>
+
+    <style name="font24_white">
+        <item name="android:textSize">24.0sp</item>
+        <item name="android:textColor">#ffffffff</item>
+    </style>
+
+
+
+    <style name="font22_gray">
+        <item name="android:textSize">22.0sp</item>
+        <item name="android:textColor">#ff666666</item>
+    </style>
+
+    <style name="font16_red">
+        <item name="android:textSize">16.0sp</item>
+        <item name="android:textColor">#ffe70010</item>
+    </style>
+
+    <style name="font18_red">
+        <item name="android:textSize">18.0sp</item>
+        <item name="android:textColor">#ffe70010</item>
+    </style>
+
+    <style name="font12_red">
+        <item name="android:textSize">12.0sp</item>
+        <item name="android:textColor">#ffe70010</item>
+    </style>
+
+    <style name="font14_red">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textColor">#ffe70010</item>
+    </style>
+
+    <style name="font14_green">
+        <item name="android:textSize">14.0sp</item>
+        <item name="android:textColor">#58b095</item>
+    </style>
+    <!-- 系统主题颜色 浅海洋绿 -->
+    <style name="font12_light_sea_green">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#44a1ab</item>
+    </style>
+
+    <style name="font14_light_sea_green">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#44a1ab</item>
+    </style>
+
+    <style name="font16_light_sea_green">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#44a1ab</item>
+    </style>
+
+    <style name="font18_light_sea_green">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#44a1ab</item>
+    </style>
+
+    <style name="font20_light_sea_green">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#44a1ab</item>
+    </style>
+    <!-- 褐色字体12 -->
+    <style name="font12_brown">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#8f7864</item>
+    </style>
+    <!-- 褐色字体14 -->
+    <style name="font14_brown">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#8f7864</item>
+    </style>
+    <!-- 褐色字体16 -->
+    <style name="font16_brown">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#8f7864</item>
+    </style>
+    <!-- 褐色字体18 -->
+    <style name="font18_brown">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#8f7864</item>
+    </style>
+    <!-- 褐色字体20 -->
+    <style name="font20_brown">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#8f7864</item>
+    </style>
+    <!-- 橙色字体12 -->
+    <style name="font12_orange">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#fa7708</item>
+    </style>
+    <!-- 橙色字体14 -->
+    <style name="font14_orange">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#fa7708</item>
+    </style>
+    <!-- 橙色字体16 -->
+    <style name="font16_orange">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#fa7708</item>
+    </style>
+    <!-- 橙色字体18 -->
+    <style name="font18_orange">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#fa7708</item>
+    </style>
+    <!-- 橙色字体20 -->
+    <style name="font20_orange">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#fa7708</item>
+    </style>
+    <!-- 淡绿色字体12 -->
+    <style name="font12_light_green">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#5fd49f</item>
+    </style>
+    <!-- 淡绿色字体14 -->
+    <style name="font14_light_green">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#5fd49f</item>
+    </style>
+    <!-- 淡绿色字体16 -->
+    <style name="font16_light_green">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#5fd49f</item>
+    </style>
+    <!-- 淡绿色字体18 -->
+    <style name="font18_light_green">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#5fd49f</item>
+    </style>
+
+    <!-- 绿色字体16 -->
+    <style name="font16_green">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#108e01</item>
+    </style>
+    <!-- 淡绿色字体20 -->
+    <style name="font20_light_green">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">#5fd49f</item>
+    </style>
+
+    <!-- 淡灰色12 -->
+    <style name="font12_light_gray">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#cccccc</item>
+    </style>
+
+    <!-- 淡灰色14 -->
+    <style name="font14_light_gray">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">#cccccc</item>
+    </style>
+
+    <!-- 淡灰色16 -->
+    <style name="font16_light_gray">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#cccccc</item>
+    </style>
+
+    <!-- 灰c5c5c5 16 -->
+    <style name="font16_gray_c5c5c5">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">#c5c5c5</item>
+    </style>
 </resources>

@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,14 +43,20 @@ import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
 import com.twzs.core.download.Downloadhelper;
+import com.twzs.zouyizou.photo.activity.AlbumActivity;
+import com.twzs.zouyizou.photo.util.Bimp;
+import com.twzs.zouyizou.photo.util.ImageItem;
 import com.zms.wechatrecorder.MediaManager;
 import com.zms.wechatrecorder.view.AudioRecordButton;
 import com.zms.wechatrecorder.view.AudioRecordButton.AudioRecordFinishListener;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -62,6 +69,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.provider.MediaStore.Images.ImageColumns;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
@@ -93,9 +101,10 @@ import net.tsz.afinal.http.AjaxCallBack;
 import net.tsz.afinal.http.AjaxParams;
 
 public class ChatActivity extends SlidingFragmentActivity implements OnClickListener {
-	/** Called when the activity is first created. */
+	public static List<String> all_photoList = new ArrayList<String>();
 	private ChatBean chatbean;
 	private Button mBtnSend;
+	Dialog progressDialog;
 	private AudioRecordButton mBtnRcd;
 	Button btn_normal_rcd;
 	private ImageView mBtnBack;
@@ -126,6 +135,8 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 	private String leirong;
 	private PopupWindow headimgpop;
 	private ImageView add;
+	File imgfile;
+
 	/**
 	 * 拍照的照片存储位置
 	 */
@@ -138,7 +149,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 	 */
 	private static final int TAKE_PICTURE = 0;
 	private static final int RESULT_LOAD_IMAGE = 1;
-	private static final int CUT_PHOTO_REQUEST_CODE = 2;
+	// private static final int CUT_PHOTO_REQUEST_CODE = 2;
 	private Uri photoUri;
 	File file;
 	private String dictationResultStr = "[";
@@ -277,6 +288,13 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		});
 
 	}
+	private BroadcastReceiver reciverrefresh = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			getMessage();
+		}
+	};
 
 	private BroadcastReceiver reciver = new BroadcastReceiver() {
 		@Override
@@ -284,10 +302,12 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 			// TODO Auto-generated method stub
 			url = intent.getStringExtra("url_data");
 			leixing = "video";
-             SendMessage();
+			progressDialog = ProgressDialog.show(ChatActivity.this, null, "正在发送视频...");
+			progressDialog.show();
+			SendMessage("video");
+			url = "";
 		}
 	};
-	
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -299,6 +319,8 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		roatdp = getResources().getDimension(R.dimen.introduce3_text_top);
 		registerReceiver(reciver, new IntentFilter(Constant.RECEIVEACTION));
+		registerReceiver(reciverrefresh, new IntentFilter(Constant.RECEIVEREFRESH));
+		
 		initView();
 		initData();
 		handler.postDelayed(runnable, 10000); // 每隔1s执行// 初始化SlideMenus
@@ -479,7 +501,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 												finalResult += dictationResultList.get(i).toString();
 											}
 											mEditTextContent.setText(finalResult);
-											SendMessage();
+											SendMessage("txt");
 											Log.d("From reall phone", finalResult);
 										}
 									}
@@ -507,7 +529,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 				}
 			}
 		});
-		
+
 		mBottom.setVisibility(View.GONE);
 		if (VehicleApp.getInstance().getSetBean().getVoice().equals("xunfei")) {
 			leixing = "txt";
@@ -517,9 +539,8 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 				public void onClick(View arg0) {
 					// TODO Auto-generated method stub
 					if (null == mIat) {
-						Toast.makeText(ChatActivity.this,
-								"创建对象失败，请确认 libmsc.so 放置正确，且有调用 createUtility 进行初始化", Toast.LENGTH_SHORT)
-								.show();
+						Toast.makeText(ChatActivity.this, "创建对象失败，请确认 libmsc.so 放置正确，且有调用 createUtility 进行初始化",
+								Toast.LENGTH_SHORT).show();
 						return;
 					}
 					dictationResultStr = "[";
@@ -538,15 +559,15 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 							}
 							if (isLast) {
 								Gson gson = new Gson();
-								List<DictationResult> dictationResultList = gson.fromJson(
-										dictationResultStr, new TypeToken<List<DictationResult>>() {
+								List<DictationResult> dictationResultList = gson.fromJson(dictationResultStr,
+										new TypeToken<List<DictationResult>>() {
 								}.getType());
 								String finalResult = "";
 								for (int i = 0; i < dictationResultList.size() - 1; i++) {
 									finalResult += dictationResultList.get(i).toString();
 								}
 								mEditTextContent.setText(finalResult);
-								SendMessage();
+								SendMessage("txt");
 								Log.d("From reall phone", finalResult);
 							}
 						}
@@ -591,7 +612,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 			return;
 		}
 		getMessage();
-		SendMessage();
+		SendMessage("txt");
 
 	}
 
@@ -628,7 +649,29 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 
 	}
 
-	private void SendMessage() {
+	private void sendPhoto() {
+		if (all_photoList != null && all_photoList.size() > 0) {
+			String baseurl = settings.getString("baseurl", "http://wzd.k76.net");
+			String userid = settings.getString("userid", "");
+			Map<String, String> parameterMap = new HashMap<String, String>();
+			parameterMap.put("userid", userid);
+			parameterMap.put("act", "postok");
+			parameterMap.put("leixing", "img");
+			List<String> paramList = new ArrayList<String>();
+			for (int i = 1; i < all_photoList.size(); i++) {
+				paramList.add(all_photoList.get(i));
+			}
+			progressDialog = ProgressDialog.show(ChatActivity.this, null, "正在发送图片...");
+			progressDialog.show();
+			if(headimgpop.isShowing()){
+				headimgpop.dismiss();
+			}
+			new AsyncFilesUploadTask(this, baseurl + "/api/chataddclient.php", parameterMap, paramList,progressDialog).execute();
+		}
+
+	}
+
+	private void SendMessage(String leixing) {
 		final SharedPreferences settings = getSharedPreferences("setting", 0);
 		String baseurl = settings.getString("baseurl", "http://wzd.k76.net");
 		String userid = settings.getString("userid", "");
@@ -653,10 +696,8 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 				e.printStackTrace();
 			}
 		}
-
 		try {
-			if (mFileName != null) {
-				File imgfile = new File(mFileName);
+			if (imgfile != null) {
 				params.put("thefile", imgfile);
 			}
 		} catch (FileNotFoundException e) {
@@ -690,6 +731,9 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 						leirong = "";
 						mEditTextContent.setText("");
 						getMessage();
+						if (progressDialog != null && progressDialog.isShowing()) {
+							progressDialog.cancel();
+						}
 					}
 				}
 			}
@@ -752,7 +796,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 	private void send() {
 		String contString = mEditTextContent.getText().toString();
 		if (contString.length() > 0) {
-			SendMessage();
+			SendMessage("txt");
 		}
 	}
 
@@ -853,7 +897,9 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		public void onFinish(float second, String filePath) {
 			mp3time = second + "";
 			file = new File(filePath);
-			SendMessage();
+			SendMessage("mp3");
+			file = null;
+			
 		}
 
 	}
@@ -869,6 +915,8 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		}
 		MediaManager.release();
 		unregisterReceiver(reciver);
+		unregisterReceiver(reciverrefresh);
+		
 	}
 
 	@Override
@@ -936,7 +984,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 			resultBuffer.append(mIatResults.get(key));
 		}
 		mEditTextContent.setText(resultBuffer.toString());
-		SendMessage();
+		SendMessage("txt");
 	}
 
 	public void showHeadimgpop(View v) {
@@ -983,8 +1031,12 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				openAlbum();
-				headimgpop.dismiss();
+				// openAlbum();
+				all_photoList.clear();
+				Intent intent = new Intent(ChatActivity.this, AlbumActivity.class);
+				// startActivity(intent);
+				// headimgpop.dismiss();
+				startActivityForResult(intent, RESULT_LOAD_IMAGE);
 			}
 		});
 		btn_cancel.setOnClickListener(new OnClickListener() {
@@ -1053,36 +1105,75 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		}
 	}
 
+	public static String getRealFilePath(final Context context, final Uri uri) {
+		if (null == uri)
+			return null;
+		final String scheme = uri.getScheme();
+		String data = null;
+		if (scheme == null)
+			data = uri.getPath();
+		else if (ContentResolver.SCHEME_FILE.equals(scheme)) {
+			data = uri.getPath();
+		} else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
+			Cursor cursor = context.getContentResolver().query(uri, new String[] { ImageColumns.DATA }, null, null,
+					null);
+			if (null != cursor) {
+				if (cursor.moveToFirst()) {
+					int index = cursor.getColumnIndex(ImageColumns.DATA);
+					if (index > -1) {
+						data = cursor.getString(index);
+					}
+				}
+				cursor.close();
+			}
+		}
+		return data;
+	}
+
 	@SuppressLint({ "SdCardPath", "SimpleDateFormat" })
 	private void startPhotoZoom(Uri uri) {
+
 		try {
 			// 获取系统时间 然后将裁剪后的图片保存至指定的文件夹
 			SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
 			String address = sDateFormat.format(new java.util.Date());
 			if (!FileUtils.isFileExist("")) {
 				FileUtils.createSDDir("");
-
 			}
-			Uri imageUri = Uri.parse("file:///sdcard/formats/" + address + ".JPEG");
 			mFileName = FileUtils.SDPATH + address + ".JPEG";
-			final Intent intent = new Intent("com.android.camera.action.CROP");
-
-			// 照片URL地址
-			intent.setDataAndType(uri, "image/*");
-
-			intent.putExtra("crop", "true");
-			// intent.putExtra("aspectX", 1);
-			// intent.putExtra("aspectY", 1);
-			intent.putExtra("outputX", 1920);
-			intent.putExtra("outputY", 1920);
-			// 输出路径
-			intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-			// 输出格式
-			intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-			// 不启用人脸识别
-			intent.putExtra("noFaceDetection", false);
-			intent.putExtra("return-data", false);
-			startActivityForResult(intent, CUT_PHOTO_REQUEST_CODE);
+			if (uri != null) {
+				String img_url = getRealFilePath(this, uri);
+				imgfile = new File(img_url);
+				leixing = "img";
+				progressDialog = ProgressDialog.show(ChatActivity.this, null, "正在发送图片...");
+				progressDialog.show();
+				if (headimgpop.isShowing()) {
+					headimgpop.dismiss();
+				}
+				SendMessage("img");
+				imgfile=null;
+				
+			}
+			// final Intent intent = new
+			// Intent("com.android.camera.action.CROP");
+			//
+			// // 照片URL地址
+			// intent.setDataAndType(uri, "image/*");
+			//
+			// intent.putExtra("crop", "true");
+			// // intent.putExtra("aspectX", 1);
+			// // intent.putExtra("aspectY", 1);
+			// intent.putExtra("outputX", 1920);
+			// intent.putExtra("outputY", 1920);
+			// // 输出路径
+			// intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+			// // 输出格式
+			// intent.putExtra("outputFormat",
+			// Bitmap.CompressFormat.JPEG.toString());
+			// // 不启用人脸识别
+			// intent.putExtra("noFaceDetection", false);
+			// intent.putExtra("return-data", false);
+			// startActivityForResult(intent, RESULT_LOAD_IMAGE);
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -1094,39 +1185,62 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		// TODO Auto-generated method stub
 		switch (requestCode) {
 		case TAKE_PICTURE:// 当选择拍照时调用
-
-			startPhotoZoom(photoUri);
+					startPhotoZoom(photoUri);
 
 			break;
 		case RESULT_LOAD_IMAGE:
-			if (data != null) {// 当选择从本地获取图片时
-				Uri uri = data.getData();
-				if (uri != null) {
-					startPhotoZoom(uri);
-				}
+			// if (data != null) {// 当选择从本地获取图片时
+			// Uri uri = data.getData();
+			// if (uri != null) {
+			// startPhotoZoom(uri);
+			// }
+			// }
+
+			for (ImageItem result : Bimp.tempSelectBitmap) {
+				all_photoList.add(result.getImagePath());
 			}
-			break;
-		case CUT_PHOTO_REQUEST_CODE:
-			if (resultCode == RESULT_OK && null != data) {// 裁剪返回
-				leixing = "img";
-				SendMessage();
+			List<String> paramList = new ArrayList<String>();
+			List<Map<String, File>> fileList = new ArrayList<Map<String, File>>();
+			for (int i = 0; i < all_photoList.size(); i++) {
+				paramList.add(all_photoList.get(i));
 			}
+			for (int i = 0; i < paramList.size(); i++) {
+				Map<String, File> fileMap = new HashMap<String, File>();
+				File file = new File(paramList.get(i));
+				fileMap.put(".jpg", file);
+				fileList.add(fileMap);
+			}
+			sendPhoto();
+			Log.d("***", all_photoList.toString());
 			break;
+		// case CUT_PHOTO_REQUEST_CODE:
+		// if (data != null) {// 当选择从本地获取图片时
+		// Uri uri = data.getData();
+		// if (uri != null) {
+		// startPhotoZoom(uri);
+		// }
+		// }
+		// break;
+		// case CUT_PHOTO_REQUEST_CODE:
+		// if (resultCode == RESULT_OK && null != data) {// 裁剪返回
+		// leixing = "img";
+		// SendMessage();
+		// }
+		// break;
 
 		case VIDEO_CAPTURE0:
 			if (resultCode == RESULT_OK && null != data) {// 裁剪返回
 				Uri uri = data.getData();
 				String[] proj = { MediaStore.Images.Media.DATA };
-
 				Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
-
 				int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-
 				actualimagecursor.moveToFirst();
-
 				url = actualimagecursor.getString(actual_image_column_index);
 				leixing = "video";
-				SendMessage();
+				progressDialog = ProgressDialog.show(ChatActivity.this, null, "正在发送视频...");
+				progressDialog.show();
+				SendMessage("video");
+				url="";
 			}
 			break;
 		}
@@ -1186,7 +1300,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 			switch (v.getId()) {
 			case R.id.btn_camera:
 				Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-				intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
+				intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
 				// intent.putExtra(MediaStore.EXTRA_OUTPUT, path);
 				intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 60);
 				startActivityForResult(intent, VIDEO_CAPTURE0);

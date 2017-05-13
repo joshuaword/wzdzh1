@@ -83,6 +83,7 @@
     <color name="gray">#fff1f1f1</color>
     <color name="dark_red">#ffa11111</color>
     <color name="white">#ffffffff</color>
+      <color name="top_title_bg">#108E01</color>
     <color name="white_0.2">#33ffffff</color>
     <color name="white_0.3">#4dffffff</color>
     <color name="white_0.3_index">#b2ffffff</color>
@@ -132,4 +133,20 @@
     <color name="viewfinder_mask">#60000000</color>
     <color name="possible_result_points">#c0ffff00</color>
     <color name="step_red">#E05189</color>
+     <!-- 上传图片添加的颜色 -->
+    <color name="none_color">#00000000</color>
+    <color name="plugin_camera_black">#000000</color>
+    <color name="albumback">#E1E0DE</color>
+    <color name="style_red">#ff4c41</color>
+    <color name="style_divider_color">#C9C7CD</color>
+    <color name="green_light">#58b095</color>
+    <color name="light_gray">#c6c0BD</color>
+    <color name="backgroud_gray">#e0dfdf</color>
+    <color name="ispay">#7dc105</color>
+    <color name="issound">#ed9b5a</color>
+    <color name="isguide">#02d1c8</color>
+    <!-- 透明背景 -->
+    <drawable name="translucent_background">#80000000</drawable>
+
+    <color name="ldrawer_color">#FFFFFF</color>
 </resources>

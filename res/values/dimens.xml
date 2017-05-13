@@ -44,4 +44,19 @@
     <dimen name="message_detail">11.0sp</dimen>
     <dimen name="account_item_corner_radius">5.0dip</dimen>
     <dimen name="account_item_stoke_width">1.0dip</dimen>
+    <dimen name="shadow_width">15dp</dimen>
+    <dimen name="right_menu_width">80dp</dimen>
+    <dimen name="later_menu_maigin">-18dp</dimen>
+    <dimen name="ui_10_dip">10dip</dimen>
+
+    <dimen name="android_spaces">8dp</dimen>
+    <dimen name="android_spaces_large">16dp</dimen>
+    <dimen name="android_spaces_small">4dp</dimen>
+    
+    <dimen name="ldrawer_drawableSize">50dp</dimen>
+    <dimen name="ldrawer_barSize">22dp</dimen>
+    <dimen name="ldrawer_topBottomBarArrowSize">16dp</dimen>
+    <dimen name="ldrawer_thickness">3dp</dimen>
+    <dimen name="ldrawer_gapBetweenBars">6dp</dimen>
+    <dimen name="ldrawer_middleBarArrowSize">22dp</dimen>
 </resources>

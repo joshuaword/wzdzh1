@@ -1,6 +1,8 @@
 package com.daijia.chat;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnPreparedListener;
@@ -21,6 +23,7 @@ public class VideoTasteActivity extends Activity {
 
 	private MyVideoView mVideoView;
 	PopupWindow popupWindow;
+	Dialog progressDialog;
 	ImageView btn_pay_zhifu;
 	private String url;
 	Button play, pause, baonianchoose, btn_zhifubao1, btn_weixin1, btn_duanxin1, btn_zhifubao2, btn_weixin2,
@@ -31,10 +34,12 @@ public class VideoTasteActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+//		requestWindowFeature(Window.FEATURE_NO_TITLE);
+//		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 		setContentView(R.layout.video_taste_activity);
+		progressDialog = ProgressDialog.show(VideoTasteActivity.this, null, "正在加载视频...");
+		progressDialog.show();
 		DisplayMetrics dm = new DisplayMetrics();
 		this.getWindowManager().getDefaultDisplay().getMetrics(dm);
 		mVideoView = (MyVideoView) findViewById(R.id.videoView);
@@ -48,13 +53,18 @@ public class VideoTasteActivity extends Activity {
 			mVideoView.setVideoURI(uri);
 			mVideoView.requestFocus();
 			mVideoView.start();
+			
 			// 视频准备好
 			mVideoView.setOnPreparedListener(new OnPreparedListener() {
 				@Override
 				public void onPrepared(MediaPlayer mp) {
+					if(progressDialog.isShowing()){
+						progressDialog.dismiss();
+					}
 					mp.setOnSeekCompleteListener(new OnSeekCompleteListener() {
 						@Override
 						public void onSeekComplete(MediaPlayer mp) {
+							
 							mp.start();
 						}
 					});
