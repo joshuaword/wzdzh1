@@ -424,7 +424,16 @@
             android:label="MediaListActivity"
             android:launchMode="singleTask" >
         </activity>
-        
+         <activity
+            android:name="com.daijia.chat.VideoUploadActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTask" >
+        </activity>
+        <activity
+            android:name="com.daijia.chat.VideoTasteActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:launchMode="singleTask" >
+        </activity>
       
          <activity
             android:name="com.dajia.activity.ChatLoginActivity"

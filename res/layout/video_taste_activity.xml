@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+<!-- 这个MyVideoView是继承自系统VideoView,所以在这里应该加上这个类的包名.如果还用VideoView则在相应的Activity里面会报类转换异常。 -->
+<!--即不能将VideoView强制转换为MyVideoView.-->
+    <com.daijia.chat.MyVideoView
+        android:id="@+id/videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:theme="@android:style/Theme.NoTitleBar.Fullscreen"/> "
+
+</LinearLayout>

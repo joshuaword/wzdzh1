@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 选择照片弹出窗 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentBottom="true"
+    android:background="#cc222222"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+ <!-- android:background="@drawable/btn_style_alert_dialog_background" -->
+
+    <Button
+        android:id="@+id/btn_camera"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:layout_marginTop="20dip"
+        android:text="拍摄"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn_album"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="10dip"
+        android:layout_marginLeft="20dip"
+        android:layout_marginRight="20dip"
+        android:layout_marginTop="10dip"
+        android:text="从本地视频选取"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        style="@style/font16_white"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_marginBottom="15dip"
+        android:layout_marginLeft="23dip"
+        android:layout_marginRight="23dip"
+        android:background="@color/blue1"
+        android:text="取消"
+        android:textStyle="bold" />
+
+</LinearLayout>

@@ -93,8 +93,8 @@
                     android:id="@+id/jianjie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                          android:layout_marginTop="5dip"
                     android:layout_marginLeft="3dip"
+                    android:layout_marginTop="5dip"
                     android:maxLength="18"
                     android:text="简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介"
                     android:textColor="@color/black"
@@ -102,21 +102,34 @@
             </LinearLayout>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/img_chatcontent"
-            android:layout_width="100dip"
-            android:layout_height="100dip"
+        <RelativeLayout
+            android:id="@+id/img_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
-            android:layout_toLeftOf="@id/iv_userhead"
-            android:background="@drawable/chatto_bg"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="left|center"
-            android:lineSpacingExtra="2dp"
-            android:minHeight="50dp"
-            android:textColor="#ff000000"
-            android:textSize="15sp"
-            android:visibility="gone" />
+            android:layout_toLeftOf="@id/iv_userhead" >
+
+            <ImageView
+                android:id="@+id/img_chatcontent"
+                android:layout_width="100dip"
+                android:layout_height="100dip"
+                android:background="@drawable/chatto_bg"
+                android:textColor="#ff000000"
+                android:textSize="15sp"
+                android:visibility="gone"
+                />
+
+            <ImageView
+                android:id="@+id/img_play"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_centerInParent="true"
+                android:background="@drawable/play"
+                android:textColor="#ff000000"
+                android:textSize="15sp"
+                android:visibility="gone" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_time"

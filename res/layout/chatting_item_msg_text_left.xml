@@ -72,31 +72,46 @@
                     android:id="@+id/img_title"
                     android:layout_width="70dip"
                     android:layout_height="70dip"
-                    android:src="@drawable/bg_dialog"
-                  />
+                    android:src="@drawable/bg_dialog" />
 
                 <TextView
                     android:id="@+id/jianjie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="3dip"
+                    android:layout_marginTop="5dip"
                     android:maxLength="18"
-                          android:layout_marginTop="5dip"
                     android:text="简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介简介"
                     android:textColor="@color/black"
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/img_chatcontent"
-            style="@style/chat_content_date_style"
-            android:layout_width="100dip"
-            android:layout_height="100dip"
+        <RelativeLayout
+            android:id="@+id/img_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_toRightOf="@id/iv_userhead"
-            android:background="@drawable/chatfrom_bg"
-            android:visibility="gone" />
+            android:layout_toRightOf="@id/iv_userhead" >
+
+            <ImageView
+                android:id="@+id/img_chatcontent"
+                style="@style/chat_content_date_style"
+                android:layout_width="100dip"
+                android:layout_height="100dip"
+                  android:visibility="gone"
+                android:background="@drawable/chatfrom_bg" />
+
+            <ImageView
+                android:id="@+id/img_play"
+                style="@style/chat_content_date_style"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_centerInParent="true"
+                android:background="@drawable/play"
+                android:visibility="gone" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_time"

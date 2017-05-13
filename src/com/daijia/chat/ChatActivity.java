@@ -21,12 +21,11 @@ import com.dajia.Bean.DictationResult;
 import com.dajia.Bean.UpDateInfo;
 import com.dajia.activity.ChatLoginActivity;
 import com.dajia.activity.CheckHtmlActivity;
-import com.dajia.activity.RegiterActivity;
+import com.dajia.constant.Constant;
 import com.dajia.fragment.MenuFragment;
 import com.dajia.util.Assign_UpDateDialog;
 import com.dajia.util.ConfirmDialogListener;
 import com.dajia.util.FileUtils;
-import com.dajia.view.Bimp;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.iflytek.cloud.ErrorCode;
@@ -42,18 +41,21 @@ import com.iflytek.cloud.ui.RecognizerDialog;
 import com.iflytek.cloud.ui.RecognizerDialogListener;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingFragmentActivity;
-import com.tencent.mm.sdk.modelmsg.WXMediaMessage.IMediaObject;
 import com.twzs.core.download.Downloadhelper;
 import com.zms.wechatrecorder.MediaManager;
 import com.zms.wechatrecorder.view.AudioRecordButton;
 import com.zms.wechatrecorder.view.AudioRecordButton.AudioRecordFinishListener;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -64,12 +66,14 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -106,10 +110,13 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 	private ImageView img1, sc_img1;
 	private SoundMeter mSensor;
 	private View rcChat_popup;
+	private static final int VIDEO_CAPTURE0 = 10;
 	private LinearLayout del_re;
+	private PopupWindow choosePopupWindow;
 	private ImageView chatting_mode_btn, volume;
-	private boolean btn_vocie = false;
+	private boolean btn_vocie = true;
 	private int flag = 1;
+	private String url;
 	private Handler mHandler = new Handler();
 	private String voiceName, leixing;
 	private long startVoiceT, endVoiceT;
@@ -134,8 +141,8 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 	private static final int CUT_PHOTO_REQUEST_CODE = 2;
 	private Uri photoUri;
 	File file;
-    private String dictationResultStr = "[";
-		private HashMap<String, String> mIatResults = new LinkedHashMap<String, String>();
+	private String dictationResultStr = "[";
+	private HashMap<String, String> mIatResults = new LinkedHashMap<String, String>();
 	Handler handler = new Handler();
 	Runnable runnable = new Runnable() {
 
@@ -152,138 +159,136 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 	};
 
 	// 语音合成对象
-		private SpeechSynthesizer mTts;
+	private SpeechSynthesizer mTts;
 
-		// 默认发音人
-		private String voicer = "xiaoyan";
-		// 缓冲进度
-		private int mPercentForBuffering = 0;
-		// 播放进度
-		private int mPercentForPlaying = 0;
-	
-	
-		private SpeechRecognizer mIat;
-		private String mEngineType = SpeechConstant.TYPE_CLOUD;
-		
-		/**
-		 * 初始化监听器。
-		 */
-		private InitListener mInitListener = new InitListener() {
+	// 默认发音人
+	private String voicer = "xiaoyan";
+	// 缓冲进度
+	private int mPercentForBuffering = 0;
+	// 播放进度
+	private int mPercentForPlaying = 0;
 
+	private SpeechRecognizer mIat;
+	private String mEngineType = SpeechConstant.TYPE_CLOUD;
+
+	/**
+	 * 初始化监听器。
+	 */
+	private InitListener mInitListener = new InitListener() {
+
+		@Override
+		public void onInit(int code) {
+			Log.d("", "SpeechRecognizer init() code = " + code);
+			if (code != ErrorCode.SUCCESS) {
+			}
+		}
+	};
+
+	/***
+	 * @return
+	 */
+	public static final String getAppSDPath() {
+		File file = new File(Environment.getExternalStorageDirectory(), "apk");
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		return file.getAbsolutePath();
+	}
+
+	public static final String getAppTmpSDPath() {
+		File file = new File(getAppSDPath(), TEMPPATH);
+		if (!file.exists()) {
+			file.mkdirs();
+		}
+		return file.getAbsolutePath();
+	}
+
+	public static String getFileNameFromUrl(String s) {
+		int i = s.lastIndexOf("\\");
+		if (i < 0 || i >= s.length() - 1) {
+			i = s.lastIndexOf("/");
+			if (i < 0 || i >= s.length() - 1)
+				return s;
+		}
+		return s.substring(i + 1);
+	}
+
+	/**
+	 * 显示升级对话框
+	 */
+	public void showUpdate_Dialog(String newVersion, final String downUrl, final String isAPK) {
+		String newverStr = "有新版本更新啦！";
+		final String version_downloading = this.getResources().getString(R.string.version_downloading, newVersion);
+		final String installapkfile = getAppTmpSDPath() + "/" + getFileNameFromUrl(downUrl);
+		Assign_UpDateDialog.showUpdateDialog(this, newverStr, "增加新功能，优化性能！", "立即尝鲜", "残忍拒绝",
+				new ConfirmDialogListener() {
+					@Override
+					public void onPositive(DialogInterface dialog) {
+						// TODO Auto-generated method stub
+						if (isAPK.equals("yes")) {
+							Downloadhelper dm = new Downloadhelper(ChatActivity.this, true);
+							dm.downLoadFile(version_downloading, downUrl, installapkfile);
+							dialog.cancel();
+						} else {
+							if (downUrl != null && !downUrl.equals("")) {
+
+								Intent intent = new Intent(ChatActivity.this, CheckHtmlActivity.class);
+								intent.putExtra("baseurl", downUrl);
+								startActivity(intent);
+							}
+						}
+
+					}
+
+					@Override
+					public void onNegative(DialogInterface dialog) {
+						dialog.cancel();
+					}
+				});
+
+	}
+
+	private void checkUPDATE() {
+
+		String baseurl = settings.getString("baseurl", "http://wzd.k76.net");
+		String userid = settings.getString("userid", "");
+		FinalHttp fp = new FinalHttp();
+		AjaxParams params = new AjaxParams();
+		params.put("userid", userid);
+		params.put("act", "postok");
+		params.put("appname", "android");
+		fp.post(baseurl + "/api/shengjiclient.php", params, new AjaxCallBack<Object>() {
 			@Override
-			public void onInit(int code) {
-				Log.d("", "SpeechRecognizer init() code = " + code);
-				if (code != ErrorCode.SUCCESS) {
+			public void onSuccess(Object t) {
+				Gson gson = new Gson();
+				UpDateInfo upDateBean = gson.fromJson(t.toString(), UpDateInfo.class);
+				if (upDateBean != null) {
+					if (!upDateBean.getVer().equals("7.4.20170419")) {
+						showUpdate_Dialog(upDateBean.getVer(), upDateBean.getUrl(), upDateBean.getApk());
+					}
 				}
 			}
-		};
-		
-		/***
-		 * @return
-		 */
-		public static final String getAppSDPath() {
-			File file = new File(Environment.getExternalStorageDirectory(), "apk");
-			if (!file.exists()) {
-				file.mkdirs();
+
+			@Override
+			public void onFailure(Throwable t, int errorNo, String strMsg) {
+				super.onFailure(t, errorNo, strMsg);
+				Log.e("aaaa", t.toString() + "-------" + errorNo + "-------" + strMsg);
 			}
-			return file.getAbsolutePath();
+		});
+
+	}
+
+	private BroadcastReceiver reciver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO Auto-generated method stub
+			url = intent.getStringExtra("url_data");
+			leixing = "video";
+             SendMessage();
 		}
+	};
+	
 
-		public static final String getAppTmpSDPath() {
-			File file = new File(getAppSDPath(), TEMPPATH);
-			if (!file.exists()) {
-				file.mkdirs();
-			}
-			return file.getAbsolutePath();
-		}
-
-		public static String getFileNameFromUrl(String s) {
-			int i = s.lastIndexOf("\\");
-			if (i < 0 || i >= s.length() - 1) {
-				i = s.lastIndexOf("/");
-				if (i < 0 || i >= s.length() - 1)
-					return s;
-			}
-			return s.substring(i + 1);
-		}
-		/**
-		 * 显示升级对话框
-		 */
-		public void showUpdate_Dialog(String newVersion, final String downUrl,
-				final String isAPK) {
-			String newverStr = "有新版本更新啦！";
-			final String version_downloading = this.getResources().getString(
-					R.string.version_downloading, newVersion);
-			final String installapkfile = getAppTmpSDPath() + "/"
-					+ getFileNameFromUrl(downUrl);
-			Assign_UpDateDialog.showUpdateDialog(this, newverStr, "增加新功能，优化性能！",
-					"立即尝鲜", "残忍拒绝", new ConfirmDialogListener() {
-						@Override
-						public void onPositive(DialogInterface dialog) {
-							// TODO Auto-generated method stub
-							if (isAPK.equals("yes")) {
-								Downloadhelper dm = new Downloadhelper(
-										ChatActivity.this, true);
-								dm.downLoadFile(version_downloading, downUrl,
-										installapkfile);
-								dialog.cancel();
-							} else {
-								if (downUrl != null && !downUrl.equals("")) {
-
-									Intent intent = new Intent(
-											ChatActivity.this,
-											CheckHtmlActivity.class);
-									intent.putExtra("baseurl", downUrl);
-									startActivity(intent);
-								}
-							}
-
-						}
-
-						@Override
-						public void onNegative(DialogInterface dialog) {
-							dialog.cancel();
-						}
-					});
-
-		}
-		
-		private void checkUPDATE() {
-
-			String baseurl = settings.getString("baseurl", "http://wzd.k76.net");
-			String userid = settings.getString("userid", "");
-			FinalHttp fp = new FinalHttp();
-			AjaxParams params = new AjaxParams();
-			params.put("userid", userid);
-			params.put("act", "postok");
-			params.put("appname", "android");
-			fp.post(baseurl + "/api/shengjiclient.php", params,
-					new AjaxCallBack<Object>() {
-						@Override
-						public void onSuccess(Object t) {
-							Gson gson = new Gson();
-							UpDateInfo upDateBean = gson.fromJson(t.toString(),
-									UpDateInfo.class);
-							if (upDateBean != null) {
-								if (!upDateBean.getVer().equals("7.4.20170419")) {
-									showUpdate_Dialog(upDateBean.getVer(),
-											upDateBean.getUrl(),
-											upDateBean.getApk());
-								}
-							}
-						}
-
-						@Override
-						public void onFailure(Throwable t, int errorNo,
-								String strMsg) {
-							super.onFailure(t, errorNo, strMsg);
-							Log.e("aaaa", t.toString() + "-------" + errorNo
-									+ "-------" + strMsg);
-						}
-					});
-
-		}
-		
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		// 去除title
@@ -293,6 +298,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		roatdp = getResources().getDimension(R.dimen.introduce3_text_top);
+		registerReceiver(reciver, new IntentFilter(Constant.RECEIVEACTION));
 		initView();
 		initData();
 		handler.postDelayed(runnable, 10000); // 每隔1s执行// 初始化SlideMenus
@@ -306,69 +312,90 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 				getSlidingMenu().showMenu();
 			}
 		});
-		SpeechUtility.createUtility(ChatActivity.this, SpeechConstant.APPID +"55d3f58b");   
-	    mIat = SpeechRecognizer.createRecognizer(ChatActivity.this, mInitListener);
+		SpeechUtility.createUtility(ChatActivity.this, SpeechConstant.APPID + "55d3f58b");
+		mIat = SpeechRecognizer.createRecognizer(ChatActivity.this, mInitListener);
 		mTts = SpeechSynthesizer.createSynthesizer(ChatActivity.this, null);
-	    settings = getSharedPreferences("setting", 0);
-	    checkUPDATE();
+		settings = getSharedPreferences("setting", 0);
+		checkUPDATE();
+		initchoosePopuWindow();
 	}
+
 	// 左侧slidingMenu
-		private void initMenu() {
-			menuFragment = new MenuFragment();
-			setBehindContentView(R.layout.menu_layout);
-			getSupportFragmentManager().beginTransaction()
-					.replace(R.id.menu_layout, menuFragment).commit();
-			SlidingMenu menu = getSlidingMenu();
-			menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
-			// 设置触摸屏幕的模式
-			menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
-			// 设置渐入渐出效果的值
-			menu.setFadeDegree(0.35f);
-			menu.setBehindScrollScale(0.0F);
-		}
-		
-		
-		/**
-		 * 参数设置
-		 * 
-		 * @param param
-		 * @return
-		 */
-//		public void setParam() {
-//			// 清空参数
-//			mIat.setParameter(SpeechConstant.PARAMS, null);
-//
-//			// 设置听写引擎
-//			mIat.setParameter(SpeechConstant.ENGINE_TYPE, mEngineType);
-//			// 设置返回结果格式
-//			mIat.setParameter(SpeechConstant.RESULT_TYPE, "json");
-//
-//				// 设置语言
-//				mIat.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
-//				// 设置语言区域
-//				mIat.setParameter(SpeechConstant.ACCENT," mandarin");
-//
-//			// 设置语音前端点:静音超时时间，即用户多长时间不说话则当做超时处理
-//			mIat.setParameter(SpeechConstant.VAD_BOS, "4000");
-//			
-//			// 设置语音后端点:后端点静音检测时间，即用户停止说话多长时间内即认为不再输入， 自动停止录音
-//			mIat.setParameter(SpeechConstant.VAD_EOS, "1000");
-//			
-//			// 设置标点符号,设置为"0"返回结果无标点,设置为"1"返回结果有标点
-//			mIat.setParameter(SpeechConstant.ASR_PTT, "1");
-//			
-//			// 设置音频保存路径，保存音频格式支持pcm、wav，设置路径为sd卡请注意WRITE_EXTERNAL_STORAGE权限
-//			// 注：AUDIO_FORMAT参数语记需要更新版本才能生效
-//			mIat.setParameter(SpeechConstant.AUDIO_FORMAT,"wav");
-//			mIat.setParameter(SpeechConstant.ASR_AUDIO_PATH, Environment.getExternalStorageDirectory()+"/msc/iat.wav");
-//		}
+	private void initMenu() {
+		menuFragment = new MenuFragment();
+		setBehindContentView(R.layout.menu_layout);
+		getSupportFragmentManager().beginTransaction().replace(R.id.menu_layout, menuFragment).commit();
+		SlidingMenu menu = getSlidingMenu();
+		menu.setBehindOffsetRes(R.dimen.slidingmenu_offset);
+		// 设置触摸屏幕的模式
+		menu.setTouchModeAbove(SlidingMenu.TOUCHMODE_MARGIN);
+		// 设置渐入渐出效果的值
+		menu.setFadeDegree(0.35f);
+		menu.setBehindScrollScale(0.0F);
+	}
+
+	/**
+	 * 参数设置
+	 * 
+	 * @param param
+	 * @return
+	 */
+	// public void setParam() {
+	// // 清空参数
+	// mIat.setParameter(SpeechConstant.PARAMS, null);
+	//
+	// // 设置听写引擎
+	// mIat.setParameter(SpeechConstant.ENGINE_TYPE, mEngineType);
+	// // 设置返回结果格式
+	// mIat.setParameter(SpeechConstant.RESULT_TYPE, "json");
+	//
+	// // 设置语言
+	// mIat.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
+	// // 设置语言区域
+	// mIat.setParameter(SpeechConstant.ACCENT," mandarin");
+	//
+	// // 设置语音前端点:静音超时时间，即用户多长时间不说话则当做超时处理
+	// mIat.setParameter(SpeechConstant.VAD_BOS, "4000");
+	//
+	// // 设置语音后端点:后端点静音检测时间，即用户停止说话多长时间内即认为不再输入， 自动停止录音
+	// mIat.setParameter(SpeechConstant.VAD_EOS, "1000");
+	//
+	// // 设置标点符号,设置为"0"返回结果无标点,设置为"1"返回结果有标点
+	// mIat.setParameter(SpeechConstant.ASR_PTT, "1");
+	//
+	// // 设置音频保存路径，保存音频格式支持pcm、wav，设置路径为sd卡请注意WRITE_EXTERNAL_STORAGE权限
+	// // 注：AUDIO_FORMAT参数语记需要更新版本才能生效
+	// mIat.setParameter(SpeechConstant.AUDIO_FORMAT,"wav");
+	// mIat.setParameter(SpeechConstant.ASR_AUDIO_PATH,
+	// Environment.getExternalStorageDirectory()+"/msc/iat.wav");
+	// }
+
+	private void showDialog(final View v) {
+		final String[] items = new String[] { "拍照", "视频" };
+		android.app.AlertDialog.Builder builder = new AlertDialog.Builder(ChatActivity.this);
+		builder.setTitle("选择拍摄类型");
+		builder.setItems(items, new DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// TODO Auto-generated method stub
+				if (items[which].equals("拍照")) {
+					showHeadimgpop(v);
+				} else if (items[which].equals("视频")) {
+					showChoosePhotePopWin(v);
+				}
+			}
+		});
+		builder.create().show();
+	}
+
 	public void initView() {
-		add= (ImageView)findViewById(R.id.img_add);
+		add = (ImageView) findViewById(R.id.img_add);
 		add.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				showHeadimgpop(v);
+				showDialog(v);
 			}
 		});
 		mListView = (ListView) findViewById(R.id.listview);
@@ -378,12 +405,12 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 				// TODO Auto-generated method stub
 				// 移动数据分析，收集开始合成事件
-			
+
 			}
 		});
 		mBtnSend = (Button) findViewById(R.id.btn_send);
 		mBtnRcd = (AudioRecordButton) findViewById(R.id.btn_rcd);
-		btn_normal_rcd = (Button)findViewById(R.id.btn_normal_rcd);
+		btn_normal_rcd = (Button) findViewById(R.id.btn_normal_rcd);
 		mBtnRcd.setAudioRecordFinishListener(new MyAudioRecordFinishListener());
 		mBtnSend.setOnClickListener(this);
 		mBtnBack = (ImageView) findViewById(R.id.currentcity_txt);
@@ -404,9 +431,9 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 
 			public void onClick(View v) {
 				if (btn_vocie) {
-					if(VehicleApp.getInstance().getSetBean().getVoice().equals("xunfei")){
+					if (VehicleApp.getInstance().getSetBean().getVoice().equals("xunfei")) {
 						btn_normal_rcd.setVisibility(View.GONE);
-					}else{
+					} else {
 						mBtnRcd.setVisibility(View.GONE);
 					}
 					mBottom.setVisibility(View.VISIBLE);
@@ -415,72 +442,132 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 					file = null;
 					leixing = "txt";
 				} else {
-					if(VehicleApp.getInstance().getSetBean().getVoice().equals("xunfei")){
+					if (VehicleApp.getInstance().getSetBean().getVoice().equals("xunfei")) {
 						leixing = "txt";
 						btn_normal_rcd.setVisibility(View.VISIBLE);
 						btn_normal_rcd.setOnClickListener(new OnClickListener() {
 							@Override
 							public void onClick(View arg0) {
 								// TODO Auto-generated method stub
-								if( null == mIat ){
-									Toast.makeText(ChatActivity.this, "创建对象失败，请确认 libmsc.so 放置正确，且有调用 createUtility 进行初始化", Toast.LENGTH_SHORT).show();
+								if (null == mIat) {
+									Toast.makeText(ChatActivity.this,
+											"创建对象失败，请确认 libmsc.so 放置正确，且有调用 createUtility 进行初始化", Toast.LENGTH_SHORT)
+											.show();
 									return;
 								}
-							    dictationResultStr = "[";
-					            RecognizerDialog iatDialog = new RecognizerDialog(
-					                    ChatActivity.this, null);
-					            mIat.setParameter(SpeechConstant.DOMAIN, "iat"); // domain:域名
-					            mIat.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
-					            mIat.setParameter(SpeechConstant.ACCENT, "mandarin"); // mandarin:普通话
-					            
-					            iatDialog.setListener(new RecognizerDialogListener() {
-					                @Override
-					                public void onResult(RecognizerResult results, boolean isLast) {
-					                    if (!isLast) {
-					                        dictationResultStr += results.getResultString() + ",";
-					                    } else {
-					                        dictationResultStr += results.getResultString() + "]";
-					                    }
-					                    if (isLast) {
-					                        Gson gson = new Gson();
-					                        List<DictationResult> dictationResultList = gson
-					                                .fromJson(dictationResultStr,
-					                                        new TypeToken<List<DictationResult>>() {
-					                                        }.getType());
-					                        String finalResult = "";
-					                        for (int i = 0; i < dictationResultList.size() - 1; i++) {
-					                            finalResult += dictationResultList.get(i)
-					                                    .toString();
-					                        }
-					                        mEditTextContent.setText(finalResult);
-					                		SendMessage();
-					                        Log.d("From reall phone", finalResult);
-					                    }
-					                }
+								dictationResultStr = "[";
+								RecognizerDialog iatDialog = new RecognizerDialog(ChatActivity.this, null);
+								mIat.setParameter(SpeechConstant.DOMAIN, "iat"); // domain:域名
+								mIat.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
+								mIat.setParameter(SpeechConstant.ACCENT, "mandarin"); // mandarin:普通话
 
-					                @Override
-					                public void onError(SpeechError error) {
-					                    // TODO 自动生成的方法存根
-					                    error.getPlainDescription(true);
-					                }
-					            });
+								iatDialog.setListener(new RecognizerDialogListener() {
+									@Override
+									public void onResult(RecognizerResult results, boolean isLast) {
+										if (!isLast) {
+											dictationResultStr += results.getResultString() + ",";
+										} else {
+											dictationResultStr += results.getResultString() + "]";
+										}
+										if (isLast) {
+											Gson gson = new Gson();
+											List<DictationResult> dictationResultList = gson.fromJson(
+													dictationResultStr, new TypeToken<List<DictationResult>>() {
+											}.getType());
+											String finalResult = "";
+											for (int i = 0; i < dictationResultList.size() - 1; i++) {
+												finalResult += dictationResultList.get(i).toString();
+											}
+											mEditTextContent.setText(finalResult);
+											SendMessage();
+											Log.d("From reall phone", finalResult);
+										}
+									}
 
-					            // 开始听写
-					            iatDialog.show();
+									@Override
+									public void onError(SpeechError error) {
+										// TODO 自动生成的方法存根
+										error.getPlainDescription(true);
+									}
+								});
+
+								// 开始听写
+								iatDialog.show();
 							}
 						});
-					}else{
+					} else {
 						mBtnRcd.setVisibility(View.VISIBLE);
 						leixing = "mp3";
 					}
-					
+
 					mBottom.setVisibility(View.GONE);
 					chatting_mode_btn.setImageResource(R.drawable.chatting_setmode_voice_btn);
 					btn_vocie = true;
-					
+
 				}
 			}
 		});
+		
+		mBottom.setVisibility(View.GONE);
+		if (VehicleApp.getInstance().getSetBean().getVoice().equals("xunfei")) {
+			leixing = "txt";
+			btn_normal_rcd.setVisibility(View.VISIBLE);
+			btn_normal_rcd.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					// TODO Auto-generated method stub
+					if (null == mIat) {
+						Toast.makeText(ChatActivity.this,
+								"创建对象失败，请确认 libmsc.so 放置正确，且有调用 createUtility 进行初始化", Toast.LENGTH_SHORT)
+								.show();
+						return;
+					}
+					dictationResultStr = "[";
+					RecognizerDialog iatDialog = new RecognizerDialog(ChatActivity.this, null);
+					mIat.setParameter(SpeechConstant.DOMAIN, "iat"); // domain:域名
+					mIat.setParameter(SpeechConstant.LANGUAGE, "zh_cn");
+					mIat.setParameter(SpeechConstant.ACCENT, "mandarin"); // mandarin:普通话
+
+					iatDialog.setListener(new RecognizerDialogListener() {
+						@Override
+						public void onResult(RecognizerResult results, boolean isLast) {
+							if (!isLast) {
+								dictationResultStr += results.getResultString() + ",";
+							} else {
+								dictationResultStr += results.getResultString() + "]";
+							}
+							if (isLast) {
+								Gson gson = new Gson();
+								List<DictationResult> dictationResultList = gson.fromJson(
+										dictationResultStr, new TypeToken<List<DictationResult>>() {
+								}.getType());
+								String finalResult = "";
+								for (int i = 0; i < dictationResultList.size() - 1; i++) {
+									finalResult += dictationResultList.get(i).toString();
+								}
+								mEditTextContent.setText(finalResult);
+								SendMessage();
+								Log.d("From reall phone", finalResult);
+							}
+						}
+
+						@Override
+						public void onError(SpeechError error) {
+							// TODO 自动生成的方法存根
+							error.getPlainDescription(true);
+						}
+					});
+
+					// 开始听写
+					iatDialog.show();
+				}
+			});
+		} else {
+			mBtnRcd.setVisibility(View.VISIBLE);
+			leixing = "mp3";
+		}
+		chatting_mode_btn.setImageResource(R.drawable.chatting_setmode_voice_btn);
+		btn_vocie = true;
 		mBtnRcd.setOnTouchListener(new OnTouchListener() {
 
 			public boolean onTouch(View v, MotionEvent event) {
@@ -494,7 +581,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 
 	public void initData() {
 		leixing = "txt";
-		leirong="hello";
+		leirong = "hello";
 		final SharedPreferences settings = getSharedPreferences("setting", 0);
 		String userid = settings.getString("userid", "");
 		if (userid.equals("") || userid == null) {
@@ -549,9 +636,9 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		AjaxParams params = new AjaxParams();
 		params.put("userid", userid);
 		params.put("act", "postok");
-		if(!leirong.equals("")){
+		if (!leirong.equals("")) {
 			params.put("leirong", leirong);
-		}else{
+		} else {
 			params.put("leirong", mEditTextContent.getText().toString());
 		}
 		params.put("leixing", leixing);
@@ -566,34 +653,43 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 				e.printStackTrace();
 			}
 		}
-		
+
 		try {
-			if (mFileName!=null) {
+			if (mFileName != null) {
 				File imgfile = new File(mFileName);
 				params.put("thefile", imgfile);
-			}	
+			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Log.e("paramsparamsparams", baseurl + "/api/chataddclient.php"+params.toString());
+
+		try {
+			if (url != null) {
+				File videofile = new File(url);
+				params.put("thefile", videofile);
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Log.e("paramsparamsparams", baseurl + "/api/chataddclient.php" + params.toString());
 		fp.post(baseurl + "/api/chataddclient.php", params, new AjaxCallBack<Object>() {
 			@Override
 			public void onSuccess(Object t) {
 				super.onSuccess(t);
 				Gson gson = new Gson();
-				ChatXunfeiBean bean = gson.fromJson(t.toString(),
-						ChatXunfeiBean.class);
-				if (bean!=null) {
-					if (bean.getRet().equals("success")) {								
-								if(!bean.getTxt().equals("")&&bean.getLeixing().equals("xunfei"))	{
-									  // 设置参数
-								    setParam();
-								    mTts.startSpeaking(bean.getTxt(), null);
-								}		
-								leirong="";
-								mEditTextContent.setText("");
-								getMessage();
+				ChatXunfeiBean bean = gson.fromJson(t.toString(), ChatXunfeiBean.class);
+				if (bean != null) {
+					if (bean.getRet().equals("success")) {
+						if (!bean.getTxt().equals("") && bean.getLeixing().equals("xunfei")) {
+							// 设置参数
+							setParam();
+							mTts.startSpeaking(bean.getTxt(), null);
+						}
+						leirong = "";
+						mEditTextContent.setText("");
+						getMessage();
 					}
 				}
 			}
@@ -606,42 +702,44 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		});
 
 	}
-	private void setParam(){
+
+	private void setParam() {
 		// 清空参数
 		mTts.setParameter(SpeechConstant.PARAMS, null);
 		// 根据合成引擎设置相应参数
-		if(mEngineType.equals(SpeechConstant.TYPE_CLOUD)) {
+		if (mEngineType.equals(SpeechConstant.TYPE_CLOUD)) {
 			mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_CLOUD);
 			// 设置在线合成发音人
 			mTts.setParameter(SpeechConstant.VOICE_NAME, voicer);
-			//设置合成语速
+			// 设置合成语速
 			mTts.setParameter(SpeechConstant.SPEED, "50");
-			//设置合成音调
+			// 设置合成音调
 			mTts.setParameter(SpeechConstant.PITCH, "50");
-			//设置合成音量
+			// 设置合成音量
 			mTts.setParameter(SpeechConstant.VOLUME, "50");
-		}else {
+		} else {
 			mTts.setParameter(SpeechConstant.ENGINE_TYPE, SpeechConstant.TYPE_LOCAL);
 			// 设置本地合成发音人 voicer为空，默认通过语记界面指定发音人。
 			mTts.setParameter(SpeechConstant.VOICE_NAME, "");
 		}
-		//设置播放器音频流类型
+		// 设置播放器音频流类型
 		mTts.setParameter(SpeechConstant.STREAM_TYPE, "3");
 		// 设置播放合成音频打断音乐播放，默认为true
 		mTts.setParameter(SpeechConstant.KEY_REQUEST_FOCUS, "true");
-		
+
 		// 设置音频保存路径，保存音频格式支持pcm、wav，设置路径为sd卡请注意WRITE_EXTERNAL_STORAGE权限
 		// 注：AUDIO_FORMAT参数语记需要更新版本才能生效
 		mTts.setParameter(SpeechConstant.AUDIO_FORMAT, "wav");
-		mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH, Environment.getExternalStorageDirectory()+"/msc/tts.wav");
+		mTts.setParameter(SpeechConstant.TTS_AUDIO_PATH, Environment.getExternalStorageDirectory() + "/msc/tts.wav");
 	}
+
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.btn_send:
-			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE); 
+			InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			// 强制隐藏软键盘
-			imm.hideSoftInputFromWindow(v.getWindowToken(), 0); 
+			imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
 			send();
 			break;
 		case R.id.currentcity_txt:
@@ -652,10 +750,10 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 	}
 
 	private void send() {
-			String contString = mEditTextContent.getText().toString();
-			if (contString.length() > 0) {
-				SendMessage();
-			}
+		String contString = mEditTextContent.getText().toString();
+		if (contString.length() > 0) {
+			SendMessage();
+		}
 	}
 
 	private String getDate() {
@@ -679,7 +777,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 			Toast.makeText(this, "没有内存空间不能录音!", Toast.LENGTH_LONG).show();
 			return false;
 		}
-	
+
 		return super.onTouchEvent(event);
 	}
 
@@ -764,12 +862,13 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
-		if( null != mIat ){
+		if (null != mIat) {
 			// 退出时释放连接
 			mIat.cancel();
 			mIat.destroy();
 		}
 		MediaManager.release();
+		unregisterReceiver(reciver);
 	}
 
 	@Override
@@ -785,7 +884,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		super.onResume();
 		MediaManager.resume();
 	}
-	
+
 	/**
 	 * 听写监听器。
 	 */
@@ -817,7 +916,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		public void onEvent(int eventType, int arg1, int arg2, Bundle obj) {
 		}
 	};
-	
+
 	private void printResult(RecognizerResult results) {
 		String text = JsonParser.parseIatResult(results.getResultString());
 
@@ -839,12 +938,11 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		mEditTextContent.setText(resultBuffer.toString());
 		SendMessage();
 	}
-	
+
 	public void showHeadimgpop(View v) {
 		// TODO Auto-generated method stub
 		View view = getLayoutInflater().inflate(R.layout.headimg_popview, null);
-		headimgpop = new PopupWindow(view, ViewGroup.LayoutParams.FILL_PARENT,
-				ViewGroup.LayoutParams.WRAP_CONTENT);
+		headimgpop = new PopupWindow(view, ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
 		headimgpop.setBackgroundDrawable(null);
 		headimgpop.setOutsideTouchable(true);
 		headimgpop.setFocusable(true);
@@ -852,8 +950,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		headimgpop.showAtLocation(v, Gravity.BOTTOM, 0, 0);
 
 		Button btn_make_photo = (Button) view.findViewById(R.id.btn_camera);
-		Button btn_take_photo = (Button) view
-				.findViewById(R.id.btn_selectalbum);
+		Button btn_take_photo = (Button) view.findViewById(R.id.btn_selectalbum);
 		Button btn_cancel = (Button) view.findViewById(R.id.btn_cancelload);
 
 		view.setOnKeyListener(new OnKeyListener() {
@@ -899,6 +996,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 			}
 		});
 	}
+
 	/**
 	 * 打开相机
 	 */
@@ -909,8 +1007,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		if (status.equals(Environment.MEDIA_MOUNTED)) {
 			doTakephoto();
 		} else {
-			Toast.makeText(ChatActivity.this, "没有可用的存储卡", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(ChatActivity.this, "没有可用的存储卡", Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -919,13 +1016,10 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 	 */
 	private void openAlbum() {
 		try {
-			Intent i = new Intent(
-					Intent.ACTION_PICK,
-					android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+			Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 			startActivityForResult(i, RESULT_LOAD_IMAGE);
 		} catch (ActivityNotFoundException e) {
-			Toast.makeText(ChatActivity.this, "没有找到照片", Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(ChatActivity.this, "没有找到照片", Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -934,12 +1028,10 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 	 */
 	public void doTakephoto() {
 		try {
-			Intent openCameraIntent = new Intent(
-					MediaStore.ACTION_IMAGE_CAPTURE);
+			Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
 			String sdcardState = Environment.getExternalStorageState();
-			String sdcardPathDir = android.os.Environment
-					.getExternalStorageDirectory().getPath() + "/tempImage/";
+			String sdcardPathDir = android.os.Environment.getExternalStorageDirectory().getPath() + "/tempImage/";
 			File file = null;
 			if (Environment.MEDIA_MOUNTED.equals(sdcardState)) {
 				// 有sd卡，是否有myImage文件夹
@@ -948,8 +1040,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 					fileDir.mkdirs();
 				}
 				// 是否有headImg文件
-				file = new File(sdcardPathDir + System.currentTimeMillis()
-						+ ".JPEG");
+				file = new File(sdcardPathDir + System.currentTimeMillis() + ".JPEG");
 			}
 			if (file != null) {
 				photoUri = Uri.fromFile(file);
@@ -966,15 +1057,13 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 	private void startPhotoZoom(Uri uri) {
 		try {
 			// 获取系统时间 然后将裁剪后的图片保存至指定的文件夹
-			SimpleDateFormat sDateFormat = new SimpleDateFormat(
-					"yyyyMMddhhmmss");
+			SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMddhhmmss");
 			String address = sDateFormat.format(new java.util.Date());
 			if (!FileUtils.isFileExist("")) {
 				FileUtils.createSDDir("");
 
 			}
-			Uri imageUri = Uri.parse("file:///sdcard/formats/" + address
-					+ ".JPEG");
+			Uri imageUri = Uri.parse("file:///sdcard/formats/" + address + ".JPEG");
 			mFileName = FileUtils.SDPATH + address + ".JPEG";
 			final Intent intent = new Intent("com.android.camera.action.CROP");
 
@@ -982,15 +1071,14 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 			intent.setDataAndType(uri, "image/*");
 
 			intent.putExtra("crop", "true");
-//			intent.putExtra("aspectX", 1);
-//			intent.putExtra("aspectY", 1);
+			// intent.putExtra("aspectX", 1);
+			// intent.putExtra("aspectY", 1);
 			intent.putExtra("outputX", 1920);
 			intent.putExtra("outputY", 1920);
 			// 输出路径
 			intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
 			// 输出格式
-			intent.putExtra("outputFormat",
-					Bitmap.CompressFormat.JPEG.toString());
+			intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
 			// 不启用人脸识别
 			intent.putExtra("noFaceDetection", false);
 			intent.putExtra("return-data", false);
@@ -1021,7 +1109,24 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		case CUT_PHOTO_REQUEST_CODE:
 			if (resultCode == RESULT_OK && null != data) {// 裁剪返回
 				leixing = "img";
-			   SendMessage();
+				SendMessage();
+			}
+			break;
+
+		case VIDEO_CAPTURE0:
+			if (resultCode == RESULT_OK && null != data) {// 裁剪返回
+				Uri uri = data.getData();
+				String[] proj = { MediaStore.Images.Media.DATA };
+
+				Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
+
+				int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+
+				actualimagecursor.moveToFirst();
+
+				url = actualimagecursor.getString(actual_image_column_index);
+				leixing = "video";
+				SendMessage();
 			}
 			break;
 		}
@@ -1029,4 +1134,77 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		super.onActivityResult(requestCode, resultCode, data);
 
 	}
+
+	/**
+	 * 弹出框
+	 * 
+	 * @param v
+	 */
+	private void showChoosePhotePopWin(View v) {
+		if (!choosePopupWindow.isShowing()) {
+			choosePopupWindow.showAtLocation(v, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+		}
+
+	}
+
+	// 初始弹窗；
+	private void initchoosePopuWindow() {
+		choosePopupWindow = new PopupWindow(this);
+		choosePopupWindow.setBackgroundDrawable(null);
+		choosePopupWindow.setWidth(LayoutParams.MATCH_PARENT);
+		choosePopupWindow.setHeight(LayoutParams.WRAP_CONTENT);
+		choosePopupWindow.setOutsideTouchable(true);
+		View contentView = LayoutInflater.from(this).inflate(R.layout.choose_photo_popup_window, null);
+		Button btn_take_photo = (Button) contentView.findViewById(R.id.btn_camera);
+		Button btn_pic_photo = (Button) contentView.findViewById(R.id.btn_album);
+		Button btn_cancel = (Button) contentView.findViewById(R.id.btn_cancel);
+		btn_take_photo.setOnClickListener(new OnPopupClickedListener());
+		btn_pic_photo.setOnClickListener(new OnPopupClickedListener());
+		btn_cancel.setOnClickListener(new OnPopupClickedListener());
+
+		contentView.setOnKeyListener(new View.OnKeyListener() {
+			@Override
+			public boolean onKey(View arg0, int keyCode, KeyEvent arg2) {
+				// TODO Auto-generated method stub
+				if (keyCode == KeyEvent.KEYCODE_BACK) {
+					if (choosePopupWindow.isShowing()) {
+						choosePopupWindow.dismiss();
+					}
+					return true;
+				}
+				return false;
+			}
+		});
+		choosePopupWindow.setContentView(contentView);
+	}
+
+	class OnPopupClickedListener implements OnClickListener {
+
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			switch (v.getId()) {
+			case R.id.btn_camera:
+				Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+				intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
+				// intent.putExtra(MediaStore.EXTRA_OUTPUT, path);
+				intent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 60);
+				startActivityForResult(intent, VIDEO_CAPTURE0);
+				choosePopupWindow.dismiss();
+				break;
+			case R.id.btn_album:
+				Intent intent1 = new Intent(ChatActivity.this, VideoUploadActivity.class);
+				startActivity(intent1);
+				choosePopupWindow.dismiss();
+				break;
+			case R.id.btn_cancel:
+				choosePopupWindow.dismiss();
+				break;
+			default:
+				break;
+			}
+		}
+
+	}
+
 }
