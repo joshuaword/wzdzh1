@@ -52,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="我知道"
+            android:text="我知道-内测版"
             android:textColor="#228dce"
             android:textSize="20sp" />
 

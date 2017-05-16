@@ -1,7 +1,11 @@
 package com.dajia.activity;
 
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 import com.daijia.chat.ChatActivity;
 import com.dajia.VehicleApp;
@@ -21,6 +25,7 @@ import com.umeng.socialize.weixin.controller.UMWXHandler;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -50,6 +55,51 @@ public class ChatLoginActivity extends BaseActivity {
 	private SharedPreferences sp;
 	private UMSocialService mController = UMServiceFactory.getUMSocialService(Constant.DESCRIPTOR);
 	UserBean bean;
+	
+	/** 
+	 * 从apk中获取版本信息 
+	 * @param context 
+	 * @param channelKey 
+	 * @return 
+	 */  
+	private static String getChannelFromApk(Context context, String channelKey) {  
+	    //从apk包中获取  
+	    ApplicationInfo appinfo = context.getApplicationInfo();  
+	    String sourceDir = appinfo.sourceDir;  
+	    //注意这里：默认放在meta-inf/里， 所以需要再拼接一下  
+	    String key = "META-INF/" + channelKey;  
+	    String ret = "";  
+	    ZipFile zipfile = null;  
+	    try {  
+	        zipfile = new ZipFile(sourceDir);  
+	        Enumeration<?> entries = zipfile.entries();  
+	        while (entries.hasMoreElements()) {  
+	            ZipEntry entry = ((ZipEntry) entries.nextElement());  
+	            String entryName = entry.getName();  
+	            if (entryName.startsWith(key)) {  
+	                ret = entryName;  
+	                break;  
+	            }  
+	        }  
+	    } catch (IOException e) {  
+	        e.printStackTrace();  
+	    } finally {  
+	        if (zipfile != null) {  
+	            try {  
+	                zipfile.close();  
+	            } catch (IOException e) {  
+	                e.printStackTrace();  
+	            }  
+	        }  
+	    }  
+	    String[] split = ret.split("_");  
+	    String channel = "";  
+	    if (split != null && split.length >= 2) {  
+	        channel = ret.substring(split[0].length() + 1);  
+	    }  
+	    return channel;  
+	}  
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -58,6 +108,10 @@ public class ChatLoginActivity extends BaseActivity {
 
 		title = (TextView) findViewById(R.id.title);
 		title.setText(getString(R.string.check_and_login));
+		
+		String mychannel = getChannelFromApk(ChatLoginActivity.this, "channel");
+		title.setText(mychannel);
+		
 		isEmail = VehicleApp.getInstance().getSetBean().getClientusername();
 		btn_qq = (Button) findViewById(R.id.btn_qq);
 		btn_weixin = (Button) findViewById(R.id.btn_weixin);

@@ -658,7 +658,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 			parameterMap.put("act", "postok");
 			parameterMap.put("leixing", "img");
 			List<String> paramList = new ArrayList<String>();
-			for (int i = 1; i < all_photoList.size(); i++) {
+			for (int i = 0; i < all_photoList.size(); i++) {
 				paramList.add(all_photoList.get(i));
 			}
 			progressDialog = ProgressDialog.show(ChatActivity.this, null, "正在发送图片...");
