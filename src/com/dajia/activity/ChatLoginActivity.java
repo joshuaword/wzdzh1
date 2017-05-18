@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -134,6 +135,8 @@ public class ChatLoginActivity extends BaseActivity {
 		}
 		phone_ed.setText(phone);
 		password_ed = (EditText) findViewById(R.id.edt_password);
+		password_ed.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+		
 		dismisspw = (TextView) findViewById(R.id.dismiss_password);
 		dismisspw.setOnClickListener(new OnClickListener() {
 

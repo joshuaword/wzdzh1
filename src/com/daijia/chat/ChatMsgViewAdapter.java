@@ -21,7 +21,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
 import com.umeng.socialize.utils.Log;
+
 import android.annotation.SuppressLint;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -37,10 +39,12 @@ import android.provider.MediaStore.Images;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import net.k76.wzd.R;
 
 @SuppressLint("NewApi")
@@ -48,6 +52,8 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 	private static ImageLoader imageLoader = ImageLoader.getInstance();
 	private static DisplayImageOptions options;
 	private ArrayList<String> imglist = new ArrayList<String>();
+
+	private boolean isClick = false;
 
 	public static void setCacheImageLoad(Context context, int drawId, int Rounded, ImageView imageView,
 			String imageUrl) {
@@ -204,13 +210,17 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		final ChatListBean entity = coll.get(position);
 		String isComMsg = entity.getMsgtype();
-		Log.d("getMsgtype", entity.getMsgtype());
+		String chatid = entity.getChatid();
+		Log.d("aaaa", "chatid="+chatid + " isComMsg=" + isComMsg);
 		ViewHolder viewHolder = null;
-		if (convertView == null) {
-			if (isComMsg.equals("0")) {
+		//if (convertView == null) {
+			if (isComMsg.equals("0")) 
+			{
+				Log.d("aaaa", "chatid="+chatid + " right" );
 				convertView = mInflater.inflate(R.layout.chatting_item_msg_text_right, null);
 
 			} else {
+				Log.d("aaaa", "chatid="+chatid + " left" );
 				convertView = mInflater.inflate(R.layout.chatting_item_msg_text_left, null);
 			}
 
@@ -228,9 +238,9 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 			viewHolder.img_title = (ImageView) convertView.findViewById(R.id.img_title);
 
 			convertView.setTag(viewHolder);
-		} else {
-			viewHolder = (ViewHolder) convertView.getTag();
-		}
+		//} else {
+		//	viewHolder = (ViewHolder) convertView.getTag();
+		//}
 
 		viewHolder.tvSendTime.setText(entity.getCreatetime());
 
@@ -273,6 +283,16 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 			viewHolder.tvContent.setText(entity.getLeirong());
 			viewHolder.tvContent.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
 			viewHolder.tvTime.setText("");
+			viewHolder.tvContent.setOnLongClickListener(new OnLongClickListener() {
+				@Override
+				public boolean onLongClick(View v) {
+					// TODO Auto-generated method stub
+					ClipboardManager cmb = (ClipboardManager) ctx.getSystemService(Context.CLIPBOARD_SERVICE);
+					cmb.setText(entity.getLeirong());
+					Toast.makeText(ctx, "复制成功", Toast.LENGTH_SHORT).show();
+					return true;
+				}
+			});
 		}
 		viewHolder.img_chatcontent.setOnClickListener(new OnClickListener() {
 			@Override
@@ -293,6 +313,7 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 
 			}
 		});
+		
 		viewHolder.url_layout.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -307,24 +328,50 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 		viewHolder.tvContent.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				if (entity.getLeixing().equals("mp3")) {
-					playMusic(entity.getThefile());
-				} else if (VehicleApp.getInstance().getSetBean().getVoice()!=null&&VehicleApp.getInstance().getSetBean().getVoice().equals("xunfei")
-						&& !entity.getLeixing().equals("url")) {
-					// 设置参数
-					if (!entity.getLeirong().equals("")) {
-						setParam();
-						mTts.startSpeaking(entity.getLeirong(), mTtsListener);
+					if (isClick == false) {
+						playMusic(entity.getThefile());
+						isClick = true;
+					} else {
+						stopMusic();
+						isClick = false;
 					}
+				} else if (VehicleApp.getInstance().getSetBean().getVoice() != null
+						&& VehicleApp.getInstance().getSetBean().getVoice().equals("xunfei")
+						&& !entity.getLeixing().equals("url")) {
+					Log.d("aaaa", "isClick="+isClick );
+					// 设置参数
+					
+						if(mTts.isSpeaking()){
+							Log.d("aaaa", "stop="+entity.getLeirong() );
+							mTts.stopSpeaking();
+							return;
+						}
+						if (!entity.getLeirong().equals("")) {
+							Log.d("aaaa", "speak="+entity.getLeirong() );
+							setParam();
+							mTts.startSpeaking(entity.getLeirong(), mTtsListener);
+							isClick = true;
+						}
+					
+					
 				} else if (entity.getLeixing().equals("xunfei")) {
-					if (!entity.getLeirong().equals("")) {
-						setParam();
-						mTts.startSpeaking(entity.getLeirong(), mTtsListener);
+					if (isClick == false) {
+						if (!entity.getLeirong().equals("")) {
+							setParam();
+							mTts.startSpeaking(entity.getLeirong(), mTtsListener);
+							isClick = true;
+						}
+					}else{
+						if(mTts.isSpeaking()){
+							mTts.stopSpeaking();
+						}
 					}
 
 				}
 
 			}
 		});
+
 		viewHolder.tvUserName.setText(entity.getNickname());
 		setCacheImageLoad(ctx, -1, 0, viewHolder.iv_userhead, entity.getHeadimg());
 		return convertView;
@@ -385,7 +432,7 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 		public View url_layout;
 		public TextView biaoti;
 		public TextView jianjie;
-		public ImageView iv_userhead, img_chatcontent, img_title,img_play;
+		public ImageView iv_userhead, img_chatcontent, img_title, img_play;
 	}
 
 	/**
@@ -407,6 +454,17 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 				}
 			});
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void stopMusic() {
+		try {
+			if (mMediaPlayer.isPlaying()) {
+				mMediaPlayer.stop();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -436,8 +494,7 @@ public class ChatMsgViewAdapter extends BaseAdapter {
 			}
 		}
 		if (kind == Images.Thumbnails.MICRO_KIND && bitmap != null) {
-			bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height,
-					ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
+			bitmap = ThumbnailUtils.extractThumbnail(bitmap, width, height, ThumbnailUtils.OPTIONS_RECYCLE_INPUT);
 		}
 		return bitmap;
 	}

@@ -137,7 +137,7 @@
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@+id/ivPopUp"
             android:gravity="center"
-            android:text="按住说话"
+            android:text="点击说话"
             android:visibility="gone" />
         
          <Button
@@ -150,7 +150,7 @@
             android:layout_marginRight="10dp"
             android:layout_toRightOf="@+id/ivPopUp"
             android:gravity="center"
-            android:text="按住说话"
+            android:text="点击说话"
             android:visibility="gone" />
     </RelativeLayout>
     <!-- 聊天内容 listview-->

@@ -62,6 +62,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -109,7 +110,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 	Button btn_normal_rcd;
 	private ImageView mBtnBack;
 	private EditText mEditTextContent;
-	private RelativeLayout mBottom;
+	private View mBottom;
 	private ListView mListView;
 	private ChatMsgViewAdapter mAdapter;
 	private List<ChatListBean> mDataArrays = new ArrayList<ChatListBean>();
@@ -436,7 +437,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		mBtnRcd.setAudioRecordFinishListener(new MyAudioRecordFinishListener());
 		mBtnSend.setOnClickListener(this);
 		mBtnBack = (ImageView) findViewById(R.id.currentcity_txt);
-		mBottom = (RelativeLayout) findViewById(R.id.btn_bottom);
+		mBottom = findViewById(R.id.btn_bottom);
 		mBtnBack.setOnClickListener(this);
 		chatting_mode_btn = (ImageView) this.findViewById(R.id.ivPopUp);
 		volume = (ImageView) this.findViewById(R.id.volume);
@@ -459,6 +460,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 						mBtnRcd.setVisibility(View.GONE);
 					}
 					mBottom.setVisibility(View.VISIBLE);
+					mEditTextContent.setVisibility(View.VISIBLE);
 					btn_vocie = false;
 					chatting_mode_btn.setImageResource(R.drawable.chatting_setmode_msg_btn);
 					file = null;
@@ -523,6 +525,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 					}
 
 					mBottom.setVisibility(View.GONE);
+					mEditTextContent.setVisibility(View.GONE);
 					chatting_mode_btn.setImageResource(R.drawable.chatting_setmode_voice_btn);
 					btn_vocie = true;
 
@@ -531,6 +534,7 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 		});
 
 		mBottom.setVisibility(View.GONE);
+		mEditTextContent.setVisibility(View.GONE);
 		if (VehicleApp.getInstance().getSetBean().getVoice().equals("xunfei")) {
 			leixing = "txt";
 			btn_normal_rcd.setVisibility(View.VISIBLE);
@@ -628,10 +632,25 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 			@Override
 			public void onSuccess(Object t) {
 				Gson gson = new Gson();
-				Log.v("aaaa", t.toString());
+				//Log.v("aaaa", t.toString());
 				chatbean = gson.fromJson(t.toString(), ChatBean.class);
-				Log.d("chatbean", chatbean + "");
-				if (chatbean != null) {
+				
+				if (chatbean != null) 
+				{
+					//如果内容没更新就不刷新
+					String lastchatid = chatbean.getLastchatid();
+					String oldlastchatid = settings.getString("lastchatid", "");
+					Log.e("aaaa", "lastchatid=" + lastchatid + " oldlastchatid=" + oldlastchatid);
+					if(lastchatid.equals(oldlastchatid)) 
+					{
+						Log.e("aaaa", "nofresh lastchatid=" + lastchatid);
+						return;
+					}
+					
+					Editor editor = settings.edit(); //获得编辑这个文件的编辑器；  
+				    editor.putString("lastchatid", lastchatid); //利用编辑器编辑内容；
+				    editor.commit();     //调用这个方法提交保存数据。
+					
 					if (chatbean.getChatlist() != null && chatbean.getChatlist().size() > 0) {
 						mAdapter = new ChatMsgViewAdapter(ChatActivity.this, chatbean.getChatlist());
 						mListView.setAdapter(mAdapter);
@@ -643,7 +662,8 @@ public class ChatActivity extends SlidingFragmentActivity implements OnClickList
 			@Override
 			public void onFailure(Throwable t, int errorNo, String strMsg) {
 				super.onFailure(t, errorNo, strMsg);
-				Log.e("aaaa", t.toString() + "-------" + errorNo + "-------" + strMsg);
+				Log.e("aaaa", t.toString() );
+				Log.e("aaaa", "-------" + errorNo + "-------" + strMsg);
 			}
 		});
 
